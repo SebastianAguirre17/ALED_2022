@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root text="&#34;El mayor de 2 números&#34;" comment="&#34;&#34;" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;OUTPUT(&#34;&#34;Ingrese un número: &#34;&#34;)&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;INPUT(num1)&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;OUTPUT(&#34;&#34;Ingrese otro número: &#34;&#34;)&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;INPUT(num2)&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<alternative text="&#34;(num1 == num2)&#34;" comment="&#34;&#34;" color="ffffff">
+			<qTrue>
+				<instruction text="&#34;OUTPUT(&#34;&#34;Los números son iguales&#34;&#34;)&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+			</qTrue>
+			<qFalse>
+				<alternative text="&#34;(num1 &#62; num2)&#34;" comment="&#34;&#34;" color="ffffff">
+					<qTrue>
+						<instruction text="&#34;OUTPUT(&#34;&#34;El mayor es: &#34;&#34;, num1)&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+					</qTrue>
+					<qFalse>
+						<instruction text="&#34;OUTPUT(&#34;&#34;El mayor es: &#34;&#34;, num2)&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+					</qFalse>
+				</alternative>
+			</qFalse>
+		</alternative>
+	</children>
+</root>
