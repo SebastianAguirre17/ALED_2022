@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root text="&#34;PrintNumero(int numero)&#34;" comment="&#34;&#34;" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;cout &#60;&#60; numero &#60;&#60; endl;&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+	</children>
+</root>

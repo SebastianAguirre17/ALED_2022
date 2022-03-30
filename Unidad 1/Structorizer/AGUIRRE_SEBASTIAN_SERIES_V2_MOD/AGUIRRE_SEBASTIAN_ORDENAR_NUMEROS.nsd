@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root text="&#34;OrdenarNumeros(int&amp; valor1, int&amp; valor2)&#34;" comment="&#34;&#34;" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;int aux;&#34;" comment="" color="ffffff" rotated="0"></instruction>
+		<alternative text="&#34;(valor1 &#62; valor2)&#34;" comment="&#34;&#34;" color="ffffff">
+			<qTrue>
+				<instruction text="&#34;aux = valor1;&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+				<instruction text="&#34;valor1 = valor2;&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+				<instruction text="&#34;valor2 = aux;&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+			</qTrue>
+			<qFalse>
+			</qFalse>
+		</alternative>
+	</children>
+</root>
