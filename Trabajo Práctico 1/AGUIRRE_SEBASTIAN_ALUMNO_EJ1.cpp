@@ -4,45 +4,55 @@
 
 using namespace std;
 
-/*	
-	Ejercicio 1: 
-	A partir de un valor ingresado por el usuario (el cual deberá estar
-	comprendido entre 2 y 9, inclusive), generar y mostrar todos los múltiplos del
-	mismo menores a 100, primero en forma ascendente y luego en sentido inverso
-	dentro del mismo programa. 
-*/
+void printNumber(int numero);
+void printString(string mensaje);
+void getNumber(string mensaje, int &numero);
+void imprimirMultiplos(int valor, char orden);
 
 int main(){
-	
-	int number = 0;
-	
-	while (number < 2 or number > 9) {
-		cout << "Ingrese un numero entre 2 y 9: ";
-		cin >> number;
-		system("cls");
-	}
-	
-	cout << "Multiplos de " << number;
-	cout << " menores a 100 de forma Ascendente" << endl;
-	
-	int i;
-	for (i = 2; i <= 100 ; i++) {
-		if (i % number == 0) {
-			cout << i << endl;
-		}
-	}
-	
-	cout << "\nMultiplos de " << number;
-	cout << " menores a 100 de forma Descendente" << endl;
-	
-	for (i = 100; i >= 2 ; i--) {
-		if (i % number == 0) {
-			cout << i << endl;
-		}
-	}
-	
+
+	int numeroIngresado;
+
+	do {
+        getNumber("Ingrese un numero entre 2 y 9: ", numeroIngresado);
+	} while(numeroIngresado < 2 or numeroIngresado > 9);
+
+    printString("\nOrden Ascendente\n");
+    imprimirMultiplos(numeroIngresado, 'A');
+
+    printString("\nOrden Inverso\n");
+    imprimirMultiplos(numeroIngresado, 'D');
+
 	return 0;
 }
 
+void printNumber(int numero) {
+    cout << numero << endl;
+}
 
+void printString(string mensaje) {
+    cout << mensaje;
+}
 
+void getNumber(string mensaje, int &numero) {
+    printString(mensaje);
+    cin >> numero;
+}
+
+void imprimirMultiplos(int valor, char orden) {
+    int i, j, limite = 100;
+
+    if (orden == 'A') {
+        for (i = valor; i <= limite ; i++) {
+            if (i % valor == 0) {
+                printNumber(i);
+            }
+        }
+    } else {
+        for (i = limite; i >=  valor; i--) {
+            if (i % valor == 0) {
+                printNumber(i);
+            }
+        }
+    }
+}
