@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <cstdio>
 
+#include "AGUIRRE_SEBASTIAN_BIBLIOTECA.h"
+
 using namespace std;
 
 void printNumber(int numero);
@@ -10,7 +12,7 @@ void getNumber(string mensaje, int &numero);
 void imprimirMultiplos(int valor, char orden);
 
 int main(){
-
+    /*
 	int numeroIngresado;
 
 	do {
@@ -22,6 +24,7 @@ int main(){
 
     printString("\nOrden Inverso\n");
     imprimirMultiplos(numeroIngresado, 'D');
+    */
 
 	return 0;
 }

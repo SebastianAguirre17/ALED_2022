@@ -36,8 +36,8 @@ int main(){
         i++; // -- DEBUG --
 	} while (numIngresado != -1);
 
-    printInterrumpciones(contGrupos);
     printString(cantidadPorGrupo);
+    printInterrumpciones(contGrupos);
 	return 0;
 }
 
@@ -59,7 +59,7 @@ void printCantidadPorGrupo(int cantidad, int posicion) {
 }
 
 void printInterrumpciones(int cantidad) {
-    cout << "El orden ascendente se interrumpio " << cantidad << " de veces.\n\n";
+    cout << "El orden ascendente se interrumpio " << cantidad << " de veces." << endl;
 }
 
 string retCantidadPorGrupo(int cantidad, int posicion ){
