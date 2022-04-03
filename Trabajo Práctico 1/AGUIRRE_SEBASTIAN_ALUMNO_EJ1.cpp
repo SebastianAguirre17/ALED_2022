@@ -2,17 +2,17 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "AGUIRRE_SEBASTIAN_BIBLIOTECA.h"
-
 using namespace std;
 
 void printNumber(int numero);
 void printString(string mensaje);
 void getNumber(string mensaje, int &numero);
 void imprimirMultiplos(int valor, char orden);
+void imprimirMultiplosAscendentes(int valor, int limite); 
+void imprimirMultiplosDescendentes(int valor, int limite); 
 
 int main(){
-    /*
+    
 	int numeroIngresado;
 
 	do {
@@ -24,7 +24,6 @@ int main(){
 
     printString("\nOrden Inverso\n");
     imprimirMultiplos(numeroIngresado, 'D');
-    */
 
 	return 0;
 }
@@ -43,19 +42,27 @@ void getNumber(string mensaje, int &numero) {
 }
 
 void imprimirMultiplos(int valor, char orden) {
-    int i, j, limite = 100;
+    int limite = 100;
 
     if (orden == 'A') {
-        for (i = valor; i <= limite ; i++) {
-            if (i % valor == 0) {
-                printNumber(i);
-            }
-        }
+        imprimirMultiplosAscendentes(valor, limite);
     } else {
-        for (i = limite; i >=  valor; i--) {
-            if (i % valor == 0) {
-                printNumber(i);
-            }
+        imprimirMultiplosDescendentes(valor, limite);
+    }
+}
+
+void imprimirMultiplosAscendentes(int valor, int limite) {
+    for (int i = valor; i <= limite ; i++) {
+        if (i % valor == 0) {
+            printNumber(i);
+        }
+    }
+}
+
+void imprimirMultiplosDescendentes(int valor, int limite) {
+    for (int i = limite; i >=  valor; i--) {
+        if (i % valor == 0) {
+            printNumber(i);
         }
     }
 }
