@@ -43,13 +43,13 @@ int getIntNumber(string mensaje) {
 }
 
 void iniciarJuego(int cantDeManos, Juego &juegoPrincipal) {
-    int cantDeValores;
+    int cantDeValores, nroDeJuego;
     Juego jugada;
 
-    for (int i = 1; i <= cantDeManos; i++) {
+    for (int nroDeJuego = 1; nroDeJuego <= cantDeManos; nroDeJuego++) {
         inicializarValores(jugada);
         cantDeValores = getIntNumber("Ingrese la cantidad de valores a tipear (N1): ");
-        ingresarValores(cantDeValores, jugada, i); 
+        ingresarValores(cantDeValores, jugada, nroDeJuego); 
         actualizarValoresDelJuego(jugada, juegoPrincipal);     
     }
 }
