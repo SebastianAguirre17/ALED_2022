@@ -1,57 +1,72 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
-#include <string.h>
+
+#define CORTE -1
 
 using namespace std;
 
-void printString(string mensaje);
-void getNumber(string mensaje, int &numero);
-void printCantidadPorGrupo(int cantidad, int posicion);
-void printInterrumpciones(int cantidad);
-void clearScreen();
+void mostrarMensaje(string mensaje);
+void mostrarTitulo(string titulo);
+void mostrarCantidadPorGrupo(int cantidad, int nroGrupo); 
+void mostrarInterrumpciones(int cantidad);
 
-int main(){
+int pedirNumeroEntero(string mensaje);
 
-	int numIngresado, anterior = -9999999, contGrupos = 0, acumPorGrupo = 0;
+int main() {
+    mostrarTitulo("Ejercicio 4");
 
-	do {
-        getNumber("Ingrese un numero: ", numIngresado);
+    int contDeGrupos = 0, acumPorGrupo, anterior;
+    int numeroIngresado = pedirNumeroEntero("Ingrese un numero: ");
+    
+    while (numeroIngresado != CORTE) {
+        acumPorGrupo = 0;
+        anterior = numeroIngresado - 1;
 
-        if (numIngresado <= anterior) {
-            contGrupos++;
-            clearScreen();
-            printCantidadPorGrupo(acumPorGrupo, contGrupos);
-            acumPorGrupo = 1;
-        } else {
+        while (numeroIngresado != CORTE and numeroIngresado > anterior) {
             acumPorGrupo++;
+            anterior = numeroIngresado;
+            numeroIngresado = pedirNumeroEntero("Ingrese un numero: ");
         }
 
-        anterior = numIngresado;
-	} while (numIngresado != -1);
+        contDeGrupos++;
+        mostrarCantidadPorGrupo(acumPorGrupo, contDeGrupos);
+    }
 
-    printInterrumpciones(contGrupos);
+    mostrarInterrumpciones(contDeGrupos);
 
 	return 0;
-}
+}   
 
-void printString(string mensaje) {
+void mostrarMensaje(string mensaje) {
     cout << mensaje;
 }
 
-void getNumber(string mensaje, int &numero) {
-    printString(mensaje);
+void mostrarTitulo(string titulo) {
+    mostrarMensaje("****************************\n");
+    cout << "\t" << titulo << endl;
+    mostrarMensaje("****************************\n\n");
+}
+
+void mostrarCantidadPorGrupo(int cantidad, int nroGrupo) {
+    cout << "\nEl grupo " << nroGrupo << " tiene " << cantidad << " numeros\n\n";
+}
+
+void mostrarCantidadPorGrupo(string titulo) {
+    mostrarMensaje("****************************\n");
+    cout << "\t" << titulo << endl;
+    mostrarMensaje("****************************\n\n");
+}
+
+void mostrarInterrumpciones(int cantidad) {
+    mostrarMensaje("*************************************************\n");
+    cout << "\nEl orden ascendente se interrumpio " << cantidad << " veces.\n\n";
+    mostrarMensaje("*************************************************\n");
+}
+
+int pedirNumeroEntero(string mensaje) {
+    int numero;
+    mostrarMensaje(mensaje);
     cin >> numero;
-}
-
-void printCantidadPorGrupo(int cantidad, int nroGrupo) {
-    cout << "El grupo: " << nroGrupo << " tiene " << cantidad << " numeros\n\n";
-}
-
-void printInterrumpciones(int cantidad) {
-    cout << "El orden ascendente se interrumpio " << cantidad << " de veces.\n\n";
-}
-
-void clearScreen() {
-    system("cls");
+    return numero;
 }

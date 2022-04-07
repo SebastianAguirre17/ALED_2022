@@ -4,79 +4,95 @@
 
 using namespace std;
 
-void printString(string mensaje);
-void getNumber(string mensaje, int &numero);
-void clearScreen();
-void jugar(int nroDeJuegos, int &sumaTotal, float &promedioMasAlto); 
-void cargarJuego(int &suma, float &promedio);
-float calcularPromedio(int valor, int cantidad);
-void mostrarTotal(int total);
-void mostrarPromedio(float promedio);
+struct tyJuego {
+    int numero;
+    int suma;
+    float promedio;
+};
+
+void mostrarMensaje(string mensaje);
+void mostrarResultados(tyJuego &jugada);
+void mostrarTitulo(string titulo);
+int pedirNumeroEntero(string mensaje);
+void inicializarValores(tyJuego &jugada);
+void iniciarJuego(int cantDeManos, tyJuego &juegoPrincipal);
+void ingresarValores(int cantDeValores, tyJuego &jugada, int nroDeJuego);
+void actualizarValoresDelJuego(tyJuego &jugada, tyJuego &juegoPrincipal);     
 
 int main(){
+    mostrarTitulo("Ejercicio 5");
 
-    int cantidadDeJuegos = 0, sumaTotal = 0;
-    float promedioMasAlto;
+    tyJuego juegoPrincipal;
+    int nroDeManos = pedirNumeroEntero("Ingrese la cantidad de manos a jugar: ");
 
-    getNumber("Ingrese la cantidad de juegos (N): ", cantidadDeJuegos);
-    jugar(cantidadDeJuegos, sumaTotal, promedioMasAlto);
-
-    clearScreen();
-    mostrarTotal(sumaTotal);
-    mostrarPromedio(promedioMasAlto);
-
+    if (nroDeManos <= 0) {
+        mostrarMensaje("\nGracias por usar este simple programa.\n");
+    } else {
+        inicializarValores(juegoPrincipal);
+        iniciarJuego(nroDeManos, juegoPrincipal);
+        mostrarResultados(juegoPrincipal);
+    }
+    
 	return 0;
 }
 
-void printString(string mensaje) {
+void mostrarMensaje(string mensaje) {
     cout << mensaje;
 }
 
-void getNumber(string mensaje, int &numero) {
-    printString(mensaje);
+int pedirNumeroEntero(string mensaje) {
+    int numero;
+    mostrarMensaje(mensaje);
     cin >> numero;
+    return numero;
 }
 
-void clearScreen() {
-    system("cls");
+void iniciarJuego(int cantDeManos, tyJuego &juegoPrincipal) {
+    int cantDeValores, nroDeJuego;
+    tyJuego jugada;
+
+    for (int nroDeJuego = 1; nroDeJuego <= cantDeManos; nroDeJuego++) {
+        inicializarValores(jugada);
+        cantDeValores = pedirNumeroEntero("\nIngrese la cantidad de valores a tipear: ");
+        ingresarValores(cantDeValores, jugada, nroDeJuego); 
+        actualizarValoresDelJuego(jugada, juegoPrincipal);     
+    }
 }
 
-void jugar(int nroDeJuegos, int &sumaTotal, float &promedioMasAlto) {
-    int i = 1, suma;
-    float promedio;
-
-    while (i <= nroDeJuegos) {
-        suma = 0;
-        cargarJuego(suma, promedio);
-        sumaTotal += suma;
-        if (promedio > promedioMasAlto) {
-            promedioMasAlto = promedio;
-        }
-        i++;
-    };
+void inicializarValores(tyJuego &jugada) {
+    jugada.numero = 0;
+    jugada.promedio = 0;
+    jugada.suma = 0;
 }
 
-void cargarJuego(int &suma, float &promedio) {
-    int nroDeManos, valorIngresado, i = 1;
-    getNumber("Ingrese la cantidad de manos (N1): ", nroDeManos);
-
-    while (i <= nroDeManos) {
-        getNumber("Ingrese un valor: ", valorIngresado);
-        suma += valorIngresado;
-        i++;
-    };
-
-    promedio = calcularPromedio(suma, nroDeManos);
+void ingresarValores(int cantDeValores, tyJuego &jugada, int nroDeJuego) {
+    int valor;
+    for (int i = 1; i <= cantDeValores; i++) {
+        valor = pedirNumeroEntero("Ingrese un valor: ");
+        jugada.suma += valor;
+    }
+    jugada.promedio = jugada.suma / cantDeValores;
+    jugada.numero = nroDeJuego;
 }
 
-float calcularPromedio(int valor, int cantidad) {
-    return valor / cantidad;
+void mostrarResultados(tyJuego &jugada) {
+    mostrarMensaje("\n****************************\n");
+    cout << "EL promedio mas alto es " << jugada.promedio << endl;
+    cout << "Se dio en el juego " << jugada.numero << endl;
+    cout << "La suma total es " << jugada.suma << endl;
+    mostrarMensaje("****************************\n");
 }
 
-void mostrarTotal(int total) {
-    cout << "La suma total es: " << total << endl;
-}
+void actualizarValoresDelJuego(tyJuego &jugada, tyJuego &juegoPrincipal) {
+    juegoPrincipal.suma += jugada.suma;
+    if (juegoPrincipal.promedio < jugada.promedio) {
+        juegoPrincipal.promedio = jugada.promedio;
+        juegoPrincipal.numero = jugada.numero;
+    }
+} 
 
-void mostrarPromedio(float promedio) {
-    cout << "El promedio mas alto es: " << promedio << endl;
+void mostrarTitulo(string titulo) {
+    mostrarMensaje("****************************\n");
+    cout << "\t" << titulo << endl;
+    mostrarMensaje("****************************\n\n");
 }
