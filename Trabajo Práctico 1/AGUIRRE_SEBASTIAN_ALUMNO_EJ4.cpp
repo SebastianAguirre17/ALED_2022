@@ -10,7 +10,6 @@ void mostrarMensaje(string mensaje);
 void mostrarTitulo(string titulo);
 void mostrarCantidadPorGrupo(int cantidad, int nroGrupo); 
 void mostrarInterrumpciones(int cantidad);
-
 int pedirNumeroEntero(string mensaje);
 
 int main() {
@@ -50,12 +49,6 @@ void mostrarTitulo(string titulo) {
 
 void mostrarCantidadPorGrupo(int cantidad, int nroGrupo) {
     cout << "\nEl grupo " << nroGrupo << " tiene " << cantidad << " numeros\n\n";
-}
-
-void mostrarCantidadPorGrupo(string titulo) {
-    mostrarMensaje("****************************\n");
-    cout << "\t" << titulo << endl;
-    mostrarMensaje("****************************\n\n");
 }
 
 void mostrarInterrumpciones(int cantidad) {

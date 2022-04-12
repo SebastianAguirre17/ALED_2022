@@ -4,6 +4,20 @@
 
 using namespace std;
 
+/*
+d) Considerar como debería venir la información si se pidiese informar la
+Cantidad total de personas y de fiestas por cada día. (Por Ejemplo:)
+Para el día 03/05/2006 se contabilizaron un total de 560 personas en 4 fiestas.
+Para el día 04/05/2006 se contabilizaron un total de 305 personas en 2 fiestas.
+*/
+
+/* RESPUESTA PUNTO D*/
+/*  
+    La información debería venir ordenada cronológicamente, de manera tal, 
+    de poder contabilizar las fiestas realizadas por día y con ello la cantidad de invitados.
+*/
+
+
 struct tyFiesta {
     string fecha;
     char tipo;
@@ -32,7 +46,7 @@ void mostrarTitulo(string titulo);
 void inicializarContadores(tyContFiestas &contFiestas, tyContTipoMenu &contTipoMenu);
 void incrementarContadorTipos(tyContFiestas &contador, char tipo);
 void ingresarFiesta(tyFiesta &fiesta, string fecha);
-void verificarMaximosPorMenu(tyContTipoMenu &contTipoMenu, tyFiesta fiesta);
+void verificarMaximosPorMenu(tyContTipoMenu &contTipoMenu, tyFiesta &fiesta);
 void realizarInforme(tyContFiestas &contFiestas, tyContTipoMenu &contTipoMenu, int contInvitados);
 
 int main() {
@@ -62,6 +76,12 @@ int main() {
 
 void mostrarMensaje(string mensaje) {
     cout << mensaje;
+}
+
+void mostrarTitulo(string titulo) {
+    mostrarMensaje("****************************\n");
+    cout << "\t" << titulo << endl;
+    mostrarMensaje("****************************\n\n");
 }
 
 string pedirTexto(string mensaje){
@@ -117,7 +137,7 @@ void ingresarFiesta(tyFiesta &fiesta, string fecha){
     fiesta.menu = pedirNumeroEntero("Ingrese el menu (1 - 2): ");
 }
 
-void verificarMaximosPorMenu(tyContTipoMenu &contTipoMenu, tyFiesta fiesta) {
+void verificarMaximosPorMenu(tyContTipoMenu &contTipoMenu, tyFiesta &fiesta) {
     if (fiesta.menu == 1 and fiesta.cantidad > contTipoMenu.maxPersonasUno) {
         contTipoMenu.maxPersonasUno = fiesta.cantidad;
         contTipoMenu.fechaMayorUno = fiesta.fecha;
@@ -133,6 +153,7 @@ void realizarInforme(tyContFiestas &contFiestas, tyContTipoMenu &contTipoMenu, i
 
     if (cantFiestas > 0) {
         float promedio = contInvitados/cantFiestas; 
+
         mostrarMensaje("\n****************************************************************************\n");
         cout << "Se realizaron " << contFiestas.qC << " fiestas del tipo C" << endl;
         cout << "Se realizaron " << contFiestas.qS << " fiestas del tipo S" << endl;
@@ -155,8 +176,4 @@ void realizarInforme(tyContFiestas &contFiestas, tyContTipoMenu &contTipoMenu, i
     }
 }
 
-void mostrarTitulo(string titulo) {
-    mostrarMensaje("****************************\n");
-    cout << "\t" << titulo << endl;
-    mostrarMensaje("****************************\n\n");
-}
+
