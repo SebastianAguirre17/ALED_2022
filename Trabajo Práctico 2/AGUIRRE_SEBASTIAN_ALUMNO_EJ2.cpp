@@ -29,11 +29,9 @@ void copiarCadena(char dest[], char source[]) {
     cout << "CAD1 tiene " << strlen(dest) << " caracteres." << endl;
     cout << "\nValor CAD2: " << source << endl;
     cout << "CAD2 tiene " << strlen(source) << " caracteres.\n\n";
-	system("PAUSE");
 }
 
 void ingresarCadenaChar(char cadch[], int tope) {
 	cout << endl << "Ingrese nuevo contenido en CAD2: ";
 	cin.getline(cadch, tope);
-	system("PAUSE");
 }
