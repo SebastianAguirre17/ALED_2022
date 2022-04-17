@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <cstring>
 
-#include "AGUIRRE_SEBASTIAN.h" 
+#include "AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
 
 using namespace std;
 
@@ -41,7 +41,6 @@ void procesarParrafo(char cadChar[], int tope, int &qPalabras) {
     mostrarTitulo("Punto a: Motrar Palabras y cantidad de letras");
 
     int i = 0, qLetras, longitud = contarCaracteresDeCadenaChar(cadChar, tope);
-    qPalabras = 0;
 
     while (i < tope and i < longitud and cadChar[i] != '\0') {
         qLetras = 0;
@@ -68,14 +67,18 @@ void mostrarLongitudDeParrafo(char cadChar[], int tope) {
 int main() {
     mostrarTitulo("TP 2 - Ejercicio 4");
 
-    int cantDePalabras;
+    int cantDePalabras = 0;
     // char parrafo[TOPE] = "??Hola, como estan? Bravo!! Veamos: ej4: Si?"; // Parrafo de prueba
     char parrafo[TOPE];
     pedirCadenaCharValida(parrafo, TOPE);
 
-    procesarParrafo(parrafo, TOPE, cantDePalabras);
-    mostrarCantidadDePalabras(cantDePalabras);
-    mostrarLongitudDeParrafo(parrafo, TOPE);
+    if (cantDePalabras > 0) {
+        procesarParrafo(parrafo, TOPE, cantDePalabras);
+        mostrarCantidadDePalabras(cantDePalabras);
+        mostrarLongitudDeParrafo(parrafo, TOPE);
+    } else {
+        mostrarMensaje("\nNo ha ingresado una frase, asi que aqui nos despedimos.\nGracias por usar este programa.\n\n");
+    }
 
 
     return R_OK;
