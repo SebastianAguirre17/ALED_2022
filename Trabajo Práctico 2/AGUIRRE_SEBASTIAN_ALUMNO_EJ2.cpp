@@ -3,6 +3,8 @@
 #include <cstdio>
 #include <cstring>
 
+#include "AGUIRRE_SEBASTIAN.h"
+
 using namespace std;
 
 #define TOPE 41
@@ -11,12 +13,13 @@ void copiarCadena(char dest[], char source[]);
 void ingresarCadenaChar(char cadch[], int tope);
 
 int main() {
+    mostrarTitulo("TP 2 - Ejercicio 2");
     
     char cad1[TOPE];
     char cad2[TOPE] = "universidad nacional de avellaneda";
 
     copiarCadena(cad1, cad2);
-    ingresarCadenaChar(cad2, TOPE);
+    pedirCadenaCharValida(cad2, TOPE);
     copiarCadena(cad1, cad2);
 	
     return 0;
@@ -24,14 +27,9 @@ int main() {
 
 void copiarCadena(char dest[], char source[]) {
     strcpy(dest, source);
-    cout << endl << "Copia de cadena ... \n\n";
+    mostrarMensaje("\nCopiando cadena...\n\n");
     cout << "Valor CAD1: " << dest << endl;
     cout << "CAD1 tiene " << strlen(dest) << " caracteres." << endl;
     cout << "\nValor CAD2: " << source << endl;
     cout << "CAD2 tiene " << strlen(source) << " caracteres.\n\n";
-}
-
-void ingresarCadenaChar(char cadch[], int tope) {
-	cout << endl << "Ingrese nuevo contenido en CAD2: ";
-	cin.getline(cadch, tope);
 }
