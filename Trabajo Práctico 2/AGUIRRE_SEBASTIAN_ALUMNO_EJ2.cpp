@@ -3,14 +3,13 @@
 #include <cstdio>
 #include <cstring>
 
-#include "AGUIRRE_SEBASTIAN_BIBLIOTECA.h"
+#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h"
 
 using namespace std;
 
 #define TOPE 41
 
-void copiarCadena(char dest[], char source[]);
-void ingresarCadenaChar(char cadch[], int tope);
+void mostrarLongitudDeCadena(char cad1[], char cad2[]);
 
 int main() {
     mostrarTitulo("TP 2 - Ejercicio 2");
@@ -18,18 +17,21 @@ int main() {
     char cad1[TOPE];
     char cad2[TOPE] = "universidad nacional de avellaneda";
 
-    copiarCadena(cad1, cad2);
+    copiarCadenaChar(cad1, cad2, TOPE);
+    mostrarLongitudDeCadena(cad1, cad2);
+
     pedirCadenaCharValida(cad2, TOPE);
-    copiarCadena(cad1, cad2);
+    copiarCadenaChar(cad1, cad2, TOPE);
+    mostrarLongitudDeCadena(cad1, cad2);
 	
     return 0;
 }
 
-void copiarCadena(char dest[], char source[]) {
-    strcpy(dest, source);
-    mostrarMensaje("\nCopiando cadena...\n\n");
-    cout << "Valor CAD1: " << dest << endl;
-    cout << "CAD1 tiene " << strlen(dest) << " caracteres." << endl;
-    cout << "\nValor CAD2: " << source << endl;
-    cout << "CAD2 tiene " << strlen(source) << " caracteres.\n\n";
+void mostrarLongitudDeCadena(char cad1[], char cad2[]) {
+    cout << endl << "Valor CAD1: " << cad1 << endl;
+    cout << "CAD1 tiene " << strlen(cad1) << " caracteres." << endl;
+    cout << "\nValor CAD2: " << cad2 << endl;
+    cout << "CAD2 tiene " << strlen(cad2) << " caracteres.\n\n";
 }
+
+

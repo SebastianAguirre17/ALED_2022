@@ -8,9 +8,13 @@
 
 using namespace std;
 
+void mostrarCaracter(char c) {
+    cout << c;
+}
+
 void repetirCaracter(char c, int cant) {
     for (int i = 0; i < cant; i++) {
-        cout << c;
+        mostrarCaracter(c);
     }
 }
 
@@ -21,10 +25,6 @@ void mostrarTitulo(string mensaje) {
     cout << endl << "     " << mensaje << endl;
     repetirCaracter('-', longitud + 10);
     cout << endl << endl;
-}
-
-void mostrarCaracter(char c) {
-    cout << c;
 }
 
 void mostrarMensaje(string msg) {
@@ -38,7 +38,14 @@ int pedirEntero(string msg) {
     return num;
 }
 
-float pedrFlotante(string msg) {
+void pedirEnteroEnRango(int &valor, int desde, int hasta) {
+    do {
+        cout << "Ingrese un numero entre " << desde << " y " << hasta << ": ";
+        cin >> valor;
+    } while (valor < desde or valor > hasta);
+}
+
+float pedirFlotante(string msg) {
     float num;
     mostrarMensaje(msg);
     cin >> num;
@@ -159,6 +166,15 @@ int buscarCaracterEnCadenaChar(char cadChar[], int tope, char c) {
     if (i == tope) 
         i = -1;
     return i;
+}
+
+void copiarCadenaChar(char dest[], char source[], int tope) {
+    int i = 0;
+    while (i < tope and source[i] != '\0') {
+        dest[i] = source[i];
+        i++;
+    }
+    dest[i] = '\0';
 }
 
 #endif

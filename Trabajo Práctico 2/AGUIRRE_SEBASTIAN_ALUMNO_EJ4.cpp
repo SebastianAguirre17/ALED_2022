@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <cstring>
 
-#include "AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
+#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h"
 
 using namespace std;
 
@@ -38,7 +38,7 @@ void mostrarCantidadDeLetras(int qLetras) {
 }
 
 void procesarParrafo(char cadChar[], int tope, int &qPalabras) {
-    mostrarTitulo("Punto a: Motrar Palabras y cantidad de letras");
+    mostrarTitulo("Punto a: Mostrar Palabras y cantidad de letras");
 
     int i = 0, qLetras, longitud = contarCaracteresDeCadenaChar(cadChar, tope);
 
@@ -53,13 +53,13 @@ void procesarParrafo(char cadChar[], int tope, int &qPalabras) {
 }
 
 void mostrarCantidadDePalabras(int qPalabras) {
-    mostrarTitulo("Punto b: Motrar cantidad de Palabras del parrafo");
+    mostrarTitulo("Punto b: Mostrar cantidad de Palabras del parrafo");
 
     cout << "El parrafo tiene: " << qPalabras << " palabras." << endl;  
 }
 
 void mostrarLongitudDeParrafo(char cadChar[], int tope) {
-    mostrarTitulo("Punto c: Motrar Longitud del parrafo");
+    mostrarTitulo("Punto c: Mostrar Longitud del parrafo");
 
     cout << "La longitud del parrafo es de: " << contarCaracteresDeCadenaChar(cadChar, tope) << " caracteres." << endl;
 }
@@ -72,7 +72,7 @@ int main() {
     char parrafo[TOPE];
     pedirCadenaCharValida(parrafo, TOPE);
 
-    if (cantDePalabras > 0) {
+    if (strlen(parrafo) > 0) {
         procesarParrafo(parrafo, TOPE, cantDePalabras);
         mostrarCantidadDePalabras(cantDePalabras);
         mostrarLongitudDeParrafo(parrafo, TOPE);
