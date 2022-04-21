@@ -2,67 +2,48 @@
 #include <cstdlib>
 #include <cstdio>
 
-using namespace std;
+#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
 
-void printNumber(int numero);
-void printString(string mensaje);
-void getNumber(string mensaje, int &numero);
-void imprimirMultiplos(int valor, char orden);
-void imprimirMultiplosAscendentes(int valor, int limite); 
-void imprimirMultiplosDescendentes(int valor, int limite); 
+#define DESDE 2
+#define HASTA 9
+#define TOPE 100
+
+void mostrarMultiplos(int valor, int tope, char orden);
+void mostarMultiplosAscendentes(int valor, int limite);
+void mostrarMultiplosDescendentes(int valor, int limite);
 
 int main(){
+	int valor;
+	pedirEnteroEnRango(valor, 2, 9);
+
+	mostrarMensaje("Orden Ascendente: \n");
+	mostrarMultiplos(valor, TOPE, 'A');
+	mostrarMensaje("\nOrden Descendente: \n");
+	mostrarMultiplos(valor, TOPE, 'D');
     
-	int numeroIngresado;
-
-	do {
-        getNumber("Ingrese un numero entre 2 y 9: ", numeroIngresado);
-	} while(numeroIngresado < 2 or numeroIngresado > 9);
-
-    printString("\nOrden Ascendente\n");
-    imprimirMultiplos(numeroIngresado, 'A');
-
-    printString("\nOrden Inverso\n");
-    imprimirMultiplos(numeroIngresado, 'D');
-
-	return 0;
+	return R_OK;
 }
 
-void printNumber(int numero) {
-    cout << numero << endl;
+void mostrarMultiplos(int valor, int tope, char orden) {
+	if (orden == 'a' or orden == 'A') {
+        mostarMultiplosAscendentes(valor, tope);
+	} else {
+        mostrarMultiplosDescendentes(valor, tope);
+	}
 }
 
-void printString(string mensaje) {
-    cout << mensaje;
-}
-
-void getNumber(string mensaje, int &numero) {
-    printString(mensaje);
-    cin >> numero;
-}
-
-void imprimirMultiplos(int valor, char orden) {
-    int limite = 100;
-
-    if (orden == 'A') {
-        imprimirMultiplosAscendentes(valor, limite);
-    } else {
-        imprimirMultiplosDescendentes(valor, limite);
-    }
-}
-
-void imprimirMultiplosAscendentes(int valor, int limite) {
+void mostarMultiplosAscendentes(int valor, int limite) {
     for (int i = valor; i <= limite ; i++) {
         if (i % valor == 0) {
-            printNumber(i);
+            mostrarNumeroEntero(i);
         }
     }
 }
 
-void imprimirMultiplosDescendentes(int valor, int limite) {
+void mostrarMultiplosDescendentes(int valor, int limite) {
     for (int i = limite; i >=  valor; i--) {
         if (i % valor == 0) {
-            printNumber(i);
+            mostrarNumeroEntero(i);
         }
     }
 }

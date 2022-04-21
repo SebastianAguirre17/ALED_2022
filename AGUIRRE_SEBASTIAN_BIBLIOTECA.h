@@ -6,16 +6,22 @@
 #include <cstdio>
 #include <cstring>
 
+#define R_OK    0
+#define R_ERROR -1
+
 using namespace std;
 
+/* PRINTS */
 void mostrarCaracter(char c) {
     cout << c;
 }
 
-void repetirCaracter(char c, int cant) {
-    for (int i = 0; i < cant; i++) {
-        mostrarCaracter(c);
-    }
+void mostrarMensaje(string msg) {
+    cout << msg;
+}
+
+void mostrarNumeroEntero(int numero) {
+    cout << numero << endl;
 }
 
 void mostrarTitulo(string mensaje) {
@@ -27,10 +33,20 @@ void mostrarTitulo(string mensaje) {
     cout << endl << endl;
 }
 
-void mostrarMensaje(string msg) {
-    cout << msg;
+void mostrarArrayNumerico(int numeros[], int tope) {
+    for (int i = 0; i < tope; i++) {
+        cout << numeros[i] << endl;
+    }
 }
 
+/* AUXILIARES */
+void repetirCaracter(char c, int cant) {
+    for (int i = 0; i < cant; i++) {
+        mostrarCaracter(c);
+    }
+}
+
+/* GETTERS */
 int pedirEntero(string msg) {
     int num;
     mostrarMensaje(msg);
@@ -59,40 +75,19 @@ char pedirCaracter(string msg) {
     return c;
 }
 
+void pedirCadenaChar(string msg, char dest[], int tope) {
+    mostrarMensaje(msg);
+	cin.getline(dest, tope);
+}
+
 void pedirString(string msg, string &dest) {
     mostrarMensaje(msg);
     getline(cin, dest);
 }
 
 void pedirStringConTope(string &dest, int tope) {
-    cout << "Ingrese menos de " << tope << " caracteres: ";
+    cout << "Ingrese un texto de menos de " << tope << " caracteres: ";
     getline(cin, dest);
-}
-
-void pedirCadenaChar(string msg, char dest[], int tope) {
-    mostrarMensaje(msg);
-	cin.getline(dest, tope);
-}
-
-int contarCaracteresDeCadenaChar(char cadChar[], int tope) {
-    int i = 0;
-    while (cadChar[i] != '\0' and i < tope) {
-        i++;
-    }
-    return i;
-}
-
-bool validarLongitudString(string &str, int tope) {
-    return (str.length() < tope);
-}
-
-void convertirStringACadenaChar(string &source, char dest[]) {
-    int i = 0, longitud = source.length();
-    while (i < longitud) {
-        dest[i] = source[i];
-        i++;
-    }
-    dest[longitud] = '\0';
 }
 
 void pedirCadenaCharValida(char cadChar[], int tope) {
@@ -105,6 +100,54 @@ void pedirCadenaCharValida(char cadChar[], int tope) {
     convertirStringACadenaChar(auxString, cadChar);
 } 
 
+/* CADENAS */
+int contarCaracteresDeCadenaChar(char cadChar[], int tope) {
+    int i = 0;
+    while (cadChar[i] != '\0' and i < tope) {
+        i++;
+    }
+    return i;
+}
+
+int contarCaracter(char cadChar[], int tope, char c) {
+    int i, q = 0, longitud = contarCaracteresDeCadenaChar(cadChar, tope);
+    for (i = 0; i < longitud; i++) {
+        if (cadChar[i] == c)
+            q++;
+    }
+
+    return q;
+}
+
+int buscarCaracterEnCadenaChar(char cadChar[], int tope, char c) {
+    int i = 0;
+    while (i < tope and cadChar[i] != c) {
+        i++;
+    }
+    if (i == tope) 
+        i = -1;
+    return i;
+}
+
+void copiarCadenaChar(char dest[], char source[], int tope) {
+    int i = 0;
+    while (i < tope and source[i] != '\0') {
+        dest[i] = source[i];
+        i++;
+    }
+    dest[i] = '\0';
+}
+
+void convertirStringACadenaChar(string &source, char dest[]) {
+    int i = 0, longitud = source.length();
+    while (i < longitud) {
+        dest[i] = source[i];
+        i++;
+    }
+    dest[longitud] = '\0';
+}
+
+ /* ARRAYS */
 void inicializarArrayNumerico(int numeros[], int tope) {
     for (int i = 0; i < tope; i++) {
         numeros[i] = 0;
@@ -152,29 +195,13 @@ void ordenamientoPorInsercion(int numeros[], int tope) {
     }
 }
 
-void mostrarArrayNumerico(int numeros[], int tope) {
-    for (int i = 0; i < tope; i++) {
-        cout << numeros[i] << endl;
-    }
+/* VALIDACIONES */
+bool validarLongitudString(string &str, int tope) {
+    return (str.length() < tope);
 }
 
-int buscarCaracterEnCadenaChar(char cadChar[], int tope, char c) {
-    int i = 0;
-    while (i < tope and cadChar[i] != c) {
-        i++;
-    }
-    if (i == tope) 
-        i = -1;
-    return i;
-}
-
-void copiarCadenaChar(char dest[], char source[], int tope) {
-    int i = 0;
-    while (i < tope and source[i] != '\0') {
-        dest[i] = source[i];
-        i++;
-    }
-    dest[i] = '\0';
+bool validarNumeroEnRago(int valor, int min, int max) {
+    return (valor > min and valor < max);
 }
 
 #endif

@@ -17,9 +17,9 @@ void VerLargo(char cadch[], int tope1, string cads){
 	
 	cout<<"y cuantos caracteres tiene CADENASTRING? "<<cads.size()<<endl;
 	
-	// la instrucción sizeof() nos dice el tamaño de la variable
+	// la instrucciï¿½n sizeof() nos dice el tamaï¿½o de la variable
 	// strlen se usa para saber cuantos caracteres tiene efectivamente una cadena
-	// de tipo char y para una cadena de tipo string esa información se obtiene
+	// de tipo char y para una cadena de tipo string esa informaciï¿½n se obtiene
 	// con el nombre de la cadena seguida por ".size()"
 	
 
@@ -43,12 +43,6 @@ void ContarChar(char cadch[], int topech, int &qchar){
 	}
 	
 }
-
-
-
-
-
-
 
 int main(){
 	char cadenachar[TOPECHAR]="Hola Mundo";
