@@ -6,8 +6,7 @@
 #include <cstdio>
 #include <cstring>
 
-#define R_OK    0
-#define R_ERROR -1
+#define EXIT_ERROR -1
 
 using namespace std;
 

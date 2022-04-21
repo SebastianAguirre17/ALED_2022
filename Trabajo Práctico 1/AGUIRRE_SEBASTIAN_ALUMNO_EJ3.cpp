@@ -23,5 +23,5 @@ int main() {
         promedio = acumNumeros / contNumeros;
     }
     
-    return 0;
+    return EXIT_SUCCESS;
 }

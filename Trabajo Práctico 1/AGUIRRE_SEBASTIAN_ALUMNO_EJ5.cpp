@@ -33,7 +33,7 @@ int main(){
         mostrarResultados(juegoPrincipal);
     }
     
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 void mostrarMensaje(string mensaje) {

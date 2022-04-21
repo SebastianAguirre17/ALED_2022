@@ -18,7 +18,7 @@ string getString(string mensaje);
 int main(){
    
     
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 void printString(string mensaje) {

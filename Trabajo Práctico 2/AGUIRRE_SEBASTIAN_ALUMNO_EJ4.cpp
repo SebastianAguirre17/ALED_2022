@@ -9,12 +9,10 @@ using namespace std;
 
 #define TOPE        200
 #define TOPE_ESP    8
-#define R_OK        0
-#define R_ERROR     -1
 
 bool esCaracterValido(char c) { 
     char caracteresEspeciales[TOPE_ESP] = {' ', '!', '?', '.', ':', ',', ';'};
-    return (buscarCaracterEnCadenaChar(caracteresEspeciales, TOPE_ESP, c) == R_ERROR);
+    return (buscarCaracterEnCadenaChar(caracteresEspeciales, TOPE_ESP, c) == EXIT_ERROR);
 }
 
 void saltarCaracteresEspeciales(int &i, char cadChar[], int tope) {
@@ -81,6 +79,6 @@ int main() {
     }
 
 
-    return R_OK;
+    return EXIT_SUCCESS;
 }
 

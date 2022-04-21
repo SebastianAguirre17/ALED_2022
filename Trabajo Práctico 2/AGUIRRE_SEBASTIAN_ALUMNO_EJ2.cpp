@@ -24,7 +24,7 @@ int main() {
     copiarCadenaChar(cad1, cad2, TOPE);
     mostrarLongitudDeCadena(cad1, cad2);
 	
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 void mostrarLongitudDeCadena(char cad1[], char cad2[]) {

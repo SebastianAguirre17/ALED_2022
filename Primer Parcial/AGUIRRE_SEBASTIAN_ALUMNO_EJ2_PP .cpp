@@ -8,5 +8,5 @@ using namespace std;
 int main(){
     mostrarTitulo("Ejercicio 2 - Primer Parcial");
 
-	return R_OK;
+	return EXIT_SUCCESS;
 }

@@ -17,7 +17,6 @@ Para el día 04/05/2006 se contabilizaron un total de 305 personas en 2 fiestas.
     de poder contabilizar las fiestas realizadas por día y con ello la cantidad de invitados.
 */
 
-
 struct tyFiesta {
     string fecha;
     char tipo;
@@ -71,7 +70,7 @@ int main() {
     
     realizarInforme(contFiestas, contTipoMenu, contInvitados);
 
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 void mostrarMensaje(string mensaje) {
@@ -117,7 +116,7 @@ void incrementarContadorTipos(tyContFiestas &contFiestas, char tipo){
     switch (tipo) {
         case 'C':
         case 'c':
-             contFiestas.qC++;
+            contFiestas.qC++;
             break;
         case 'S':
         case 's':

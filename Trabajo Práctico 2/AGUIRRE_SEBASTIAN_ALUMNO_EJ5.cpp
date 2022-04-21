@@ -1,9 +1,3 @@
-/* Ej5. Realizar una función que dado un arreglo de 45 elementos de tipo carácter que 
-contiene una palabra, devuelva otro arreglo de 5 elementos enteros donde cada uno 
-representa la cantidad de veces que se repite cada vocal en la palabra. 
-Para 
-entregar*/
-
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
@@ -26,7 +20,7 @@ int main() {
     contarVocales(cadena, TOPE_CADENA, contVocales, TOPE_VOCALES);
 
     mostrarArrayNumerico(contVocales, TOPE_VOCALES);
-    return R_OK;
+    return EXIT_SUCCESS;
 }
 
 void contarVocales(char cadena[], int topeChar, int contVocales[], int topeVocales) {
@@ -35,7 +29,7 @@ void contarVocales(char cadena[], int topeChar, int contVocales[], int topeVocal
 
     for (i = 0; i < largoCadena; i++) {
         aux = buscarCaracterEnCadenaChar(vocales, TOPE_VOCALES, cadena[i]);
-        if (aux != R_ERROR) 
+        if (aux != EXIT_ERROR) 
             contVocales[aux]++;
     }
 }

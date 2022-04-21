@@ -21,9 +21,8 @@ void inicilizarContador(tyContEdad &cont) {
 
 void mostrarResultados(int mayor, tyContEdad contador) {
 
-        
-        mostrarNumeroEntero(contador.laborales);
-        mostrarNumeroEntero(contador.menores);
+    mostrarNumeroEntero(contador.laborales);
+    mostrarNumeroEntero(contador.menores);
 }
 
 int main(){
@@ -34,7 +33,7 @@ int main(){
     inicilizarContador(contador);
 
     edad = pedirEntero("Ingrese la edad: ");
-    while (edad != -1) {
+    while (edad != EXIT_ERROR) {
         if (not validarNumeroEnRago(edad, MIN, MAX)) {
             mostrarMensaje("La edad ingresada es incorrecta\n");
         } else {
@@ -53,7 +52,7 @@ int main(){
     mostrarResultados(mayor, contador);
 
 
-	return R_OK;
+	return EXIT_SUCCESS;
 }
 
 

@@ -21,7 +21,7 @@ int main(){
 	mostrarMensaje("\nOrden Descendente: \n");
 	mostrarMultiplos(valor, TOPE, 'D');
     
-	return R_OK;
+	return EXIT_SUCCESS;
 }
 
 void mostrarMultiplos(int valor, int tope, char orden) {
