@@ -11,7 +11,39 @@
 
 using namespace std;
 
-/* PRINTS */
+// PROTOTIPOS
+void mostrarCaracter(char c);
+void mostrarMensaje(string msg);
+void mostrarNumeroEntero(int numero);
+void mostrarTitulo(string mensaje);
+void mostrarArrayNumerico(int numeros[], int tope);
+
+void repetirCaracter(char c, int cant);
+
+int pedirEntero(string msg);
+void pedirEnteroEnRango(int &valor, int desde, int hasta);
+float pedirFlotante(string msg);
+char pedirCaracter(string msg);
+void pedirCadenaChar(string msg, char dest[], int tope);
+void pedirString(string msg, string &dest);
+void pedirStringConTope(string &dest, int tope);
+void pedirCadenaCharValida(char cadChar[], int tope);
+
+int contarCaracteresDeCadenaChar(char cadChar[], int tope);
+int contarCaracter(char cadChar[], int tope, char c);
+int buscarCaracterEnCadenaChar(char cadChar[], int tope, char c);
+void copiarCadenaChar(char dest[], char source[], int tope);
+void convertirStringACadenaChar(string &source, char dest[]);
+
+void inicializarArrayNumerico(int numeros[], int tope);
+void ordenamientoBurbuja(int numeros[], int tope);
+void ordenamientoPorSeleccion(int numeros[], int tope);
+void ordenamientoPorInsercion(int numeros[], int tope);
+
+bool validarLongitudString(string &str, int tope);
+bool validarNumeroEnRago(int valor, int min, int max);
+
+// DESARROLLO DE FUNCIONES
 void mostrarCaracter(char c) {
     cout << c;
 }
@@ -39,14 +71,12 @@ void mostrarArrayNumerico(int numeros[], int tope) {
     }
 }
 
-/* AUXILIARES */
 void repetirCaracter(char c, int cant) {
     for (int i = 0; i < cant; i++) {
         mostrarCaracter(c);
     }
 }
 
-/* GETTERS */
 int pedirEntero(string msg) {
     int num;
     mostrarMensaje(msg);
@@ -100,7 +130,6 @@ void pedirCadenaCharValida(char cadChar[], int tope) {
     convertirStringACadenaChar(auxString, cadChar);
 } 
 
-/* CADENAS */
 int contarCaracteresDeCadenaChar(char cadChar[], int tope) {
     int i = 0;
     while (cadChar[i] != '\0' and i < tope) {
@@ -147,7 +176,6 @@ void convertirStringACadenaChar(string &source, char dest[]) {
     dest[longitud] = '\0';
 }
 
- /* ARRAYS */
 void inicializarArrayNumerico(int numeros[], int tope) {
     for (int i = 0; i < tope; i++) {
         numeros[i] = 0;
@@ -195,7 +223,6 @@ void ordenamientoPorInsercion(int numeros[], int tope) {
     }
 }
 
-/* VALIDACIONES */
 bool validarLongitudString(string &str, int tope) {
     return (str.length() < tope);
 }
@@ -204,5 +231,5 @@ bool validarNumeroEnRago(int valor, int min, int max) {
     return (valor > min and valor < max);
 }
 
-#endif
 
+#endif
