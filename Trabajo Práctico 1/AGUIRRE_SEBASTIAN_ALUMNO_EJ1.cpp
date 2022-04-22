@@ -13,6 +13,8 @@ void mostarMultiplosAscendentes(int valor, int limite);
 void mostrarMultiplosDescendentes(int valor, int limite);
 
 int main(){
+    mostrarTitulo("Ejercicio 1");
+
 	int valor;
 	pedirEnteroEnRango(valor, 2, 9);
 

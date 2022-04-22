@@ -23,10 +23,12 @@ int pedirEntero(string msg);
 void pedirEnteroEnRango(int &valor, int desde, int hasta);
 float pedirFlotante(string msg);
 char pedirCaracter(string msg);
+void pedirCaracterValido(char &dest, char validos[], int tope);
 void pedirCadenaChar(string msg, char dest[], int tope);
 void pedirString(string msg, string &dest);
 void pedirStringConTope(string &dest, int tope);
 void pedirCadenaCharValida(char cadChar[], int tope);
+string retornarString(string mensaje);
 
 int contarCaracteresDeCadenaChar(char cadChar[], int tope);
 int contarCaracter(char cadChar[], int tope, char c);
@@ -41,6 +43,7 @@ void ordenamientoPorInsercion(int numeros[], int tope);
 
 bool validarLongitudString(string &str, int tope);
 bool validarNumeroEnRago(int valor, int min, int max);
+bool esCaracterValido(char c, char validos[], int tope);
 
 // DESARROLLO DE FUNCIONES
 void mostrarCaracter(char c) {
@@ -112,6 +115,13 @@ void pedirCadenaChar(string msg, char dest[], int tope) {
 void pedirString(string msg, string &dest) {
     mostrarMensaje(msg);
     getline(cin, dest);
+}
+
+string retornarString(string mensaje) {
+    string msg;
+    mostrarMensaje(mensaje);
+    cin >> msg;
+    return msg;
 }
 
 void pedirStringConTope(string &dest, int tope) {
@@ -226,9 +236,24 @@ bool validarLongitudString(string &str, int tope) {
     return (str.length() < tope);
 }
 
-bool validarNumeroEnRago(int valor, int min, int max) {
+bool validarNumeroEnRango(int valor, int min, int max) {
+    return (valor >= min and valor <= max);
+}
+
+bool validarNumeroEnRangoExcluyente(int valor, int min, int max) {
     return (valor > min and valor < max);
 }
 
+void pedirCaracterValido(char &dest, char validos[], int tope, string mensaje) {
+    bool charValido;
+    do {
+        dest = pedirCaracter(mensaje);
+        charValido = esCaracterValido(dest, validos, tope);
+    } while (not charValido);
+}
+
+bool esCaracterValido(char c, char validos[], int tope) { 
+    return (buscarCaracterEnCadenaChar(validos, tope, c) != EXIT_ERROR);
+}
 
 #endif
