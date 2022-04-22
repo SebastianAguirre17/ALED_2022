@@ -2,20 +2,9 @@
 #include <cstdlib>
 #include <cstdio>
 
+#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
+
 using namespace std;
-
-/*
-d) Considerar como debería venir la información si se pidiese informar la
-Cantidad total de personas y de fiestas por cada día. (Por Ejemplo:)
-Para el día 03/05/2006 se contabilizaron un total de 560 personas en 4 fiestas.
-Para el día 04/05/2006 se contabilizaron un total de 305 personas en 2 fiestas.
-*/
-
-/* RESPUESTA PUNTO D*/
-/*  
-    La información debería venir ordenada cronológicamente, de manera tal, 
-    de poder contabilizar las fiestas realizadas por día y con ello la cantidad de invitados.
-*/
 
 struct tyFiesta {
     string fecha;
@@ -37,11 +26,6 @@ struct tyContTipoMenu {
     int maxPersonasDos;
 };
 
-void mostrarMensaje(string mensaje);
-string pedirTexto(string mensaje);
-char pedirCaracter(string mensaje);
-int pedirNumeroEntero(string mensaje);
-void mostrarTitulo(string titulo);
 void inicializarContadores(tyContFiestas &contFiestas, tyContTipoMenu &contTipoMenu);
 void incrementarContadorTipos(tyContFiestas &contador, char tipo);
 void ingresarFiesta(tyFiesta &fiesta, string fecha);
@@ -59,49 +43,18 @@ int main() {
     
     inicializarContadores(contFiestas, contTipoMenu);
 
-    auxFecha = pedirTexto("Ingresar fecha de la fiesta (* para salir): ");
+    auxFecha = retornarString("Ingresar fecha de la fiesta (* para salir): ");
     while (auxFecha != "*") {
         ingresarFiesta(fiesta, auxFecha);
         incrementarContadorTipos(contFiestas, fiesta.tipo);
         verificarMaximosPorMenu(contTipoMenu, fiesta);
         contInvitados += fiesta.cantidad;
-        auxFecha = pedirTexto("\n\nIngresar fecha de la fiesta (* para salir): ");
+        auxFecha = retornarString("\n\nIngresar fecha de la fiesta (* para salir): ");
     }
     
     realizarInforme(contFiestas, contTipoMenu, contInvitados);
 
 	return EXIT_SUCCESS;
-}
-
-void mostrarMensaje(string mensaje) {
-    cout << mensaje;
-}
-
-void mostrarTitulo(string titulo) {
-    mostrarMensaje("****************************\n");
-    cout << "\t" << titulo << endl;
-    mostrarMensaje("****************************\n\n");
-}
-
-string pedirTexto(string mensaje){
-    string texto;
-    mostrarMensaje(mensaje);
-    cin >> texto;
-    return texto;
-}
-
-int pedirNumeroEntero(string mensaje){
-    int numero;
-    mostrarMensaje(mensaje);
-    cin >> numero;
-    return numero;
-}
-
-char pedirCaracter(string mensaje) {
-    char caracter;
-    mostrarMensaje(mensaje);
-    cin >> caracter;
-    return caracter;
 }
 
 void inicializarContadores(tyContFiestas &contFiestas, tyContTipoMenu &contTipoMenu){
@@ -132,8 +85,8 @@ void incrementarContadorTipos(tyContFiestas &contFiestas, char tipo){
 void ingresarFiesta(tyFiesta &fiesta, string fecha){
     fiesta.fecha = fecha;
     fiesta.tipo = pedirCaracter("Ingrese el tipo de fiesta (C - S - O): ");
-    fiesta.cantidad = pedirNumeroEntero("Ingrese la cantidad de personas: ");
-    fiesta.menu = pedirNumeroEntero("Ingrese el menu (1 - 2): ");
+    fiesta.cantidad = pedirEntero("Ingrese la cantidad de personas: ");
+    fiesta.menu = pedirEntero("Ingrese el menu (1 - 2): ");
 }
 
 void verificarMaximosPorMenu(tyContTipoMenu &contTipoMenu, tyFiesta &fiesta) {
@@ -153,22 +106,21 @@ void realizarInforme(tyContFiestas &contFiestas, tyContTipoMenu &contTipoMenu, i
     if (cantFiestas > 0) {
         float promedio = contInvitados/cantFiestas; 
 
-        mostrarMensaje("\n****************************************************************************\n");
+        mostrarTitulo("Informar cuantas fiestas hay de cada tipo");
         cout << "Se realizaron " << contFiestas.qC << " fiestas del tipo C" << endl;
         cout << "Se realizaron " << contFiestas.qS << " fiestas del tipo S" << endl;
         cout << "Se realizaron " << contFiestas.qO << " fiestas del tipo O" << endl;
-        if (contTipoMenu.maxPersonasUno > 0) {
-            cout << "La Fiesta con mayor cantidad de invitados que eligieron el menu 1 fue el " << contTipoMenu.fechaMayorUno << endl;
-        } else {
+
+        mostrarTitulo("Fecha de la fiesta con mayor cantidad de personas");
+        contTipoMenu.maxPersonasUno > 0 ?
+            cout << "La Fiesta con mayor cantidad de invitados que eligieron el menu 1 fue el " << contTipoMenu.fechaMayorUno << endl :
             cout << "No se eligio el menu 1" << endl;
-        }
-        if (contTipoMenu.maxPersonasDos > 0) {
-            cout << "La Fiesta con mayor cantidad de invitados que eligieron el menu 2 fue el " << contTipoMenu.fechaMayorDos << endl;
-        } else {
+        contTipoMenu.maxPersonasDos > 0 ?
+            cout << "La Fiesta con mayor cantidad de invitados que eligieron el menu 2 fue el " << contTipoMenu.fechaMayorDos << endl :
             cout << "No se eligio el menu 2" << endl;
-        }
+        
+        mostrarTitulo("El promedio de personas de todas las fiestas");
         cout << "El promedio de personas de todas las fiestas es de " << promedio << endl;
-        mostrarMensaje("\n****************************************************************************\n");
 
     } else {
         mostrarMensaje("\nGracias por usar este simple programa.\n\n");

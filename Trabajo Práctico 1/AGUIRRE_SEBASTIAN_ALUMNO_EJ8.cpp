@@ -72,7 +72,6 @@ void ingresarLlamada(tyLlamada &llamada, string comercio) {
     llamada.duracion = pedirEnteroPositivo("Ingrese la Duracion: ");
 }
 
-
 void inicializarLlamada(tyLlamada &llamada) {
     llamada.duracion = 0;
     llamada.comercio = "";
