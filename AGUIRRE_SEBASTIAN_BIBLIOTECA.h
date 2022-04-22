@@ -20,6 +20,7 @@ void mostrarArrayNumerico(int numeros[], int tope);
 void repetirCaracter(char c, int cant);
 
 int pedirEntero(string msg);
+int pedirEnteroPositivo(string msg);
 void pedirEnteroEnRango(int &valor, int desde, int hasta);
 float pedirFlotante(string msg);
 char pedirCaracter(string msg);
@@ -83,6 +84,15 @@ int pedirEntero(string msg) {
     int num;
     mostrarMensaje(msg);
     cin >> num;
+    return num;
+}
+
+int pedirEnteroPositivo(string msg) {
+    int num;
+    do {
+        mostrarMensaje(msg);
+        cin >> num;
+    } while (num < 1);
     return num;
 }
 
