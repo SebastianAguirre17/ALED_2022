@@ -6,7 +6,8 @@
 #include <cstdio>
 #include <cstring>
 
-#define EXIT_ERROR -1
+#define EXIT_ERROR  -1
+#define FIN_LINEA   '\0'
 
 using namespace std;
 
@@ -24,6 +25,7 @@ int pedirEnteroPositivo(string msg);
 void pedirEnteroEnRango(int &valor, int desde, int hasta);
 float pedirFlotante(string msg);
 char pedirCaracter(string msg);
+void pedirDosCaracteres(char &c1, char &c2);
 void pedirCaracterValido(char &dest, char validos[], int tope);
 void pedirCadenaChar(string msg, char dest[], int tope);
 void pedirString(string msg, string &dest);
@@ -34,15 +36,17 @@ string retornarString(string mensaje);
 int contarCaracteresDeCadenaChar(char cadChar[], int tope);
 int contarCaracter(char cadChar[], int tope, char c);
 int buscarCaracterEnCadenaChar(char cadChar[], int tope, char c);
+int buscarDosCarConsecutivos(char cadchar[], int tope, char car1, char car2);
+bool existenDosCarNoConsecutivos(char cadChar[], int tope, char car1, char car2);
 void copiarCadenaChar(char dest[], char source[], int tope);
-void convertirStringACadenaChar(string &source, char dest[]);
+void convertirStringACadenaChar(string source, char dest[]);
 
 void inicializarArrayNumerico(int numeros[], int tope);
 void ordenamientoBurbuja(int numeros[], int tope);
 void ordenamientoPorSeleccion(int numeros[], int tope);
 void ordenamientoPorInsercion(int numeros[], int tope);
 
-bool validarLongitudString(string &str, int tope);
+bool validarLongitudString(string str, int tope);
 bool validarNumeroEnRago(int valor, int min, int max);
 bool esCaracterValido(char c, char validos[], int tope);
 
@@ -117,6 +121,13 @@ char pedirCaracter(string msg) {
     return c;
 }
 
+void pedirDosCaracteres(char &c1, char &c2) {
+    c1 = pedirCaracter("Ingrese un caracter: ('*' para cancelar): ");
+    if (c1 != '*') {
+        c2 = pedirCaracter("Ingrese un caracter: ");
+    }
+}
+
 void pedirCadenaChar(string msg, char dest[], int tope) {
     mostrarMensaje(msg);
 	cin.getline(dest, tope);
@@ -151,7 +162,7 @@ void pedirCadenaCharValida(char cadChar[], int tope) {
 
 int contarCaracteresDeCadenaChar(char cadChar[], int tope) {
     int i = 0;
-    while (cadChar[i] != '\0' and i < tope) {
+    while (cadChar[i] != FIN_LINEA and i < tope) {
         i++;
     }
     return i;
@@ -163,36 +174,67 @@ int contarCaracter(char cadChar[], int tope, char c) {
         if (cadChar[i] == c)
             q++;
     }
-
     return q;
 }
 
 int buscarCaracterEnCadenaChar(char cadChar[], int tope, char c) {
-    int i = 0;
-    while (i < tope and cadChar[i] != c) {
+    int i, longitud = contarCaracteresDeCadenaChar(cadChar, tope);
+
+    while (i < longitud and i < tope and cadChar[i] != c and cadChar[i] != FIN_LINEA ) {
         i++;
     }
-    if (i == tope) 
-        i = -1;
+    if (i >= longitud) 
+        i = EXIT_ERROR;
     return i;
+}
+
+int buscarCaracterEnRango(char cadChar[], int desde, int hasta, char c) {
+    int i = desde;
+
+    while (i < hasta and cadChar[i] != c and cadChar[i] != FIN_LINEA ) {
+        i++;
+    }
+    if (i == hasta) 
+        i = EXIT_ERROR;
+    return i;
+}
+
+int buscarDosCarConsecutivos(char cadChar[], int tope, char car1, char car2) {
+    int i = 0, pos, longitud = contarCaracteresDeCadenaChar(cadChar, tope) - 1;
+    while (i < tope and i < longitud and (cadChar[i] != car1 or cadChar[i + 1] != car2)) {
+        i++;
+    }
+    pos = i < longitud ? i : EXIT_ERROR;
+    return pos;
+}
+
+bool existenDosCarNoConsecutivos(char cadChar[], int tope, char car1, char car2) {
+    int i, longitud = contarCaracteresDeCadenaChar(cadChar, tope);
+    bool ret;
+    i = buscarCaracterEnRango(cadChar, 0, longitud, car1);  
+    if (i != EXIT_ERROR) {
+        i = buscarCaracterEnRango(cadChar, i, longitud, car2);
+        ret = i != EXIT_ERROR;   
+    }
+    return ret;
 }
 
 void copiarCadenaChar(char dest[], char source[], int tope) {
     int i = 0;
-    while (i < tope and source[i] != '\0') {
+    while (i < tope and source[i] != FIN_LINEA) {
         dest[i] = source[i];
         i++;
     }
-    dest[i] = '\0';
+    dest[i] = FIN_LINEA;
 }
 
-void convertirStringACadenaChar(string &source, char dest[]) {
+void convertirStringACadenaChar(string source, char dest[]) {
     int i = 0, longitud = source.length();
     while (i < longitud) {
         dest[i] = source[i];
         i++;
     }
-    dest[longitud] = '\0';
+    dest[longitud] = FIN_LINEA;
 }
 
 void inicializarArrayNumerico(int numeros[], int tope) {
@@ -242,7 +284,7 @@ void ordenamientoPorInsercion(int numeros[], int tope) {
     }
 }
 
-bool validarLongitudString(string &str, int tope) {
+bool validarLongitudString(string str, int tope) {
     return (str.length() < tope);
 }
 
@@ -265,5 +307,6 @@ void pedirCaracterValido(char &dest, char validos[], int tope, string mensaje) {
 bool esCaracterValido(char c, char validos[], int tope) { 
     return (buscarCaracterEnCadenaChar(validos, tope, c) != EXIT_ERROR);
 }
+
 
 #endif
