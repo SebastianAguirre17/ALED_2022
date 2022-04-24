@@ -6,8 +6,8 @@
 #include <cstdio>
 #include <cstring>
 
-#define EXIT_ERROR  -1
-#define FIN_LINEA   '\0'
+#define EXIT_ERROR      -1
+#define FIN_LINEA       '\0'
 
 using namespace std;
 
@@ -17,8 +17,6 @@ void mostrarMensaje(string msg);
 void mostrarNumeroEntero(int numero);
 void mostrarTitulo(string mensaje);
 void mostrarArrayNumerico(int numeros[], int tope);
-
-void repetirCaracter(char c, int cant);
 
 int pedirEntero(string msg);
 int pedirEnteroPositivo(string msg);
@@ -46,9 +44,15 @@ void ordenamientoBurbuja(int numeros[], int tope);
 void ordenamientoPorSeleccion(int numeros[], int tope);
 void ordenamientoPorInsercion(int numeros[], int tope);
 
+void repetirCaracter(char c, int cant);
+int calcularNumeroInverso(int num);
+int sumarDivisores(int num);
+
 bool validarLongitudString(string str, int tope);
 bool validarNumeroEnRago(int valor, int min, int max);
 bool esCaracterValido(char c, char validos[], int tope);
+bool esNumeroCapicua(int num);
+bool sonNumerosAmigos(int num1, int num2);
 
 // DESARROLLO DE FUNCIONES
 void mostrarCaracter(char c) {
@@ -96,7 +100,7 @@ int pedirEnteroPositivo(string msg) {
     do {
         mostrarMensaje(msg);
         cin >> num;
-    } while (num < 1);
+    } while (num < 0);
     return num;
 }
 
@@ -308,5 +312,33 @@ bool esCaracterValido(char c, char validos[], int tope) {
     return (buscarCaracterEnCadenaChar(validos, tope, c) != EXIT_ERROR);
 }
 
+int calcularNumeroInverso(int num) {
+    int inv = 0;
+    while (num > 0) {
+        inv = num % 10 + inv * 10;
+        num = num / 10;
+    }
+    return inv;
+}
+
+bool esNumeroCapicua(int num) {
+    return (num == calcularNumeroInverso(num));
+}
+
+bool sonNumerosAmigos(int num1, int num2) {
+    int div1 = sumarDivisores(num1);
+    int div2 = sumarDivisores(num2);
+
+    return (num1 == div2 and num2 == div1);
+}
+
+int sumarDivisores(int num) {
+    int div = 0;
+    for (int i = 1; i <= num / 2; i++) {
+        if (num % i == 0)
+            div += i;
+    }
+    return div;
+}   
 
 #endif

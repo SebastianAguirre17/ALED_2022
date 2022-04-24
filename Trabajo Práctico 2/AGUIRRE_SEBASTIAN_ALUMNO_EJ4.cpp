@@ -40,9 +40,9 @@ void procesarParrafo(char cadChar[], int tope, int &qPalabras) {
 
     int i = 0, qLetras, longitud = contarCaracteresDeCadenaChar(cadChar, tope);
 
+    saltarCaracteresEspeciales(i, cadChar, tope);
     while (i < tope and i < longitud and cadChar[i] != '\0') {
         qLetras = 0;
-        saltarCaracteresEspeciales(i, cadChar, tope);
         mostrarPalabrasYContarLetras(i, cadChar, tope, qLetras, longitud);
         mostrarCantidadDeLetras(qLetras);
         qPalabras++;
