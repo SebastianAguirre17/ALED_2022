@@ -20,6 +20,7 @@ void mostrarArrayNumerico(int numeros[], int tope);
 
 int pedirEntero(string msg);
 int pedirEnteroPositivo(string msg);
+int pedirEnteroMayorA(string msg, int min);
 void pedirEnteroEnRango(int &valor, int desde, int hasta);
 float pedirFlotante(string msg);
 char pedirCaracter(string msg);
@@ -53,6 +54,7 @@ bool validarNumeroEnRago(int valor, int min, int max);
 bool esCaracterValido(char c, char validos[], int tope);
 bool esNumeroCapicua(int num);
 bool sonNumerosAmigos(int num1, int num2);
+bool esNumeroPar(int num);
 
 // DESARROLLO DE FUNCIONES
 void mostrarCaracter(char c) {
@@ -101,6 +103,15 @@ int pedirEnteroPositivo(string msg) {
         mostrarMensaje(msg);
         cin >> num;
     } while (num < 0);
+    return num;
+}
+
+int pedirEnteroMayorA(string msg, int min) {
+    int num;
+    do {
+        mostrarMensaje(msg);
+        cin >> num;
+    } while (num <= min);
     return num;
 }
 
@@ -340,5 +351,9 @@ int sumarDivisores(int num) {
     }
     return div;
 }   
+
+bool esNumeroPar(int num) {
+    return (num % 2 == 0);
+}
 
 #endif
