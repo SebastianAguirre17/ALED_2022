@@ -4,13 +4,23 @@
 
 #include "AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
 
-#define TOPE 10
+#define TOPE 20
+
+void stringToChar(string str, char cad[]) {
+    int i, largo = str.length();
+    for (i = 0; i < largo; i++) {
+        cad[i] = str[i]; 
+    }
+    cad[largo] = '\0';
+}
 
 int main(){
-    mostrarTitulo("Prueba de Funciones");
+    string str = "Esto es una prueba";
+    char cad[TOPE];
 
-    int arr[TOPE] = {3,4,5,6,1,7,8,9};
+    stringToChar(str, cad);
 
+    cout << cad << endl;
 
 	return EXIT_SUCCESS;
 }
