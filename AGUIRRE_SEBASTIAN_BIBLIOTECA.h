@@ -8,6 +8,7 @@
 
 #define EXIT_ERROR      -1
 #define FIN_LINEA       '\0'
+#define REPETICIONES    10
 
 using namespace std;
 
@@ -21,22 +22,21 @@ void mostrarArrayNumerico(int numeros[], int tope);
 int pedirEntero(string msg);
 int pedirEnteroPositivo(string msg);
 int pedirEnteroMayorA(string msg, int min);
-void pedirEnteroEnRango(int &valor, int desde, int hasta);
 float pedirFlotante(string msg);
 char pedirCaracter(string msg);
+string retornarString(string mensaje);
+void pedirEnteroEnRango(int &valor, int desde, int hasta);
 void pedirDosCaracteres(char &c1, char &c2);
 void pedirCaracterValido(char &dest, char validos[], int tope);
 void pedirCadenaChar(string msg, char dest[], int tope);
 void pedirString(string msg, string &dest);
 void pedirStringConTope(string &dest, int tope);
 void pedirCadenaCharValida(char cadChar[], int tope);
-string retornarString(string mensaje);
 
 int contarCaracteresDeCadenaChar(char cadChar[], int tope);
 int contarCaracter(char cadChar[], int tope, char c);
 int buscarCaracterEnCadenaChar(char cadChar[], int tope, char c);
 int buscarDosCarConsecutivos(char cadchar[], int tope, char car1, char car2);
-bool existenDosCarNoConsecutivos(char cadChar[], int tope, char car1, char car2);
 void copiarCadenaChar(char dest[], char source[], int tope);
 void convertirStringACadenaChar(string source, char dest[]);
 
@@ -44,11 +44,15 @@ void inicializarArrayNumerico(int numeros[], int tope);
 void ordenamientoBurbuja(int numeros[], int tope);
 void ordenamientoPorSeleccion(int numeros[], int tope);
 void ordenamientoPorInsercion(int numeros[], int tope);
+int busquedaSecuencial(int numeros[], int tope, int buscado);
+int busquedaBinaria(int numeros[], int tope, int buscado);
+int busquedaSecuencialChar(char cadChar[], int tope, char buscado);
 
 void repetirCaracter(char c, int cant);
 int calcularNumeroInverso(int num);
 int sumarDivisores(int num);
 
+bool existenDosCarNoConsecutivos(char cadChar[], int tope, char car1, char car2);
 bool validarLongitudString(string str, int tope);
 bool validarNumeroEnRago(int valor, int min, int max);
 bool esCaracterValido(char c, char validos[], int tope);
@@ -72,9 +76,9 @@ void mostrarNumeroEntero(int numero) {
 void mostrarTitulo(string mensaje) {
     int longitud = mensaje.length();
     cout << endl;
-    repetirCaracter('-', longitud + 10);
+    repetirCaracter('-', longitud + REPETICIONES);
     cout << endl << "     " << mensaje << endl;
-    repetirCaracter('-', longitud + 10);
+    repetirCaracter('-', longitud + REPETICIONES);
     cout << endl << endl;
 }
 
@@ -355,5 +359,54 @@ int sumarDivisores(int num) {
 bool esNumeroPar(int num) {
     return (num % 2 == 0);
 }
+
+int busquedaSecuencial(int numeros[], int tope, int buscado) {
+    int i = 0;
+    bool encontrado = false;
+
+    while (not encontrado and i < tope) {
+        if (numeros[i] == buscado)
+            encontrado = true;
+        i++;
+    }
+    i = encontrado ? i - 1 : EXIT_ERROR;
+    return i;
+} 
+
+int busquedaSecuencialChar(char cadChar[], int tope, char buscado) {
+    int i = 0;
+    bool encontrado = false;
+
+    while (not encontrado and i < tope) {
+        if (cadChar[i] == buscado)
+            encontrado = true;
+        i++;
+    }
+    i = encontrado ? i - 1 : EXIT_ERROR;
+    return i;
+} 
+
+int busquedaBinaria(int numeros[], int tope, int buscado) {
+    int inf = 0, sup = tope, mitad;
+    bool encontrado = false;
+
+    while (not encontrado and inf <= sup) {
+        mitad = (inf + sup) / 2;
+
+        if (numeros[mitad] == buscado)
+            encontrado = true;
+        if (numeros[mitad] > buscado) {
+            sup = mitad;
+            mitad = (inf + sup) / 2;
+        }
+        if (numeros[mitad] < buscado) {
+            inf = mitad;
+            mitad = (inf + sup) / 2;
+        }
+    }
+
+    mitad = encontrado ? mitad : EXIT_ERROR;
+    return mitad;
+} 
 
 #endif

@@ -4,23 +4,13 @@
 
 #include "AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
 
-#define TOPE 50
+#define TOPE 10
 
 int main(){
     mostrarTitulo("Prueba de Funciones");
 
-    char cadena[TOPE] = "Esto es una frase de prueba!";
-    char c1, c2;
+    int arr[TOPE] = {3,4,5,6,1,7,8,9};
 
-    pedirDosCaracteres(c1, c2);
-
-    while (c1 != '*') {
-        existenDosCarNoConsecutivos(cadena, TOPE, c1, c2) ?
-            mostrarMensaje("Estan\n") :
-            mostrarMensaje("No estan\n");
-        
-        pedirDosCaracteres(c1, c2);
-    }
 
 	return EXIT_SUCCESS;
 }
