@@ -197,13 +197,14 @@ int contarCaracter(char cadChar[], int tope, char c) {
 }
 
 int buscarCaracterEnCadenaChar(char cadChar[], int tope, char c) {
-    int i, longitud = contarCaracteresDeCadenaChar(cadChar, tope);
+    int i = 0, longitud = contarCaracteresDeCadenaChar(cadChar, tope);
 
     while (i < longitud and i < tope and cadChar[i] != c and cadChar[i] != FIN_LINEA ) {
         i++;
     }
     if (i >= longitud) 
         i = EXIT_ERROR;
+
     return i;
 }
 
