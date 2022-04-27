@@ -23,6 +23,7 @@ int pedirEntero(string msg);
 int pedirEnteroPositivo(string msg);
 int pedirEnteroMayorA(string msg, int min);
 float pedirFlotante(string msg);
+float pedirFlotanteMayorA(string msg, int min);
 char pedirCaracter(string msg);
 string retornarString(string mensaje);
 void pedirEnteroEnRango(int &valor, int desde, int hasta);
@@ -37,6 +38,7 @@ int contarCaracteresDeCadenaChar(char cadChar[], int tope);
 int contarCaracter(char cadChar[], int tope, char c);
 int buscarCaracterEnCadenaChar(char cadChar[], int tope, char c);
 int buscarDosCarConsecutivos(char cadchar[], int tope, char car1, char car2);
+int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char &c1, char &c2);
 void copiarCadenaChar(char dest[], char source[], int tope);
 void convertirStringACadenaChar(string source, char dest[]);
 
@@ -46,7 +48,6 @@ void ordenamientoPorSeleccion(int numeros[], int tope);
 void ordenamientoPorInsercion(int numeros[], int tope);
 int busquedaSecuencial(int numeros[], int tope, int buscado);
 int busquedaBinaria(int numeros[], int tope, int buscado);
-int busquedaSecuencialChar(char cadChar[], int tope, char buscado);
 
 void repetirCaracter(char c, int cant);
 int calcularNumeroInverso(int num);
@@ -130,6 +131,15 @@ float pedirFlotante(string msg) {
     float num;
     mostrarMensaje(msg);
     cin >> num;
+    return num;
+}
+
+float pedirFlotanteMayorA(string msg, int min) {
+    float num;
+    do {
+        mostrarMensaje(msg);
+        cin >> num;
+    } while (num <= min);
     return num;
 }
 
@@ -374,19 +384,6 @@ int busquedaSecuencial(int numeros[], int tope, int buscado) {
     return i;
 } 
 
-int busquedaSecuencialChar(char cadChar[], int tope, char buscado) {
-    int i = 0;
-    bool encontrado = false;
-
-    while (not encontrado and i < tope) {
-        if (cadChar[i] == buscado)
-            encontrado = true;
-        i++;
-    }
-    i = encontrado ? i - 1 : EXIT_ERROR;
-    return i;
-} 
-
 int busquedaBinaria(int numeros[], int tope, int buscado) {
     int inf = 0, sup = tope, mitad;
     bool encontrado = false;
@@ -394,8 +391,9 @@ int busquedaBinaria(int numeros[], int tope, int buscado) {
     while (not encontrado and inf <= sup) {
         mitad = (inf + sup) / 2;
 
-        if (numeros[mitad] == buscado)
+        if (numeros[mitad] == buscado) {
             encontrado = true;
+        }
         if (numeros[mitad] > buscado) {
             sup = mitad;
             mitad = (inf + sup) / 2;
@@ -409,5 +407,22 @@ int busquedaBinaria(int numeros[], int tope, int buscado) {
     mitad = encontrado ? mitad : EXIT_ERROR;
     return mitad;
 } 
+
+int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char &c1, char &c2) {
+    int i = 0, longitud = contarCaracteresDeCadenaChar(cadChar, tope);
+    bool encontrado = false;
+
+    while (not encontrado and i < tope and i < longitud and cadChar[i] != FIN_LINEA) {
+        if (cadChar[i] == c1 or cadChar[i] == c2) {
+            encontrado = true;
+            i--;
+        }
+        i++;
+    }
+    if (not encontrado)
+        i = EXIT_ERROR;
+
+    return i;
+}
 
 #endif
