@@ -5,7 +5,7 @@
 #include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
 using namespace std;
 
-#define TOPE 50
+#define TOPE 10
 
 void solicitarDatos(char cadChar[], int tope, char &c1, char &c2);
 int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char &c1, char &c2);
