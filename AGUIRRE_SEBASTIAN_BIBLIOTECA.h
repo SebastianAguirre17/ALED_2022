@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <cstring>
+#include <ctime>
 
 #define EXIT_ERROR      -1
 #define FIN_LINEA       '\0'
@@ -18,6 +19,7 @@ void mostrarMensaje(string msg);
 void mostrarNumeroEntero(int numero);
 void mostrarTitulo(string mensaje);
 void mostrarArrayNumerico(int numeros[], int tope);
+void mostrarArrayNumericoConIndice(int numeros[], int tope);
 
 int pedirEntero(string msg);
 int pedirEnteroPositivo(string msg);
@@ -41,6 +43,7 @@ int buscarDosCarConsecutivos(char cadchar[], int tope, char car1, char car2);
 int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char &c1, char &c2);
 void copiarCadenaChar(char dest[], char source[], int tope);
 void convertirStringACadenaChar(string source, char dest[]);
+void invertirFrase(char cadChar[], int tope);
 
 void inicializarArrayNumerico(int numeros[], int tope);
 void ordenamientoBurbuja(int numeros[], int tope);
@@ -48,7 +51,10 @@ void ordenamientoPorSeleccion(int numeros[], int tope);
 void ordenamientoPorInsercion(int numeros[], int tope);
 int busquedaSecuencial(int numeros[], int tope, int buscado);
 int busquedaBinaria(int numeros[], int tope, int buscado);
-
+void cargarVecRandom(int vec[], int tope, int mod);
+void buscarPosMinYMaxEnArrayNumerico(int vec[], int tope, int &minPos, int &maxPos);
+int contarRepeticionesEnVecNumerico(int vec[], int tope, int buscado);
+ 
 void repetirCaracter(char c, int cant);
 int calcularNumeroInverso(int num);
 int sumarDivisores(int num);
@@ -86,6 +92,12 @@ void mostrarTitulo(string mensaje) {
 void mostrarArrayNumerico(int numeros[], int tope) {
     for (int i = 0; i < tope; i++) {
         cout << numeros[i] << endl;
+    }
+}
+
+void mostrarArrayNumericoConIndice(int numeros[], int tope) {
+    for (int i = 0; i < tope; i++) {
+        cout << "Indice: " << i << " - Valor: " << numeros[i] << endl;
     }
 }
 
@@ -423,6 +435,51 @@ int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char &c1, char &c2) {
         i = EXIT_ERROR;
 
     return i;
+}
+
+void cargarVecRandom(int vec[], int tope, int mod) {
+    int i;
+    for (i = 0; i < tope; i++) {
+        vec[i] = rand() % (mod);
+    }
+}
+
+void buscarPosMinYMaxEnArrayNumerico(int vec[], int tope, int &minPos, int &maxPos) {
+    int i, vMin, vMax;
+    minPos = maxPos = 0;
+    vMax = vMin = vec[0];
+    for (i = 0; i < tope; i++) {
+        if (vec[i] < vMin) {
+            minPos = i;
+            vMin = vec[i];
+        }
+        if (vec[i] > vMax) {
+            maxPos = i;
+            vMax = vec[i];
+        }
+    }
+}
+
+int contarRepeticionesEnVecNumerico(int vec[], int tope, int buscado) {
+    int i, q = 0;
+    for (i = 0; i < tope; i++) {
+        if (vec[i] == buscado)
+            q++;
+    }
+    return q;
+}
+
+void invertirFrase(char cadChar[], int tope) {
+    int i = 0, longitud = contarCaracteresDeCadenaChar(cadChar, tope), j = longitud - 1;
+    char aux;
+
+    while (cadChar[i] != FIN_LINEA and i < longitud / 2) {
+        aux = cadChar[i];
+        cadChar[i] = cadChar[j];
+        cadChar[j] = aux;
+        i++;
+        j--;
+    }
 }
 
 #endif
