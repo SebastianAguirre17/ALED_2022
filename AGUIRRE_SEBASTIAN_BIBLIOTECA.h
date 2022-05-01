@@ -54,7 +54,8 @@ int busquedaBinaria(int numeros[], int tope, int buscado);
 void cargarVecRandom(int vec[], int tope, int mod);
 void buscarPosMinYMaxEnArrayNumerico(int vec[], int tope, int &minPos, int &maxPos);
 int contarRepeticionesEnVecNumerico(int vec[], int tope, int buscado);
- 
+void concatNumerosNoRepetidos(int vec[], int tope, int result[], int &topeR);
+
 void repetirCaracter(char c, int cant);
 int calcularNumeroInverso(int num);
 int sumarDivisores(int num);
@@ -479,6 +480,16 @@ void invertirFrase(char cadChar[], int tope) {
         cadChar[j] = aux;
         i++;
         j--;
+    }
+}
+
+void concatNumerosNoRepetidos(int vec[], int tope, int result[], int &topeR) {
+    int i;
+    for (i = 0; i < tope; i++) {
+        if (busquedaSecuencial(result, topeR, vec[i]) == EXIT_ERROR) {
+            result[topeR] = vec[i];
+            topeR++;
+        }
     }
 }
 
