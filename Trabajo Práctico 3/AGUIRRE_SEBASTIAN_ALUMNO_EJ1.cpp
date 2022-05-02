@@ -16,6 +16,8 @@ int main(){
     cargarVecRandom(vec, TOPE, MOD);
 
     buscarPosMinYMaxEnArrayNumerico(vec, TOPE, posMin, posMax);
+    cout << "El Maximo se encuentra el la posicion: " << posMax << endl;
+    cout << "El Minimo se encuentra el la posicion: " << posMin << endl << endl;
     mostrarArrayNumericoConIndice(vec, TOPE);
     mostrarValorMaximoArrNumerico(vec, posMax);
 
