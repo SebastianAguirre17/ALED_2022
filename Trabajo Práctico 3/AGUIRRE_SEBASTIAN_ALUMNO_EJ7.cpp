@@ -5,7 +5,7 @@
 #include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
 
 #define SALIDA 99
-#define TOPE_COCHERA 10
+#define TOPE_COCHERA 2
 #define APERTURA 7
 #define CIERRE 21
 
@@ -70,15 +70,15 @@ void aperturaDeEstacionamiento(string menu, tyVehiculo vehiculos[], int topeCoch
 void ingresoDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &topeActual) {
     mostrarTitulo("Ingreso de Vehiculo");
 
-    cout << "Cocheras libres: " << topeCochera - topeActual << " de " << topeCochera << endl << endl;
     if (topeActual < topeCochera) {
+        cout << "Cocheras libres: " << topeCochera - topeActual << " de " << topeCochera << endl << endl;
         string patente = retornarString("Ingrese la patente: ");
         if (buscarVehiculoPorPatente(vehiculos, topeActual, patente) == EXIT_ERROR)
             agregarVehiculo(vehiculos, topeActual, patente);
         else 
             mostrarMensaje("\nEl vehiculo se encuentra estacionado.\n");
     } else {
-        mostrarMensaje("No hay lugares para estacionar.\n");
+        mostrarMensaje("No hay lugares para estacionar. \n");
     }
     pausarPrograma();
 }
