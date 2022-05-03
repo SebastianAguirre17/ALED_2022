@@ -4,91 +4,86 @@
 
 #include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
 
-#define TOPE 5
-#define SALIDA 5
+#define SALIDA 99
+#define TOPE_COCHERA 10
+#define APERTURA 7
+#define CIERRE 21
 
 struct tyVehiculo {
     string patente;
     int hora;
 };
 
-void mostrarMenu(string menu, tyVehiculo vehiculos[], int tope, int &topeReal, tyVehiculo &vehiculo);
+void aperturaDeEstacionamiento(string menu, tyVehiculo vehiculos[], int topeCochera);
 
-void ingresoDeVehiculo(tyVehiculo vehiculos[], int tope, int &topeReal, tyVehiculo &vehiculo);
-int buscarPatente(tyVehiculo vehiculos[], int tope, string patente); 
-void pedirHoraEnRango(int &valor, int desde, int hasta);
-void agregarVehiculo(tyVehiculo vehiculos[], tyVehiculo vehiculo, int &pos);
+void ingresoDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &topeActual); 
+int  buscarVehiculoPorPatente(tyVehiculo vehiculos[], int tope, string patente);
+void agregarVehiculo(tyVehiculo vehiculos[], int &topeActual, string patente);
+int  pedirHoraEnRango(int desde, int hasta);
 
-void salidaDeVehiculo(tyVehiculo vehiculos[], int &topeReal);
-void quitarVehiculo(tyVehiculo vehiculos[], int &topeReal, int pos); 
+void salidaDeVehiculo(tyVehiculo vehiculos[], int &topeActual);
+void verificarVehiculo(tyVehiculo vehiculos[], int &topeActual);
+void quitarVehiculo(tyVehiculo vehiculos[], int &topeActual, int pos);
 
-void listadoDeVehiculos(tyVehiculo vehiculos[], int tope);
-void mostrarVehiculo(tyVehiculo vehiculo); 
+void listadoDeVehiculos(tyVehiculo vehiculos[], int topeActual);
+void mostrarVehiculos(tyVehiculo vehiculos[], int topeActual);
 
-void verificarSalida(tyVehiculo vehiculos[], int topeReal, int &opcion);
+void finalizarPrograma(tyVehiculo vehiculos[], int topeActual, int &opcion);
+
 void pausarPrograma();
 
 int main(){
-    tyVehiculo cochera[TOPE];
-    tyVehiculo vehiculo;
-    int topeReal = 0;
+    string menu = "1) Ingreso de Vehiculo\n2) Salida de Vehiculo\n3) Listado de Vehiculos\n4) Fin de Programa\n\nOpcion: ";
+    tyVehiculo vehiculos[TOPE_COCHERA];
     
-    mostrarMenu("1) Ingreso de Vehiculo\n2) Salida de Vehiculo\n3) Listado de Vehiculos\n4) Fin\n\nOpcion: ", cochera, TOPE, topeReal, vehiculo);
+    aperturaDeEstacionamiento(menu, vehiculos, TOPE_COCHERA);
     mostrarTitulo("Gracias por usar este programa.");
-    pausarPrograma();
+
 	return EXIT_SUCCESS;
 }
 
-void mostrarMenu(string menu, tyVehiculo vehiculos[], int tope, int &topeReal, tyVehiculo &vehiculo) {
-    int opcion = 0;
+void aperturaDeEstacionamiento(string menu, tyVehiculo vehiculos[], int topeCochera) {
+    int opcion = 0, topeActual = 0;
 
-    while(opcion != SALIDA) {
+    while (opcion != SALIDA) {
         system("CLS");
         mostrarTitulo("Ejercicio 7 - Estacionamiento");
 
         opcion = pedirEntero(menu);
-
         switch(opcion) {
             case 1:
-                ingresoDeVehiculo(vehiculos, tope, topeReal, vehiculo);
+                ingresoDeVehiculo(vehiculos, topeCochera, topeActual);
                 break;
             case 2:
-                salidaDeVehiculo(vehiculos, topeReal);
+                salidaDeVehiculo(vehiculos, topeActual);
                 break;
             case 3:
-                listadoDeVehiculos(vehiculos, topeReal);
+                listadoDeVehiculos(vehiculos, topeActual);
                 break;
             case 4:
-                verificarSalida(vehiculos, topeReal, opcion);
+                finalizarPrograma(vehiculos, topeActual, opcion);
                 break;
         }
     }
 }
 
-void ingresoDeVehiculo(tyVehiculo vehiculos[], int tope, int &topeReal, tyVehiculo &vehiculo) {
+void ingresoDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &topeActual) {
     mostrarTitulo("Ingreso de Vehiculo");
 
-    if (topeReal == tope) {
-        cout << "No lugares para estacionar" << endl;
+    cout << "Cocheras libres: " << topeCochera - topeActual << " de " << topeCochera << endl << endl;
+    if (topeActual < topeCochera) {
+        string patente = retornarString("Ingrese la patente: ");
+        if (buscarVehiculoPorPatente(vehiculos, topeActual, patente) == EXIT_ERROR)
+            agregarVehiculo(vehiculos, topeActual, patente);
+        else 
+            mostrarMensaje("\nEl vehiculo se encuentra estacionado.\n");
     } else {
-        vehiculo.patente = retornarString("Ingrese la patente: ");
-        if (buscarPatente(vehiculos, topeReal, vehiculo.patente) == EXIT_ERROR) {
-            pedirHoraEnRango(vehiculo.hora, 7, 21);
-            agregarVehiculo(vehiculos, vehiculo, topeReal);
-        }
-        else
-            cout << endl << "El vehiculo se encuentra estacionado" << endl;
-    }  
+        mostrarMensaje("No hay lugares para estacionar.\n");
+    }
     pausarPrograma();
 }
 
-void agregarVehiculo(tyVehiculo vehiculos[], tyVehiculo vehiculo, int &pos) {
-    vehiculos[pos] = vehiculo;
-    pos++;
-    cout << endl << "Vehiculo guardado" << endl;
-}
-
-int buscarPatente(tyVehiculo vehiculos[], int tope, string patente) {
+int buscarVehiculoPorPatente(tyVehiculo vehiculos[], int tope, string patente) {
     int i = 0;
     bool encontrado = false;
 
@@ -100,66 +95,81 @@ int buscarPatente(tyVehiculo vehiculos[], int tope, string patente) {
         i++;
     }
     return encontrado ? i : EXIT_ERROR;
-}   
+}
 
-void pedirHoraEnRango(int &valor, int desde, int hasta) {
+void agregarVehiculo(tyVehiculo vehiculos[], int &topeActual, string patente) {
+    tyVehiculo auxVehiculo;
+    auxVehiculo.patente = patente;
+    auxVehiculo.hora = pedirHoraEnRango(APERTURA, CIERRE);
+    vehiculos[topeActual] = auxVehiculo;
+    topeActual++;
+    mostrarMensaje("\nVehiculo guardado.\n");
+}
+
+int pedirHoraEnRango(int desde, int hasta) {
+    int valor;
     do {
-        cout << "Ingrese la hora (7 a 21): ";
+        cout << "Ingrese la hora (" << desde << " a " << hasta << "): ";
         cin >> valor;
     } while (valor < desde or valor > hasta);
+    return valor;
 }
 
-void salidaDeVehiculo(tyVehiculo vehiculos[], int &topeReal) {
-    mostrarTitulo("Salida de Vehiculo");
-
-    if (topeReal == 0) {
-        cout << "No hay vehiculos estacionados" << endl;
-    }
-    else {
-        string patente = retornarString("Ingrese la patente: ");
-        int pos = buscarPatente(vehiculos, topeReal, patente);
-
-        if (pos != EXIT_ERROR) {
-            cout << "El vehiculo entro a las: " << vehiculos[pos].hora << endl;
-            quitarVehiculo(vehiculos, topeReal, pos);
-        } else {
-            cout << endl << "El vehiculo no se encuentra estacionado." << endl;
-        }
-    }
-    pausarPrograma();
-}
-
-void quitarVehiculo(tyVehiculo vehiculos[], int &topeReal, int pos) {
-    int i;
-    for (i = pos; i < topeReal; i++) {
-        vehiculos[i] = vehiculos[i + 1];
-    }
-    topeReal--;
-}
-
-void listadoDeVehiculos(tyVehiculo vehiculos[], int tope) {
+void listadoDeVehiculos(tyVehiculo vehiculos[], int topeActual) {
     mostrarTitulo("Listado de Vehiculos");
     
-    int i;
-    for(i = 0; i < tope; i++) {
-        mostrarVehiculo(vehiculos[i]);
-    } 
-    if (tope == 0)
-        cout << "No hay Vehiculos estacionados." << endl;
+    if (topeActual == 0)
+        mostrarMensaje("No hay Vehiculos estacionados.\n");
+    else 
+        mostrarVehiculos(vehiculos, topeActual);
+
     pausarPrograma();
 }
 
-void mostrarVehiculo(tyVehiculo vehiculo) {
-    cout << "Patente: " << vehiculo.patente << " - Hora de ingreso: " << vehiculo.hora << endl; 
-}   
+void mostrarVehiculos(tyVehiculo vehiculos[], int topeActual) {
+    int i;
+    for(i = 0; i < topeActual; i++) {
+        cout << "Patente: " << vehiculos[i].patente << " - Hora de ingreso: " << vehiculos[i].hora << endl; 
+    } 
+}
 
-void verificarSalida(tyVehiculo vehiculos[], int topeReal, int &opcion) {
-    if (topeReal != 0) {
-        cout << endl << "No se puede cerrar, aun quedan vehiculos" << endl;
-        listadoDeVehiculos(vehiculos, topeReal);
-    } else {
-        opcion = 5;
+void salidaDeVehiculo(tyVehiculo vehiculos[], int &topeActual) {
+    mostrarTitulo("Salida de Vehiculo");
+
+    if (topeActual == 0)
+        mostrarMensaje("No hay vehiculos estacionados.\n");
+    else 
+        verificarVehiculo(vehiculos, topeActual);
+
+    pausarPrograma();
+}
+
+void verificarVehiculo(tyVehiculo vehiculos[], int &topeActual) {
+    string patente = retornarString("Ingrese la patente: ");
+    int pos = buscarVehiculoPorPatente(vehiculos, topeActual, patente);
+
+    if (pos != EXIT_ERROR) 
+        quitarVehiculo(vehiculos, topeActual, pos);
+    else
+        mostrarMensaje("\nEl vehiculo no se encuentra estacionado.\n");
+}
+
+void quitarVehiculo(tyVehiculo vehiculos[], int &topeActual, int pos) {
+    int i;
+    cout << "\nEl vehiculo entro a las: " << vehiculos[pos].hora << endl;
+    for (i = pos; i < topeActual; i++) {
+        vehiculos[i] = vehiculos[i + 1];
     }
+    topeActual--;
+}
+
+
+void finalizarPrograma(tyVehiculo vehiculos[], int topeActual, int &opcion) {
+    if (topeActual != 0) 
+        mostrarMensaje("\nNo se puede cerrar, aun quedan vehiculos.\n");
+    else 
+        opcion = SALIDA;
+    pausarPrograma();
 }
 
 void pausarPrograma() {
