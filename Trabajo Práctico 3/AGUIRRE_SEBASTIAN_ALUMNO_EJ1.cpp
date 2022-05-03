@@ -14,16 +14,18 @@ int main(){
 
     int vec[TOPE], posMin, posMax;
     cargarVecRandom(vec, TOPE, MOD);
+    mostrarArrayNumericoConIndice(vec, TOPE);
 
     buscarPosMinYMaxEnArrayNumerico(vec, TOPE, posMin, posMax);
+    mostrarTitulo("Punto C");
     cout << "El Maximo se encuentra el la posicion: " << posMax << endl;
     cout << "El Minimo se encuentra el la posicion: " << posMin << endl << endl;
-    mostrarArrayNumericoConIndice(vec, TOPE);
+    mostrarTitulo("Punto D");
     mostrarValorMaximoArrNumerico(vec, posMax);
 
 	return EXIT_SUCCESS;
 }
 
 void mostrarValorMaximoArrNumerico(int vec[], int pos) {
-    cout << endl << "El valor maximo es: " << vec[pos] << " y se encuentra en el indice: " << pos << endl;
+    cout << "El valor maximo es: " << vec[pos] << " y se encuentra en el indice: " << pos << endl;
 }

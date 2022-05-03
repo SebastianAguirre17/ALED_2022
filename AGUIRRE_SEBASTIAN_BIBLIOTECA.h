@@ -183,7 +183,7 @@ void pedirString(string msg, string &dest) {
 string retornarString(string mensaje) {
     string msg;
     mostrarMensaje(mensaje);
-    cin >> msg;
+    getline(cin, msg);
     return msg;
 }
 

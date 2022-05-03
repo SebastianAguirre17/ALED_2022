@@ -126,7 +126,6 @@ void mostrarResultados(tyAcumuladores &acum, tyContRubros &cont) {
         cout << "Lavandinas     : " << cont.l << endl;
     else
         cout << "No hubo ventas del Rubro Lavandinas" << endl;
-
     if (cont.a > 0)
         cout << "Alcoholes      : " << cont.a << endl;
     else

@@ -5,7 +5,7 @@
 #include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
 
 #define SALIDA 99
-#define TOPE_COCHERA 2
+#define TOPE_COCHERA 10
 #define APERTURA 7
 #define CIERRE 21
 
@@ -13,8 +13,6 @@ struct tyVehiculo {
     string patente;
     int hora;
 };
-
-void aperturaDeEstacionamiento(string menu, tyVehiculo vehiculos[], int topeCochera);
 
 void ingresoDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &topeActual); 
 int  buscarVehiculoPorPatente(tyVehiculo vehiculos[], int tope, string patente);
@@ -35,14 +33,6 @@ void pausarPrograma();
 int main(){
     string menu = "1) Ingreso de Vehiculo\n2) Salida de Vehiculo\n3) Listado de Vehiculos\n4) Fin de Programa\n\nOpcion: ";
     tyVehiculo vehiculos[TOPE_COCHERA];
-    
-    aperturaDeEstacionamiento(menu, vehiculos, TOPE_COCHERA);
-    mostrarTitulo("Gracias por usar este programa.");
-
-	return EXIT_SUCCESS;
-}
-
-void aperturaDeEstacionamiento(string menu, tyVehiculo vehiculos[], int topeCochera) {
     int opcion = 0, topeActual = 0;
 
     while (opcion != SALIDA) {
@@ -52,7 +42,7 @@ void aperturaDeEstacionamiento(string menu, tyVehiculo vehiculos[], int topeCoch
         opcion = pedirEntero(menu);
         switch(opcion) {
             case 1:
-                ingresoDeVehiculo(vehiculos, topeCochera, topeActual);
+                ingresoDeVehiculo(vehiculos, TOPE_COCHERA, topeActual);
                 break;
             case 2:
                 salidaDeVehiculo(vehiculos, topeActual);
@@ -65,6 +55,9 @@ void aperturaDeEstacionamiento(string menu, tyVehiculo vehiculos[], int topeCoch
                 break;
         }
     }
+    mostrarTitulo("Gracias por usar este programa.");
+
+	return EXIT_SUCCESS;
 }
 
 void ingresoDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &topeActual) {
