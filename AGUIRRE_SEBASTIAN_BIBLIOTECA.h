@@ -1,5 +1,5 @@
-#ifndef _AGUIRRE_SEBASTIAN_H_
-#define  _AGUIRRE_SEBASTIAN_H_
+#ifndef _AGUIRRE_SEBASTIAN_BIBLIOTECA_H_
+#define  _AGUIRRE_SEBASTIAN_BIBLIOTECA_H_
 
 #include <iostream>
 #include <cstdlib>
@@ -40,7 +40,7 @@ int contarCaracteresDeCadenaChar(char cadChar[], int tope);
 int contarCaracter(char cadChar[], int tope, char c);
 int buscarCaracterEnCadenaChar(char cadChar[], int tope, char c);
 int buscarDosCarConsecutivos(char cadchar[], int tope, char car1, char car2);
-int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char &c1, char &c2);
+int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char c1, char c2);
 void copiarCadenaChar(char dest[], char source[], int tope);
 void convertirStringACadenaChar(string source, char dest[]);
 void invertirFrase(char cadChar[], int tope);
@@ -386,14 +386,13 @@ bool esNumeroPar(int num) {
 
 int busquedaSecuencial(int numeros[], int tope, int buscado) {
     int i = 0;
-    bool encontrado = false;
 
-    while (not encontrado and i < tope) {
-        if (numeros[i] == buscado)
-            encontrado = true;
+    while (i < tope and numeros[i] != buscado) {
         i++;
     }
-    i = encontrado ? i - 1 : EXIT_ERROR;
+    if (i == tope) 
+        i = EXIT_ERROR;
+
     return i;
 } 
 
@@ -421,18 +420,13 @@ int busquedaBinaria(int numeros[], int tope, int buscado) {
     return mitad;
 } 
 
-int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char &c1, char &c2) {
+int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char c1, char c2) {
     int i = 0, longitud = contarCaracteresDeCadenaChar(cadChar, tope);
-    bool encontrado = false;
 
-    while (not encontrado and i < tope and i < longitud and cadChar[i] != FIN_LINEA) {
-        if (cadChar[i] == c1 or cadChar[i] == c2) {
-            encontrado = true;
-            i--;
-        }
+    while (i < longitud and i < tope and cadChar[i] != c1 and cadChar[i] != c2 and cadChar[i] != FIN_LINEA ) {
         i++;
     }
-    if (not encontrado)
+    if (i >= longitud) 
         i = EXIT_ERROR;
 
     return i;

@@ -8,7 +8,6 @@ using namespace std;
 #define TOPE 10
 
 void solicitarDatos(char cadChar[], int tope, char &c1, char &c2);
-int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char &c1, char &c2);
 void mostrarResultado(int pos);
 
 int main(){
