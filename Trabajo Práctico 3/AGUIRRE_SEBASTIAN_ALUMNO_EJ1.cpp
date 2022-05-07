@@ -13,16 +13,18 @@ void mostrarValorMaximoArrNumerico(int vec[], int pos);
 int main(){
     mostrarTitulo("Ejercicio 1");
 
+    mostrarTitulo("Vector de 20 elementos Random");
     int vec[TOPE], posMin, posMax;
     cargarVecRandom(vec, TOPE, MOD);
     mostrarArrayNumericoConIndice(vec, TOPE);
 
-    buscarPosMinYMaxEnArrayNumerico(vec, TOPE, posMin, posMax);
     mostrarTitulo("Punto C");
+    buscarPosMinYMaxEnArrayNumerico(vec, TOPE, posMin, posMax);
     cout << "El Maximo se encuentra el la posicion: " << posMax << endl;
     cout << "El Minimo se encuentra el la posicion: " << posMin << endl;
+
     mostrarTitulo("Punto D");
-    mostrarValorMaximoArrNumerico(vec, posMax);
+    mostrarValorMaximoArrNumerico(vec, TOPE);
 
 	return EXIT_SUCCESS;
 }
@@ -31,6 +33,7 @@ void buscarPosMinYMaxEnArrayNumerico(int vec[], int tope, int &minPos, int &maxP
     int i, vMin, vMax;
     minPos = maxPos = 0;
     vMax = vMin = vec[0];
+
     for (i = 0; i < tope; i++) {
         if (vec[i] < vMin) {
             minPos = i;
@@ -43,6 +46,14 @@ void buscarPosMinYMaxEnArrayNumerico(int vec[], int tope, int &minPos, int &maxP
     }
 }
 
-void mostrarValorMaximoArrNumerico(int vec[], int pos) {
-    cout << "El valor maximo es: " << vec[pos] << " y se encuentra en el indice: " << pos << endl;
+void mostrarValorMaximoArrNumerico(int vec[], int tope) {
+    int i, vMax = vec[0], pos = 0;
+
+    for (i = 0; i < tope; i++) {
+        if (vec[i] > vMax) {
+            pos = i;
+            vMax = vec[i];
+        }
+    }
+    cout << "El valor maximo es: " << vMax << " y se encuentra en el indice: " << pos << endl;
 }

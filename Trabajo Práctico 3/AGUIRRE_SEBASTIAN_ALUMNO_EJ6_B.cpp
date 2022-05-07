@@ -19,5 +19,13 @@ int main(){
     ordenamientoPorSeleccion(vec1, TOPE_M);
     ordenamientoPorSeleccion(vec2, TOPE_N);
 
+    mostrarTitulo("Vector 1");
+    mostrarArrayNumericoConIndice(vec1, TOPE_M);
+    system("PAUSE");
+
+    mostrarTitulo("Vector 2");
+    mostrarArrayNumericoConIndice(vec2, TOPE_N);
+    system("PAUSE");
+
 	return EXIT_SUCCESS;
 }

@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
+#include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
 
 #define TOPE 100
 #define MOD 100
@@ -12,9 +12,9 @@ int main(){
 
     int vec[TOPE], buscado;
     cargarVecRandom(vec, TOPE, MOD);
-    // mostrarArrayNumericoConIndice(vec, TOPE);
+    mostrarArrayNumericoConIndice(vec, TOPE);
 
-    buscado = pedirEnteroPositivo("Ingrese un numero: ");
+    ingresarEnteroPositivo(buscado, "Ingrese un numero: ");
     cout << endl << endl << "POS: " << busquedaSecuencial(vec, TOPE, buscado) << endl;
 
 	return EXIT_SUCCESS;

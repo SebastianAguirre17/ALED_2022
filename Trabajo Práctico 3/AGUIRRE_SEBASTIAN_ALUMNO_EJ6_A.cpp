@@ -16,7 +16,7 @@ int main(){
 
     int vec1[TOPE_M] = { 12, 5, 4, 5, 9, 11, 5, 4, 13, 7 };
     int vec2[TOPE_N] = { 0, 9, 3, 7, 10 };
-    int result[TOPE_R], topeResult; 
+    int result[TOPE_R], topeResult = 0; 
 
     mostrarTitulo("Vector 1");
     mostrarArrayNumericoConIndice(vec1, TOPE_M);
@@ -34,9 +34,6 @@ int main(){
 }
 
 void mezclarVectoresNumericos(int vec1[], int topeM, int vec2[], int topeN, int result[], int &topeR) {
-    int i;
-    topeR = 0;
-
     concatNumerosNoRepetidos(vec1, topeM, result, topeR);
     concatNumerosNoRepetidos(vec2, topeN, result, topeR);
 }

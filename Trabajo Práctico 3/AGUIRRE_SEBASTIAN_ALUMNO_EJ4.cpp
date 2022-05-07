@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
+#include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
 
 #define TOPE 21
 

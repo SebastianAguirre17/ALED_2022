@@ -90,7 +90,36 @@ void ingresarCaracterValido(char &dest, char validos[], int tope, string mensaje
     } while (not charValido);
 }
 
+void invertirFrase(char cadChar[], int tope) {
+    int i = 0, longitud = contarCaracteresDeCadenaChar(cadChar, tope), j = longitud - 1;
+    char aux;
+
+    while (cadChar[i] != FIN_LINEA and i < longitud / 2) {
+        aux = cadChar[i];
+        cadChar[i] = cadChar[j];
+        cadChar[j] = aux;
+        i++;
+        j--;
+    }
+}
+
+int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char c1, char c2) {
+    int i = 0, longitud = contarCaracteresDeCadenaChar(cadChar, tope);
+
+    while (i < longitud and i < tope and cadChar[i] != c1 and cadChar[i] != c2 and cadChar[i] != FIN_LINEA ) {
+        i++;
+    }
+    if (i >= longitud) 
+        i = EXIT_ERROR;
+
+    return i;
+}
+
 // STRINGS
+bool validarLongitudString(string str, int tope) {
+    return (str.length() < tope);
+}
+
 void ingresarString(string &dest, string mensaje) {
     cout << mensaje;
     getline(cin, dest);
@@ -105,8 +134,31 @@ void mostrarTitulo(string mensaje) {
     cout << endl << endl;
 }
 
-
 // CADENAS
+void pedirStringConTope(string &dest, int tope) {
+    cout << "Ingrese un texto de menos de " << tope << " caracteres: ";
+    getline(cin, dest);
+}
+
+void convertirStringACadenaChar(string source, char dest[]) {
+    int i = 0, longitud = source.length();
+    while (i < longitud) {
+        dest[i] = source[i];
+        i++;
+    }
+    dest[longitud] = FIN_LINEA;
+}
+
+void ingresarCadenaCharValida(char cadChar[], int tope, string mensaje) {
+    string auxString;
+    bool cadValida;
+    do {
+        cout << mensaje;
+        getline(cin, auxString);
+        cadValida = validarLongitudString(auxString, tope);
+    } while (not cadValida);
+    convertirStringACadenaChar(auxString, cadChar);
+} 
 
 // ARRAYS
 void inicializarArrayNumerico(int numeros[], int tope) {
@@ -171,6 +223,15 @@ void cargarVecRandom(int vec[], int tope, int mod) {
     for (i = 0; i < tope; i++) {
         vec[i] = rand() % (mod);
     }
+}
+
+int contarRepeticionesEnVecNumerico(int vec[], int tope, int buscado) {
+    int i, q = 0;
+    for (i = 0; i < tope; i++) {
+        if (vec[i] == buscado)
+            q++;
+    }
+    return q;
 }
 
 #endif

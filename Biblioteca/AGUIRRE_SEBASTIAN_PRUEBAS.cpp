@@ -3,9 +3,7 @@
 #include <cstdio>
 #include <ctime>
 
-#include "AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
-
-#define TOPE 10
+#include "AGUIRRE_SEBASTIAN.h" 
 
 
 int main(){
