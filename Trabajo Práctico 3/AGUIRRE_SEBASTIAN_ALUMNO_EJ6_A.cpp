@@ -8,7 +8,7 @@
 #define TOPE_N 5
 #define TOPE_R TOPE_M + TOPE_N
 
-void mezclarVectoresNumericos(int vec1[], int topeN, int vec2[], int topeM, int result[], int &topeR);
+void mezclarVectoresNumericos(int vec1[], int topeM, int vec2[], int topeN, int result[], int &topeR);
 void concatNumerosNoRepetidos(int vec[], int tope, int result[], int &topeR);
 
 int main(){
@@ -16,15 +16,14 @@ int main(){
 
     int vec1[TOPE_M] = { 12, 5, 4, 5, 9, 11, 5, 4, 13, 7 };
     int vec2[TOPE_N] = { 0, 9, 3, 7, 10 };
-    int result[TOPE_R], topeResult = 0; 
+    int result[TOPE_R];
+    int topeResult = 0; 
 
     mostrarTitulo("Vector 1");
     mostrarArrayNumericoConIndice(vec1, TOPE_M);
-    system("PAUSE");
 
     mostrarTitulo("Vector 2");
     mostrarArrayNumericoConIndice(vec2, TOPE_N);
-    system("PAUSE");
     
     mostrarTitulo("Mezcla de Vectores");
     mezclarVectoresNumericos(vec1, TOPE_M, vec2, TOPE_N, result, topeResult);

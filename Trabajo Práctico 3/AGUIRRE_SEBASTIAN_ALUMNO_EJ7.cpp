@@ -85,8 +85,7 @@ bool hayEspacioEnCohcera(int topeCochera, int topeActual) {
 
 void agregarVehiculo(tyVehiculo vehiculos[], int &topeActual) {
     tyVehiculo auxVehiculo;
-    cin.ignore(); // Limpiar buffer cin para usar getline
-    ingresarString(auxVehiculo.patente, "Ingrese la patente: ");
+    ingresarStringValido(auxVehiculo.patente, 6, 7, "Ingrese la patente: ");
     if (buscarVehiculoPorPatente(vehiculos, topeActual, auxVehiculo.patente) == EXIT_ERROR) {
         ingresarEnteroEnRango(auxVehiculo.hora, APERTURA, CIERRE, "Ingrese hora de ingreso (7 a 21): ");
         vehiculos[topeActual] = auxVehiculo;
@@ -113,8 +112,7 @@ void salidaDeVehiculo(tyVehiculo vehiculos[], int &topeActual) {
     
     if (topeActual > 0) {
         string patente;
-        cin.ignore(); // Limpiar buffer cin para usar getline
-        ingresarString(patente, "Ingrese la patente: ");
+        ingresarStringValido(patente, 6, 7, "Ingrese la patente: ");
         int pos = buscarVehiculoPorPatente(vehiculos, topeActual, patente);
         if (pos != EXIT_ERROR) {
             cout << "\nEl vehiculo entro a las: " << vehiculos[pos].hora << endl << endl;

@@ -17,6 +17,7 @@ using namespace std;
 void ingresarEntero(int &valor, string mensaje) {
     cout << mensaje;
     cin >> valor;
+    cin.ignore(); // Limpiar buffer cin para usar getline
 }
 
 void ingresarEnteroPositivo(int &valor, string mensaje) {
@@ -125,6 +126,13 @@ void ingresarString(string &dest, string mensaje) {
     getline(cin, dest);
 }
 
+void ingresarStringValido(string &dest, int min, int max, string mensaje) {
+    do {
+        cout << mensaje;
+        getline(cin, dest);
+    } while (dest.length() < min or dest.length() > max);
+}
+
 void mostrarTitulo(string mensaje) {
     int longitud = mensaje.length();
     cout << endl;
@@ -215,7 +223,6 @@ void mostrarArrayNumericoConIndice(int numeros[], int tope) {
     for (int i = 0; i < tope; i++) {
         cout << "Indice: " << i << " - Valor: " << numeros[i] << endl;
     }
-    cout << endl;
 }
 
 void cargarVecRandom(int vec[], int tope, int mod) {

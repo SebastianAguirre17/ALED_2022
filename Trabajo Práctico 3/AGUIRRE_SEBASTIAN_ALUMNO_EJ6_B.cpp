@@ -14,6 +14,8 @@ int main(){
 
     int vec1[TOPE_M] = { 12, 5, 4, 5, 9, 11, 5, 4, 13, 7 };
     int vec2[TOPE_N] = { 0, 9, 3, 7, 10 };
+    int result[TOPE_R];
+    int topeResult = 0; 
 
     // Ordeno Vectores
     ordenamientoPorSeleccion(vec1, TOPE_M);
@@ -21,11 +23,12 @@ int main(){
 
     mostrarTitulo("Vector 1");
     mostrarArrayNumericoConIndice(vec1, TOPE_M);
-    system("PAUSE");
 
     mostrarTitulo("Vector 2");
     mostrarArrayNumericoConIndice(vec2, TOPE_N);
-    system("PAUSE");
+
+
 
 	return EXIT_SUCCESS;
 }
+

@@ -8,13 +8,14 @@
 #define MOD 100
 
 void buscarPosMinYMaxEnArrayNumerico(int vec[], int tope, int &minPos, int &maxPos);
-void mostrarValorMaximoArrNumerico(int vec[], int pos);
+void mostrarValorMaximoArrNumerico(int vec[], int tope);
 
 int main(){
     mostrarTitulo("Ejercicio 1");
+    
+    int vec[TOPE], posMin, posMax;
 
     mostrarTitulo("Vector de 20 elementos Random");
-    int vec[TOPE], posMin, posMax;
     cargarVecRandom(vec, TOPE, MOD);
     mostrarArrayNumericoConIndice(vec, TOPE);
 
