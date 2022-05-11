@@ -119,6 +119,8 @@ int buscarCiclistaPorDni(tyCiclista ciclistas[], int topeActual, string dni) {
 }
 
 int buscarYMostrarCiclista(tyCiclista ciclistas[], int topeActual) {
+    mostrarTitulo("Buscar Ciclista");
+
     tyCiclista auxCiclista;
     ingresarStringValido(auxCiclista.dni, 7, 8, "Ingrese el dni: ");
     int pos = buscarCiclistaPorDni(ciclistas, topeActual, auxCiclista.dni);  

@@ -117,6 +117,10 @@ int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char c1, char c2) {
 }
 
 // STRINGS
+void mostrarString(string mensaje) {
+    cout << mensaje;
+}
+
 bool validarLongitudString(string str, int tope) {
     return (str.length() < tope);
 }
@@ -179,7 +183,10 @@ void ordenamientoPorSeleccion(int numeros[], int tope) {
     int i, j, aux, min;
     for (i = 0; i < tope; i++) {
         min = i;
+        cout << "Vuelta: " << i << endl;
         for (j = i + 1; j < tope ; j++) {
+            cout << "J: " << j << endl;
+
             if (numeros[j] < numeros[min]) {
                 min = j;
             }
@@ -187,6 +194,31 @@ void ordenamientoPorSeleccion(int numeros[], int tope) {
         aux = numeros[i];
         numeros[i] = numeros[min];
         numeros[min] = aux;
+    }
+}
+
+void ordenamientoPorSeleccionV2(int numeros[], int tope) {
+    int i, j, aux, min, max;
+    for (i = 0; i < tope; i++) {
+        min = max = i;
+        cout << "Vuelta: " << i << endl;
+        for (j = i + 1; j < tope ; j++) {
+            cout << "J: " << j << endl;
+
+            if (numeros[j] < numeros[min]) {
+                min = j;
+            }
+            if (numeros[j] > numeros[max]) {
+                max = j;
+            }
+        }
+        aux = numeros[i];
+        numeros[i] = numeros[min];
+        numeros[min] = aux;
+        aux = numeros[tope - 1];
+        numeros[tope - 1] = numeros[max];
+        numeros[max] = aux;
+        tope--;
     }
 }
 

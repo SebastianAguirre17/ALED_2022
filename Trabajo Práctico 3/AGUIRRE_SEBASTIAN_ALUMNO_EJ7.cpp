@@ -4,7 +4,7 @@
 
 #include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
 
-#define SALIDA          999
+#define SALIDA          4
 #define APERTURA        7
 #define CIERRE          21
 #define TOPE_COCHERA    10
@@ -12,42 +12,47 @@
 struct tyVehiculo {
     string patente;
     int hora;
+    int minutos;
 };
 
 string menu();
-void ingresoDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &topeActual);
-bool hayEspacioEnCohcera(int topeCochera, int topeActual);
-int  buscarVehiculoPorPatente(tyVehiculo vehiculos[], int topeActual, string patente);
-void agregarVehiculo(tyVehiculo vehiculos[], int &topeActual);
-void salidaDeVehiculo(tyVehiculo vehiculos[], int &topeActual);
-void quitarVehiculo(tyVehiculo vehiculos[], int &topeActual, int pos);
-void listadoDeVehiculos(tyVehiculo vehiculos[], int topeActual);
-void mostrarVehiculos(tyVehiculo vehiculos[], int topeActual);
-void finalizarPrograma(tyVehiculo vehiculos[], int topeActual, int &opcion);
+void ingresoDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &cantVehiculosEstacionados);
+bool hayEspacioEnCohcera(int topeCochera, int cantVehiculosEstacionados);
+int  buscarVehiculoPorPatente(tyVehiculo vehiculos[], int cantVehiculosEstacionados, string patente);
+void agregarVehiculo(tyVehiculo vehiculos[], int &cantVehiculosEstacionados);
+void salidaDeVehiculo(tyVehiculo vehiculos[], int &cantVehiculosEstacionados);
+void quitarVehiculo(tyVehiculo vehiculos[], int &cantVehiculosEstacionados, int pos);
+void listadoDeVehiculos(tyVehiculo vehiculos[], int cantVehiculosEstacionados);
+void mostrarVehiculos(tyVehiculo vehiculos[], int cantVehiculosEstacionados);
+void mostrarVehiculo(tyVehiculo vehiculo);
+void finalizarPrograma(int cantVehiculosEstacionados);
+void mostrarMensajeDeError();
 
 int main(){
     string menuDeOPciones = menu();
     tyVehiculo cochera[TOPE_COCHERA];
-    int opcion, topeActual = 0;
+    int opcion, cantVehiculosEstacionados = 0;
 
     do {
         system("CLS");
         ingresarEntero(opcion, menuDeOPciones);
         switch (opcion) {
             case 1:
-                ingresoDeVehiculo(cochera, TOPE_COCHERA, topeActual);
+                ingresoDeVehiculo(cochera, TOPE_COCHERA, cantVehiculosEstacionados);
                 break;
             case 2:
-                salidaDeVehiculo(cochera, topeActual);
+                salidaDeVehiculo(cochera, cantVehiculosEstacionados);
                 break;
             case 3:
-                listadoDeVehiculos(cochera, topeActual);
+                listadoDeVehiculos(cochera, cantVehiculosEstacionados);
                 break;
             case 4:
-                finalizarPrograma(cochera, topeActual, opcion);
+                finalizarPrograma(cantVehiculosEstacionados);
                 break;
+            default:
+                mostrarMensajeDeError();
         }
-    } while (opcion != SALIDA);
+    } while (opcion != SALIDA or cantVehiculosEstacionados != 0);
 
     mostrarTitulo("Gracias por usar este programa");
 	return EXIT_SUCCESS;
@@ -67,11 +72,11 @@ string menu() {
 }
 
 // INGRESO
-void ingresoDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &topeActual) {
+void ingresoDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &cantVehiculosEstacionados) {
     mostrarTitulo("Ingreso de Vehiculo");
 
-    if (hayEspacioEnCohcera(topeCochera, topeActual)) {
-        agregarVehiculo(vehiculos, topeActual);
+    if (hayEspacioEnCohcera(topeCochera, cantVehiculosEstacionados)) {
+        agregarVehiculo(vehiculos, cantVehiculosEstacionados);
     } else {
         cout << "No hay cocheras libres.\n\n";
     }
@@ -79,44 +84,49 @@ void ingresoDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &topeActual)
     system("PAUSE");
 }
 
-bool hayEspacioEnCohcera(int topeCochera, int topeActual) {
-    return topeActual < topeCochera;
+bool hayEspacioEnCohcera(int topeCochera, int cantVehiculosEstacionados) {
+    return cantVehiculosEstacionados < topeCochera;
 }
 
-void agregarVehiculo(tyVehiculo vehiculos[], int &topeActual) {
+void agregarVehiculo(tyVehiculo vehiculos[], int &cantVehiculosEstacionados) {
     tyVehiculo auxVehiculo;
-    ingresarStringValido(auxVehiculo.patente, 6, 7, "Ingrese la patente: ");
-    if (buscarVehiculoPorPatente(vehiculos, topeActual, auxVehiculo.patente) == EXIT_ERROR) {
+    ingresarStringValido(auxVehiculo.patente, 6, 10, "Ingrese la patente: "); // QWE123 - AS345AS
+    if (buscarVehiculoPorPatente(vehiculos, cantVehiculosEstacionados, auxVehiculo.patente) == EXIT_ERROR) {
         ingresarEnteroEnRango(auxVehiculo.hora, APERTURA, CIERRE, "Ingrese hora de ingreso (7 a 21): ");
-        vehiculos[topeActual] = auxVehiculo;
-        topeActual++;
+        ingresarEnteroEnRango(auxVehiculo.minutos, 0, 59, "Ingrese los minutos: ");
+        vehiculos[cantVehiculosEstacionados] = auxVehiculo;
+        cantVehiculosEstacionados++;
         cout << "\nVehiculo guardado.\n\n";
     } else {
         cout << "\nEl vehiculo ya se encuentra estacionado.\n\n";
     }
 }
 
-int buscarVehiculoPorPatente(tyVehiculo vehiculos[], int topeActual, string patente) {
+int buscarVehiculoPorPatente(tyVehiculo vehiculos[], int cantVehiculosEstacionados, string patente) {
     int i = 0;
-    while (i < topeActual and vehiculos[i].patente != patente) {
+    while (i < cantVehiculosEstacionados and vehiculos[i].patente != patente) {
         i++;
     }
-    if (i == topeActual)
+    if (i == cantVehiculosEstacionados)
         i = EXIT_ERROR;
     return i;
 }
 
 // SALIDA
-void salidaDeVehiculo(tyVehiculo vehiculos[], int &topeActual) {
+void salidaDeVehiculo(tyVehiculo vehiculos[], int &cantVehiculosEstacionados) {
     mostrarTitulo("Salida de Vehiculo");
     
-    if (topeActual > 0) {
+    if (cantVehiculosEstacionados > 0) {
         string patente;
-        ingresarStringValido(patente, 6, 7, "Ingrese la patente: ");
-        int pos = buscarVehiculoPorPatente(vehiculos, topeActual, patente);
+        ingresarStringValido(patente, 6, 10, "Ingrese la patente: ");
+        int pos = buscarVehiculoPorPatente(vehiculos, cantVehiculosEstacionados, patente);
         if (pos != EXIT_ERROR) {
-            cout << "\nEl vehiculo entro a las: " << vehiculos[pos].hora << endl << endl;
-            quitarVehiculo(vehiculos, topeActual, pos);
+            cout << "\nEl vehiculo entro a las: " << vehiculos[pos].hora << ":";
+            if (vehiculos[pos].minutos < 10)
+                cout << "0" << vehiculos[pos].minutos << " Hs." << endl << endl;
+            else
+                cout << vehiculos[pos].minutos << " Hs." << endl << endl;
+            quitarVehiculo(vehiculos, cantVehiculosEstacionados, pos);
         } else {
             cout << "\nEl vehiculo no se encuentra estacionado.\n\n";
         }
@@ -127,41 +137,55 @@ void salidaDeVehiculo(tyVehiculo vehiculos[], int &topeActual) {
     system("PAUSE");
 }
 
-void quitarVehiculo(tyVehiculo vehiculos[], int &topeActual, int pos) {
+void quitarVehiculo(tyVehiculo vehiculos[], int &cantVehiculosEstacionados, int pos) {
     int i;
-    for (i = pos; i < topeActual; i++) {
+    for (i = pos; i < cantVehiculosEstacionados; i++) {
         vehiculos[i] = vehiculos[i + 1];
     }
-    topeActual--;
+    cantVehiculosEstacionados--;
 }
 
 // LISTADO
-void listadoDeVehiculos(tyVehiculo vehiculos[], int topeActual) {
+void listadoDeVehiculos(tyVehiculo vehiculos[], int cantVehiculosEstacionados) {
     mostrarTitulo("Listado de Vehiculos");
     
-    if (topeActual == 0) {
+    if (cantVehiculosEstacionados == 0) {
         cout << "No hay Vehiculos estacionados.\n\n";
     } else {
-        mostrarVehiculos(vehiculos, topeActual);
+        mostrarVehiculos(vehiculos, cantVehiculosEstacionados);
     }
-
     system("PAUSE");   
 }
 
-void mostrarVehiculos(tyVehiculo vehiculos[], int topeActual) {
+void mostrarVehiculos(tyVehiculo vehiculos[], int cantVehiculosEstacionados) {
     int i;
-    for(i = 0; i < topeActual; i++) {
-        cout << "Patente: " << vehiculos[i].patente << " - Hora de ingreso: " << vehiculos[i].hora << endl; 
+    for(i = 0; i < cantVehiculosEstacionados; i++) {
+        mostrarVehiculo(vehiculos[i]);
     } 
     cout << endl;
 }
 
+void mostrarVehiculo(tyVehiculo vehiculo) {
+    cout << "Patente: " << vehiculo.patente;
+    if (vehiculo.hora < 10)
+        cout << " - Hora de ingreso: " << "0" << vehiculo.hora << ":"; 
+    else
+        cout << " - Hora de ingreso: " << vehiculo.hora << ":"; 
+    if (vehiculo.minutos < 10)
+        cout << "0" << vehiculo.minutos << " Hs." << endl;
+    else
+        cout << vehiculo.minutos << " Hs." << endl;
+}
+
 // FIN
-void finalizarPrograma(tyVehiculo vehiculos[], int topeActual, int &opcion) {
-    if (topeActual != 0) {
+void finalizarPrograma(int cantVehiculosEstacionados) {
+    if (cantVehiculosEstacionados != 0) {
         cout << "\nNo se puede cerrar, aun quedan vehiculos.\n\n";
         system("PAUSE");
-    } else {
-        opcion = SALIDA;
-    }
+    } 
+}
+
+void mostrarMensajeDeError() {
+    cout << "\nLa opcion ingresada es incorrecta.\n\n";
+    system("PAUSE");
 }
