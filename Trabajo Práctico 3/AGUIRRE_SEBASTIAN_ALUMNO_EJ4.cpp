@@ -7,13 +7,28 @@
 #define TOPE 21
 
 int main(){
-    mostrarTitulo("Ejercicio 4");
+    // mostrarTitulo("Ejercicio 4");
 
-    char frase[TOPE] = "satse omoc aloH";
+    char frase[TOPE] = "abeurp ed esarF";
 
-    mostrarTitulo(frase);
+    mostrarTitulo("Frase inicial");
+    mostrarString(frase);
+    cout << endl;
+
     invertirFrase(frase, TOPE);
-    mostrarTitulo(frase);
+
+    mostrarTitulo("Frase invertida");
+    mostrarString(frase);
+    cout << endl;
+
+    mostrarTitulo("Nueva frase");
+    ingresarCadenaCharValida(frase, TOPE, "Ingrese un texto de menos de 20 caracteres: ");
+    
+    invertirFrase(frase, TOPE);
+
+    mostrarTitulo("Frase invertida");
+    mostrarString(frase);
+    cout << endl;
 
 	return EXIT_SUCCESS;
 }
