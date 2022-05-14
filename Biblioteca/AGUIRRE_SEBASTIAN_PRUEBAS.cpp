@@ -7,12 +7,10 @@
 
 int main(){
 
-	int vec[] = { 12, 5, 4, 5, 9, 11, 5, 4, 13, 7 };
+	int vec[] = { 0, 15, 6, 4 ,5, 9, 3, 9, 10, 2, 17, 1, 12, 22 };
 
-	//ordenamientoPorSeleccion(vec, 10);
-	cout << endl << endl;
-	ordenamientoPorSeleccionV2(vec, 10);
-	mostrarArrayNumericoConIndice(vec, 10);
+	ordenamientoPorSeleccionV2(vec, 14);
+	mostrarArrayNumericoConIndice(vec, 14);
 
 	
 

@@ -34,6 +34,12 @@ void ingresarEnteroEnRango(int &valor, int desde, int hasta, string mensaje) {
     } while (valor < desde or valor > hasta);
 }
 
+void swapEntero(int &a, int &b) {
+    int aux = a;
+    a = b;
+    b = aux;
+}
+
 // FLOTANTES
 void ingresarFlotante(float &valor, string mensaje) {
     cout << mensaje;
@@ -57,6 +63,12 @@ void repetirCaracter(char c, int cant) {
     for (int i = 0; i < cant; i++) {
         cout << c;
     }
+}
+
+void swapCaracter(char &a, char &b) {
+    char aux = a;
+    a = b;
+    b = aux;
 }
 
 int contarCaracteresDeCadenaChar(char cadChar[], int tope) {
@@ -93,12 +105,9 @@ void ingresarCaracterValido(char &dest, char validos[], int tope, string mensaje
 
 void invertirFrase(char cadChar[], int tope) {
     int i = 0, longitud = contarCaracteresDeCadenaChar(cadChar, tope), j = longitud - 1;
-    char aux;
 
     while (cadChar[i] != FIN_LINEA and i < longitud / 2) {
-        aux = cadChar[i];
-        cadChar[i] = cadChar[j];
-        cadChar[j] = aux;
+        swapCaracter(cadChar[i], cadChar[j]);
         i++;
         j--;
     }
@@ -183,42 +192,12 @@ void ordenamientoPorSeleccion(int numeros[], int tope) {
     int i, j, aux, min;
     for (i = 0; i < tope; i++) {
         min = i;
-        cout << "Vuelta: " << i << endl;
         for (j = i + 1; j < tope ; j++) {
-            cout << "J: " << j << endl;
-
             if (numeros[j] < numeros[min]) {
                 min = j;
             }
         }
-        aux = numeros[i];
-        numeros[i] = numeros[min];
-        numeros[min] = aux;
-    }
-}
-
-void ordenamientoPorSeleccionV2(int numeros[], int tope) {
-    int i, j, aux, min, max;
-    for (i = 0; i < tope; i++) {
-        min = max = i;
-        cout << "Vuelta: " << i << endl;
-        for (j = i + 1; j < tope ; j++) {
-            cout << "J: " << j << endl;
-
-            if (numeros[j] < numeros[min]) {
-                min = j;
-            }
-            if (numeros[j] > numeros[max]) {
-                max = j;
-            }
-        }
-        aux = numeros[i];
-        numeros[i] = numeros[min];
-        numeros[min] = aux;
-        aux = numeros[tope - 1];
-        numeros[tope - 1] = numeros[max];
-        numeros[max] = aux;
-        tope--;
+        swapEntero(numeros[i], numeros[min]);
     }
 }
 
@@ -243,6 +222,38 @@ int busquedaSecuencial(int numeros[], int tope, int buscado) {
     if (i == tope)
         i = EXIT_ERROR;
     return i;
+}
+
+void buscarPosMinYMaxEnArrayNumerico(int vec[], int desde, int hasta, int &minPos, int &maxPos) {
+    int i, vMin, vMax;
+    minPos = maxPos = desde;
+    vMax = vMin = vec[desde];
+    for (i = desde; i < hasta; i++) {
+        if (vec[i] < vMin) {
+            minPos = i;
+            vMin = vec[i];
+        }
+        if (vec[i] > vMax) {
+            maxPos = i;
+            vMax = vec[i];
+        }
+    }
+}
+
+void ordenamientoPorSeleccionV2(int numeros[], int tope) {
+    /* INCOMPLETO */
+    int i, aux, min, max;
+    for (i = 0; i < tope; i++) {
+        cout << "Vuelta: " << i << endl;
+        buscarPosMinYMaxEnArrayNumerico(numeros, i, tope, min, max);
+        aux = numeros[i];
+        numeros[i] = numeros[min];
+        numeros[min] = aux;
+        tope--;
+        aux = numeros[tope];
+        numeros[tope] = numeros[max];
+        numeros[max] = aux;
+    }
 }
 
 void mostrarArrayNumerico(int numeros[], int tope) {
@@ -272,5 +283,7 @@ int contarRepeticionesEnVecNumerico(int vec[], int tope, int buscado) {
     }
     return q;
 }
+
+
 
 #endif
