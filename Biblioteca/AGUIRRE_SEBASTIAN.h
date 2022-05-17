@@ -25,6 +25,7 @@ void ingresarEnteroPositivo(int &valor, string mensaje) {
         cout << mensaje;
         cin >> valor;
     } while (valor <= 0);
+    cin.ignore(); // Limpiar buffer cin para usar getline
 }
 
 void ingresarEnteroEnRango(int &valor, int desde, int hasta, string mensaje) {
@@ -32,6 +33,7 @@ void ingresarEnteroEnRango(int &valor, int desde, int hasta, string mensaje) {
         cout << mensaje;
         cin >> valor;
     } while (valor < desde or valor > hasta);
+    cin.ignore(); // Limpiar buffer cin para usar getline
 }
 
 void swapEntero(int &a, int &b) {
@@ -188,9 +190,15 @@ void inicializarArrayNumerico(int numeros[], int tope) {
     }
 }
 
+void inicializarArrayFlotante(float numeros[], int tope) {
+    for (int i = 0; i < tope; i++) {
+        numeros[i] = 0;
+    }
+}
+
 void ordenamientoPorSeleccion(int numeros[], int tope) {
     int i, j, aux, min;
-    for (i = 0; i < tope; i++) {
+    for (i = 0; i < tope - 1; i++) {
         min = i;
         for (j = i + 1; j < tope ; j++) {
             if (numeros[j] < numeros[min]) {
@@ -222,6 +230,18 @@ int busquedaSecuencial(int numeros[], int tope, int buscado) {
     if (i == tope)
         i = EXIT_ERROR;
     return i;
+}
+
+void buscarPosMaxEnArrayNumerico(int vec[], int tope, int &maxPos) {
+    int i, vMax;
+    maxPos = 0;
+    vMax = vec[0];
+    for (i = 0; i < tope; i++) {
+        if (vec[i] > vMax) {
+            maxPos = i;
+            vMax = vec[i];
+        }
+    }
 }
 
 void buscarPosMinYMaxEnArrayNumerico(int vec[], int desde, int hasta, int &minPos, int &maxPos) {
