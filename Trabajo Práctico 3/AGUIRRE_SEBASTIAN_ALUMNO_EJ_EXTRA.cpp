@@ -2,29 +2,6 @@
 #include <cstdlib>
 #include <cstdio>
 
-/*Una empresa de telefonía celular cuenta con un grupo de promotores que
-se dedican a vender sus 10 modelos de teléfonos.
-Cada una de las ventas realizadas se informa con la siguiente estructura:
-Nombre del promotor (string) (“fin” para salir)
-Descripción del teléfono (string)
-Cantidad Vendida (numérico entero > 0).
-Día del mes en que se realizó la venta (1 a 31)
-Los datos deben ser validados
-Se cuenta además con la información correspondiente a los 40
-promotores:
-Nombre del promotor (string)
-Porcentaje de comisión (numérico real)
-Y con la información correspondiente a los 10 modelos de teléfonos:
-Descripción del teléfono (string)
-Precio (numérico real)
-Se pide informar:
-a) Importe de factura y el importe a cobrar por el promotor en
-concepto de comisión.
-b) Cantidad de facturas realizadas en cada día del mes.
-c) Importe total a cobrar por cada promotor en concepto de
-comisión
-d) Teléfono más vendido.*/
-
 #include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
 
 #define CANT_MODELOS    10
@@ -133,7 +110,6 @@ void ingresarVenta(tyPromotor promotores[], int topeProm, tyTelefono telefonos[]
     mostrarTitulo("Ingresar Venta");
 
     ingresarPromotor(promotores, topeProm, posProm);
-
     if (posProm != EXIT_ERROR and promotores[posProm].nombre != FIN) {
         ingresarTeleono(telefonos, CANT_MODELOS, posTel);
         ingresarEnteroPositivo(cantidad, "Ingrese la cantidad: ");
@@ -227,7 +203,7 @@ void mostrarComisionesPorPromotor(float acumComisiones[], tyPromotor promotores[
     int i;
     for (i = 0; i < topeProm; i++) {
         if (acumComisiones[i] > 0) {
-            cout << promotores[i].nombre << " gano $ " << acumComisiones[i] << endl;
+            cout << promotores[i].nombre << " gano $ " << acumComisiones[i] << " en comisiones" << endl;
             hayResultados = true;
         }
     }
