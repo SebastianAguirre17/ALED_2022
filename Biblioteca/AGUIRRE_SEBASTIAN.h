@@ -13,7 +13,57 @@
 
 using namespace std;
 
-// ENTEROS
+// PROTOTIPOS
+void ingresarEntero(int &valor, string mensaje);
+void ingresarEnteroPositivo(int &valor, string mensaje);
+void ingresarEnteroEnRango(int &valor, int desde, int hasta, string mensaje);
+void swapEntero(int &a, int &b);
+
+void ingresarFlotante(float &valor, string mensaje);
+void ingresarFlotantePositivo(float &valor, string mensaje);
+
+void ingresarCaracter(char &dest, string msg);
+void ingresarCaracterValido(char &dest, char validos[], int tope, string mensaje);
+void repetirCaracter(char c, int cant);
+void swapCaracter(char &a, char &b);
+bool esCaracterValido(char c, char validos[], int tope);
+
+int contarCaracteresDeCadenaChar(char cadChar[], int tope);
+int buscarCaracterEnCadenaChar(char cadChar[], int tope, char c);
+int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char c1, char c2);
+int buscarCaracterEnRango(char cadChar[], int desde, int hasta, char c);
+void ingresarCadenaCharValida(char cadChar[], int tope, string mensaje);
+void convertirStringACadenaChar(string source, char dest[]);
+void copiarCadenaChar(char dest[], char source[], int tope);
+bool existenDosCarNoConsecutivos(char cadChar[], int tope, char car1, char car2); 
+
+void mostrarTitulo(string mensaje);
+void invertirFrase(char cadChar[], int tope);
+void mostrarString(string mensaje);
+bool validarLongitudString(string str, int tope);
+void ingresarString(string &dest, string mensaje);
+void ingresarStringValido(string &dest, int min, int max, string mensaje);
+void pedirStringConTope(string &dest, int tope);
+
+void inicializarArrayNumerico(int numeros[], int tope);
+void inicializarArrayFlotante(float numeros[], int tope);
+void ordenamientoPorSeleccion(int numeros[], int tope);
+void ordenamientoPorSeleccionV2(int numeros[], int tope);
+void ordenamientoPorInsercion(int numeros[], int tope);
+int busquedaSecuencial(int numeros[], int tope, int buscado);
+void buscarPosMaxEnArrayNumerico(int vec[], int tope, int &maxPos);
+void buscarPosMinYMaxEnArrayNumerico(int vec[], int desde, int hasta, int &minPos, int &maxPos);
+void mostrarArrayNumerico(int numeros[], int tope);
+void mostrarArrayNumericoConIndice(int numeros[], int tope);
+void cargarVecRandom(int vec[], int tope, int mod);
+int contarRepeticionesEnVecNumerico(int vec[], int tope, int buscado);
+
+int sumarDivisores(int num);
+int calcularNumeroInverso(int num);
+bool esNumeroCapicua(int num);
+bool sonNumerosAmigos(int num1, int num2);
+
+// DESARROLLO DE FUNCIONES
 void ingresarEntero(int &valor, string mensaje) {
     cout << mensaje;
     cin >> valor;
@@ -55,7 +105,6 @@ void ingresarFlotantePositivo(float &valor, string mensaje) {
     } while (valor <= 0);
 }
 
-// CARACTERES
 void ingresarCaracter(char &dest, string msg) {
     cout << msg;
     cin >> dest;
@@ -127,7 +176,6 @@ int buscarCaracteresEnCadenaChar(char cadChar[], int tope, char c1, char c2) {
     return i;
 }
 
-// STRINGS
 void mostrarString(string mensaje) {
     cout << mensaje;
 }
@@ -157,7 +205,6 @@ void mostrarTitulo(string mensaje) {
     cout << endl << endl;
 }
 
-// CADENAS
 void pedirStringConTope(string &dest, int tope) {
     cout << "Ingrese un texto de menos de " << tope << " caracteres: ";
     getline(cin, dest);
@@ -172,6 +219,15 @@ void convertirStringACadenaChar(string source, char dest[]) {
     dest[longitud] = FIN_LINEA;
 }
 
+void copiarCadenaChar(char dest[], char source[], int tope) {
+    int i = 0;
+    while (i < tope and source[i] != FIN_LINEA) {
+        dest[i] = source[i];
+        i++;
+    }
+    dest[i] = FIN_LINEA;
+}
+
 void ingresarCadenaCharValida(char cadChar[], int tope, string mensaje) {
     string auxString;
     bool cadValida;
@@ -183,7 +239,6 @@ void ingresarCadenaCharValida(char cadChar[], int tope, string mensaje) {
     convertirStringACadenaChar(auxString, cadChar);
 } 
 
-// ARRAYS
 void inicializarArrayNumerico(int numeros[], int tope) {
     for (int i = 0; i < tope; i++) {
         numeros[i] = 0;
@@ -304,6 +359,60 @@ int contarRepeticionesEnVecNumerico(int vec[], int tope, int buscado) {
     return q;
 }
 
+int sumarDivisores(int num) {
+    int div = 0;
+    for (int i = 1; i <= num / 2; i++) {
+        if (num % i == 0)
+            div += i;
+    }
+    return div;
+}   
+
+int calcularNumeroInverso(int num) {
+    int inv = 0;
+    while (num > 0) {
+        inv = num % 10 + inv * 10;
+        num = num / 10;
+    }
+    return inv;
+}
+
+bool esNumeroCapicua(int num) {
+    return (num == calcularNumeroInverso(num));
+}
+
+bool sonNumerosAmigos(int num1, int num2) {
+    int div1 = sumarDivisores(num1);
+    int div2 = sumarDivisores(num2);
+
+    return (num1 == div2 and num2 == div1);
+}
+
+bool esNumeroPar(int num) {
+    return (num % 2 == 0);
+}
+
+int buscarCaracterEnRango(char cadChar[], int desde, int hasta, char c) {
+    int i = desde;
+
+    while (i < hasta and cadChar[i] != c and cadChar[i] != FIN_LINEA ) {
+        i++;
+    }
+    if (i == hasta) 
+        i = EXIT_ERROR;
+    return i;
+}
+
+bool existenDosCarNoConsecutivos(char cadChar[], int tope, char car1, char car2) {
+    int i, longitud = contarCaracteresDeCadenaChar(cadChar, tope);
+    bool ret;
+    i = buscarCaracterEnRango(cadChar, 0, longitud, car1);  
+    if (i != EXIT_ERROR) {
+        i = buscarCaracterEnRango(cadChar, i, longitud, car2);
+        ret = i != EXIT_ERROR;   
+    }
+    return ret;
+}
 
 
 #endif
