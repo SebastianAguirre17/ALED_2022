@@ -10,6 +10,7 @@
 #define EXIT_ERROR      -1
 #define FIN_LINEA       '\0'
 #define REPETICIONES    10
+#define CANT_FICHEROS   1
 
 using namespace std;
 
@@ -412,6 +413,42 @@ bool existenDosCarNoConsecutivos(char cadChar[], int tope, char car1, char car2)
         ret = i != EXIT_ERROR;   
     }
     return ret;
+}
+
+bool abrirArchivo(char ruta[], char op[], FILE *&fichero) {
+	fichero = NULL;
+	if ((op[0] == 'w' or op[0] == 'r' or op[0] == 'a') and op[1] == 'b') {
+		fichero = fopen(ruta, op);
+	} 
+	return (fichero != NULL);
+}
+
+bool cerrarArchivo(FILE *fichero) {
+	bool result = false;
+	if (fichero != NULL) {
+		result = fclose(fichero) == 0;	
+	}
+	return result;
+}
+
+bool escribirArchivo(void *reg, int size, FILE *fichero) {
+	bool result = false;
+	if (fichero != NULL) {
+		result = fwrite(reg, size, CANT_FICHEROS, fichero) == 1;
+	}
+	return result ;
+}
+
+void leerArchivo(FILE * fichero, void *reg, int size, bool &fin, bool &pude){
+	fin = true; //Fuerzo la condici�n de fin a verdadero por si el fichero vino en null
+	if (fichero != NULL) {
+		if (fread(reg, size, CANT_FICHEROS, fichero) == 0) {
+			pude = false;
+		} else {
+			pude = true;
+			fin = feof(fichero);
+		}
+	}	
 }
 
 

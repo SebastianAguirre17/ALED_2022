@@ -5,15 +5,43 @@
 
 #include "AGUIRRE_SEBASTIAN.h" 
 
+struct tyPersona
+{
+	int dni;
+	char nombre[30];
+};
+
+void mostrarArch (char arch[]);
+
 int main(){
 
-	int vec[] = { 0, 15, 6, 4 ,5, 9, 3, 9, 10, 2, 17, 1, 12, 22 };
-
-	ordenamientoPorSeleccionV2(vec, 14);
-	mostrarArrayNumericoConIndice(vec, 14);
-
-	
+	mostrarArch("prueba.dat");
 
 	return EXIT_SUCCESS;
 }
+
+/*	Para implementaci�n local en el cpp*/
+
+void mostrarArch (char arch[]) {
+	tyPersona reg;
+	bool pude, finArch=false;
+	FILE *fichero=NULL;
+	int largo = sizeof(reg);
+	abrirArchivo(arch, "rb", fichero);
+	cout<<"El registro pesa: "<<sizeof(reg)<<" bytes"<<endl;
+	if (pude){
+		leerArchivo(fichero, &reg, largo, finArch, pude);
+		while(pude && !finArch) {
+			cout << "Nombre: "<<reg.nombre << endl;
+			cout << "------------------";
+			leerArchivo(fichero, &reg,sizeof(reg), finArch, pude);
+		}
+		cerrarArchivo(fichero);
+	}else{
+		cout<<"Archivo no encontrado...";
+	}
+}
+
+
+
 

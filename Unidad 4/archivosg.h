@@ -42,7 +42,7 @@ bool cerrarArch(FILE *fichero){
 }
 
 void leerArch(FILE * fichero, void *reg, int size, bool &fin, bool &pude){
-	fin=true; //Fuerzo la condición de fin a verdadero por si el fichero vino en null
+	fin=true; //Fuerzo la condiciï¿½n de fin a verdadero por si el fichero vino en null
 	if ( fichero != NULL ) {
 		if (fread(reg,size,1,fichero)==0){
 			pude=false;
@@ -53,7 +53,7 @@ void leerArch(FILE * fichero, void *reg, int size, bool &fin, bool &pude){
 	}	
 }
 
-/*	Para implementación local en el cpp
+/*	Para implementaciï¿½n local en el cpp
 
 void mostrarArch (char arch[]) {
 	ty_reg reg;
