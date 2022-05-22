@@ -88,6 +88,15 @@ int buscarTelefono(tyTelefono telefonos[], int tope, string descripcion) {
     return i;
 }
 
+bool validarVenta(tyPromotor promotores[], int topeProm, tyTelefono telefonos[], int topeTel, tyVenta venta) {
+    return (
+        buscarPromotor(promotores, topeProm, venta.promotor) != EXIT_ERROR and 
+        buscarTelefono(telefonos, topeTel, venta.descripcion) != EXIT_ERROR and
+        venta.cantidad > 0 and venta.dia > 0 and venta.dia < 32
+    ); 
+}
+
+
 #endif
 
 

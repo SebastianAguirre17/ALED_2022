@@ -15,5 +15,7 @@ int main(){
     cargarTelefonos(telefonos, CANT_TEL, rutaTelefonos, op);
     cargarPromotores(promotores, CANT_PROM, rutaPromotores, op);
 
+    
+
 	return EXIT_SUCCESS;
 }

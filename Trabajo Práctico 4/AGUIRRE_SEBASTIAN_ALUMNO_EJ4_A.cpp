@@ -21,16 +21,17 @@ int main(){
     
     FILE *fichero = NULL;
     char ruta[] = "ventas.dat"; 
+    char op[] = "ab";
     int size = sizeof(tyVenta);
 
-    if (abrirArchivo(ruta, "ab", fichero)) {
+    if (abrirArchivo(ruta, op, fichero)) {
         for (int i = 0; i < 10; i++) {
             if (not escribirArchivo(&ventas[i], size, fichero)) {
                 cout << "Error al guardar venta" << endl; 
             }
         }
-        if (not cerrarArchivo(fichero)) {
-            cout << "Error al cerrar el archivo" << endl;
+        if (cerrarArchivo(fichero)) {
+            cout << "Archivo de ventas guardado." << endl;
         }
     } else {
         cout << "Archivo no encontrado." << endl;

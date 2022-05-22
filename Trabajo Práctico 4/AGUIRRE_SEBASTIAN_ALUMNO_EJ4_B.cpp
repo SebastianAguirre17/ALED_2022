@@ -3,8 +3,6 @@
 #include <cstdio>
 #include "PROMOTORES_Y_TELEFONOS.h"
 
-void cargarVentas(tyVenta ventas[], char nombreArchivo[]);
-bool validarVenta(tyPromotor promotores[], int topeProm, tyTelefono telefonos[], int topeTel, tyVenta venta);
 
 int main(){
     mostrarTitulo("Ejercicio 4 - B");
@@ -61,10 +59,3 @@ int main(){
 	return EXIT_SUCCESS;
 }
 
-bool validarVenta(tyPromotor promotores[], int topeProm, tyTelefono telefonos[], int topeTel, tyVenta venta) {
-    return (
-        buscarPromotor(promotores, topeProm, venta.promotor) != EXIT_ERROR and 
-        buscarTelefono(telefonos, topeTel, venta.descripcion) != EXIT_ERROR and
-        venta.cantidad > 0 and venta.dia > 0 and venta.dia < 32
-    ); 
-}
