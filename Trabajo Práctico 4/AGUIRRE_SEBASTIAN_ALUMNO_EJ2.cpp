@@ -20,20 +20,18 @@ int main(){
     };
     FILE *fichero = NULL;
     char ruta[] = "telefonos.dat"; 
+    char op[] = "ab";
     int size = sizeof(tyTelefono);
+    bool result;
 
-    if (abrirArchivo(ruta, "ab", fichero)) {
+    abrirArchivo(ruta, op, fichero, result);
+
+    if (result) {
         for (int i = 0; i < CANT_TEL; i++) {
-            if (not escribirArchivo(&telefonos[i], size, fichero)) {
-                cout << "Error al guardar telefono: " << telefonos[i].descripcion << endl; 
-            }
+            escribirArchivo(&telefonos[i], size, fichero, result);
         }
-        if (not cerrarArchivo(fichero)) {
-            cout << "Error al cerrar el archivo" << endl;
-        }
-    } else {
-        cout << "Archivo no encontrado." << endl;
-    }
-    
+        cerrarArchivo(fichero, result);
+    } 
+
 	return EXIT_SUCCESS;
 }

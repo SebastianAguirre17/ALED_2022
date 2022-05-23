@@ -28,44 +28,40 @@ struct tyVenta {
     int dia;
 };
 
-void cargarTelefonos(tyTelefono telefonos[], int tope, char nombreArchivo[], char op[]) {
+void cargarTelefonos(tyTelefono telefonos[], int tope, char nombreArchivo[]) {
     tyTelefono telefono;
     int i = 0, size = sizeof(telefono);
     FILE *fichero = NULL;
     bool result, finDeArchivo;
+    char op[] = "rb";
 
-    if (abrirArchivo(nombreArchivo, op, fichero)) {
+    abrirArchivo(nombreArchivo, op, fichero, result);
+    if (result) {
         leerArchivo(fichero, &telefono, size, finDeArchivo, result);
         while (result and not finDeArchivo and i < tope) {
             telefonos[i++] = telefono;
             leerArchivo(fichero, &telefono, size, finDeArchivo, result);
         }
-        if (cerrarArchivo(fichero)) {
-            cout << "Telefonos cargados." << endl;
-        }
-    } else {
-        cout << "Error al abrir archivo: " << nombreArchivo << endl;
-    }
+        cerrarArchivo(fichero, result);
+    } 
 }
 
-void cargarPromotores(tyPromotor promotores[], int tope, char nombreArchivo[], char op[]) {
+void cargarPromotores(tyPromotor promotores[], int tope, char nombreArchivo[]) {
     tyPromotor promotor;
     int i = 0, size = sizeof(promotor);
     FILE *fichero = NULL;
     bool result, finDeArchivo;
+    char op[] = "rb";
 
-    if (abrirArchivo(nombreArchivo, op, fichero)) {
+    abrirArchivo(nombreArchivo, op, fichero, result);
+    if (result) {
         leerArchivo(fichero, &promotor, size, finDeArchivo, result);
         while (result and not finDeArchivo and i < tope) {
             promotores[i++] = promotor;
             leerArchivo(fichero, &promotor, size, finDeArchivo, result);
         }
-        if (cerrarArchivo(fichero)) {
-            cout << "Promotores cargados." << endl;
-        }
-    } else {
-        cout << "Error al abrir archivo: " << nombreArchivo << endl;
-    }
+        cerrarArchivo(fichero, result);
+    } 
 }
 
 int buscarPromotor(tyPromotor promotores[], int tope, string nombre) {

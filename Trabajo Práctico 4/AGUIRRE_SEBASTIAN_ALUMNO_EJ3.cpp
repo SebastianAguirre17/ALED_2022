@@ -10,12 +10,10 @@ int main(){
     tyPromotor promotores[CANT_PROM];
     char rutaTelefonos[] = "telefonos.dat";
     char rutaPromotores[] = "promotores.dat";
-    char op[] = "rb";
 
-    cargarTelefonos(telefonos, CANT_TEL, rutaTelefonos, op);
-    cargarPromotores(promotores, CANT_PROM, rutaPromotores, op);
+    cargarTelefonos(telefonos, CANT_TEL, rutaTelefonos);
+    cargarPromotores(promotores, CANT_PROM, rutaPromotores);
 
-    
 
 	return EXIT_SUCCESS;
 }

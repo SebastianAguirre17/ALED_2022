@@ -20,20 +20,17 @@ int main(){
     };
     FILE *fichero = NULL;
     char ruta[] = "promotores.dat"; 
-    int size = sizeof(tyPromotor);
+    char op[] = "ab";
+    int size = sizeof(promotores[0]);
+    bool result;
 
-    if (abrirArchivo(ruta, "ab", fichero)) {
+    abrirArchivo(ruta, op, fichero, result);
+    if (result) {
         for (int i = 0; i < CANT_PROM; i++) {
-            if (not escribirArchivo(&promotores[i], size, fichero)) {
-                cout << "Error al guardar promotor: " << promotores[i].nombre << endl; 
-            }
+            escribirArchivo(&promotores[i], size, fichero, result);
         }
-        if (not cerrarArchivo(fichero)) {
-            cout << "Error al cerrar el archivo" << endl;
-        }
-    } else {
-        cout << "Archivo no encontrado." << endl;
+        cerrarArchivo(fichero, result);
     }
-    
+
 	return EXIT_SUCCESS;
 }

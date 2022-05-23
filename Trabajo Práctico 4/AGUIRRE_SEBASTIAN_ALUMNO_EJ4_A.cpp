@@ -23,19 +23,15 @@ int main(){
     char ruta[] = "ventas.dat"; 
     char op[] = "ab";
     int size = sizeof(tyVenta);
+    bool result;
 
-    if (abrirArchivo(ruta, op, fichero)) {
+    abrirArchivo(ruta, op, fichero, result);
+    if (result) {
         for (int i = 0; i < 10; i++) {
-            if (not escribirArchivo(&ventas[i], size, fichero)) {
-                cout << "Error al guardar venta" << endl; 
-            }
-        }
-        if (cerrarArchivo(fichero)) {
-            cout << "Archivo de ventas guardado." << endl;
-        }
-    } else {
-        cout << "Archivo no encontrado." << endl;
-    }
-
+            escribirArchivo(&ventas[i], size, fichero, result);
+        }  
+        cerrarArchivo(fichero, result); 
+    } 
+    
 	return EXIT_SUCCESS;
 }

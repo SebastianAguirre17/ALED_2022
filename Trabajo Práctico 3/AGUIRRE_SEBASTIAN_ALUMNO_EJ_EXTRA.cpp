@@ -35,7 +35,7 @@ void incrementarAcumuladorFacturasPorDia(int contFactPorDia[], int dia);
 void incrementarContTelefonosVendidos(int contTelefonosVendidos[], int posTel, int cantidad);
 void incrementarAcumuladorComisiones(float acumComisiones[], int posProm, float comision);
 void calcularImporteYComision(tyPromotor promotores[], tyTelefono telefonos[], int posProm, int posTel, int cantidad, float &importeTotal, float &comision);
-void mostrarFacturaYComision(tyPromotor promotores[], tyTelefono telefonos[], int posProm, int posTel, int cantidad, int importeTotal, float comision);
+void mostrarFacturaYComision(tyPromotor promotores[], tyTelefono telefonos[], int posProm, int posTel, int cantidad, float importeTotal, float comision);
 void mostrarTelefonoMasVendido(int contTelefonosVendidos[], tyTelefono telefonos[], int topeTel);
 void mostrarComisionesPorPromotor(float acumComisiones[], tyPromotor promotores[], int topeProm);
 void mostrarCantFacturasPorDia(int contFactPorDia[], int topeDias);
@@ -167,10 +167,10 @@ void incrementarContTelefonosVendidos(int contTelefonosVendidos[], int posTel, i
 
 void calcularImporteYComision(tyPromotor promotores[], tyTelefono telefonos[], int posProm, int posTel, int cantidad, float &importeTotal, float &comision) {
     importeTotal = telefonos[posTel].precio * cantidad;
-    comision = promotores[posTel].comision * importeTotal / PORCENTAJE;
+    comision = promotores[posProm].comision * importeTotal / PORCENTAJE;
 }
 
-void mostrarFacturaYComision(tyPromotor promotores[], tyTelefono telefonos[], int posProm, int posTel, int cantidad, int importeTotal, float comision) {
+void mostrarFacturaYComision(tyPromotor promotores[], tyTelefono telefonos[], int posProm, int posTel, int cantidad, float importeTotal, float comision) {
     mostrarTitulo("Factura");
 
     cout << "Nombre del promotor     : " << promotores[posProm].nombre << endl;

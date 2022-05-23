@@ -415,32 +415,41 @@ bool existenDosCarNoConsecutivos(char cadChar[], int tope, char car1, char car2)
     return ret;
 }
 
-bool abrirArchivo(char ruta[], char op[], FILE *&fichero) {
+void abrirArchivo(char ruta[], char op[], FILE *&fichero, bool &result) {
 	fichero = NULL;
 	if ((op[0] == 'w' or op[0] == 'r' or op[0] == 'a') and op[1] == 'b') {
 		fichero = fopen(ruta, op);
-	} 
-	return (fichero != NULL);
+	} else {
+        cout << "ERROR - No se reconoce el modo de acceso." << endl;
+    }
+    result = (fichero != NULL);
+    if (not result) {
+        cout << "ERROR - No se pudo abrir archivo: " << ruta << endl;
+    }
 }
 
-bool cerrarArchivo(FILE *fichero) {
-	bool result = false;
+void cerrarArchivo(FILE *fichero, bool &result) {
+	result = false;
 	if (fichero != NULL) {
 		result = fclose(fichero) == 0;	
+        if (not result) {
+            cout << "ERROR - No se pudo cerrar el archivo";
+        }
 	}
-	return result;
 }
 
-bool escribirArchivo(void *reg, int size, FILE *fichero) {
-	bool result = false;
+void escribirArchivo(void *reg, int size, FILE *fichero, bool &result) {
+	result = false;
 	if (fichero != NULL) {
 		result = fwrite(reg, size, CANT_FICHEROS, fichero) == 1;
+        if (not result) {
+            cout << "ERROR - No se pudo escribir el archivo";
+        }
 	}
-	return result ;
 }
 
-void leerArchivo(FILE * fichero, void *reg, int size, bool &fin, bool &pude){
-	fin = true; //Fuerzo la condici�n de fin a verdadero por si el fichero vino en null
+void leerArchivo(FILE *fichero, void *reg, int size, bool &fin, bool &pude){
+	fin = true;
 	if (fichero != NULL) {
 		if (fread(reg, size, CANT_FICHEROS, fichero) == 0) {
 			pude = false;

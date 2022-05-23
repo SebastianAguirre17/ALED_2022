@@ -13,47 +13,37 @@ int main(){
     int i = 0, size = sizeof(venta);
     FILE *fichero = NULL, *fVentasValidas = NULL, *fVentasErroneas = NULL;
     bool result, finDeArchivo;
+    char op[] = "rb";
+    char opE[] = "ab";
     char rutaVentas[] = "ventas.dat";
-    char opLectura[] = "rb";
-    char opEscritura[] = "ab";
     char rutaTelefonos[] = "telefonos.dat";
     char rutaPromotores[] = "promotores.dat";
     char rutaVentasValidas[] = "ventasValidas.dat";
     char rutaVentasErroneas[] = "ventasErroneas.dat";
 
-    cargarTelefonos(telefonos, CANT_TEL, rutaTelefonos, opLectura);
-    cargarPromotores(promotores, CANT_PROM, rutaPromotores, opLectura);
+    cargarTelefonos(telefonos, CANT_TEL, rutaTelefonos);
+    cargarPromotores(promotores, CANT_PROM, rutaPromotores);
 
-    if (abrirArchivo(rutaVentas, opEscritura, fichero)) {
-        if (abrirArchivo(rutaVentasValidas, opEscritura, fVentasValidas)) {
-            if (abrirArchivo(rutaVentasErroneas, opEscritura, fVentasErroneas)) {
-
+    abrirArchivo(rutaVentas, op, fichero, result);
+    if (result) {
+        abrirArchivo(rutaVentasValidas, opE, fVentasValidas, result);
+        if (result) {
+            abrirArchivo(rutaVentasErroneas, opE, fVentasErroneas, result);
+            if (result) {
                 leerArchivo(fichero, &venta, size, finDeArchivo, result);
                 while (result and not finDeArchivo) {
-                    if (validarVenta)
-                    leerArchivo(fichero, &venta, size, finDeArchivo, result);
                     if (validarVenta(promotores, CANT_PROM, telefonos, CANT_TEL, venta)) {
-                        if (not escribirArchivo(&venta, size, fVentasValidas)) {
-                            cout << "Error al guardar venta: " << endl; 
-                        }
+                        escribirArchivo(&venta, size, fVentasValidas, result);
                     } else {
-                        if (not escribirArchivo(&venta, size, fVentasErroneas)) {
-                            cout << "Error al guardar venta: " << endl; 
-                        }
+                        escribirArchivo(&venta, size, fVentasErroneas, result);
                     }
+                    leerArchivo(fichero, &venta, size, finDeArchivo, result);
                 }
-                if (cerrarArchivo(fichero)) {
-                    cout << "Ventas cargadas." << endl;
-                }
-            } else {
-                cout << "Error al abrir archivo: " << rutaVentasErroneas << endl;
+                cerrarArchivo(fVentasErroneas, result);
             }
-        } else {
-            cout << "Error al abrir archivo: " << rutaVentasValidas << endl;
+            cerrarArchivo(fVentasValidas, result);
         }
-
-    } else {
-        cout << "Error al abrir archivo: " << rutaVentas << endl;
+        cerrarArchivo(fichero, result);
     }
 
 	return EXIT_SUCCESS;
