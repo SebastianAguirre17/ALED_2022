@@ -52,7 +52,7 @@ void calcularImporteYComision(tyPromotor promotores[], int topeProm, tyTelefono 
     int posTel = buscarTelefono(telefonos, topeTel, venta.descripcion);
     int posProm = buscarPromotor(promotores, topeProm, venta.promotor);
     importeTotal = telefonos[posTel].precio * venta.cantidad;
-    comision = promotores[posTel].comision * importeTotal / 100;
+    comision = promotores[posProm].comision * importeTotal / 100;
 }
 
 void incrementarAcumuladorFacturasPorDia(int contFactPorDia[], int dia) {

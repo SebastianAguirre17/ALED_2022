@@ -20,7 +20,7 @@ int main(){
     };
     FILE *fichero = NULL;
     char ruta[] = "promotores.dat"; 
-    char op[] = "ab";
+    char op[] = "wb";
     int size = sizeof(promotores[0]);
     bool result;
 

@@ -39,7 +39,7 @@ int main(){
     tyVehiculo cochera[TOPE_COCHERA];
     string menuDeOpciones = menu();
     int cantVehiculosEstacionados, opcion;
-    char rutaCochera[] = "cochera.dat";
+    char rutaCochera[] = "estacionamiento.dat";
     
     cantVehiculosEstacionados = 0;
     inicializarEstacionamiento(cochera, TOPE_COCHERA, rutaCochera, cantVehiculosEstacionados);

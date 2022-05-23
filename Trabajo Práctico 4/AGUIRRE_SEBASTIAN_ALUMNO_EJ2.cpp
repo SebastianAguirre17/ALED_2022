@@ -20,7 +20,7 @@ int main(){
     };
     FILE *fichero = NULL;
     char ruta[] = "telefonos.dat"; 
-    char op[] = "ab";
+    char op[] = "wb";
     int size = sizeof(tyTelefono);
     bool result;
 

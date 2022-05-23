@@ -14,7 +14,7 @@ int main(){
     FILE *fichero = NULL, *fVentasValidas = NULL, *fVentasErroneas = NULL;
     bool result, finDeArchivo;
     char op[] = "rb";
-    char opE[] = "ab";
+    char opE[] = "wb";
     char rutaVentas[] = "ventas.dat";
     char rutaTelefonos[] = "telefonos.dat";
     char rutaPromotores[] = "promotores.dat";
@@ -39,6 +39,7 @@ int main(){
                     }
                     leerArchivo(fichero, &venta, size, finDeArchivo, result);
                 }
+                cout << "Archivos generados." << endl;
                 cerrarArchivo(fVentasErroneas, result);
             }
             cerrarArchivo(fVentasValidas, result);
