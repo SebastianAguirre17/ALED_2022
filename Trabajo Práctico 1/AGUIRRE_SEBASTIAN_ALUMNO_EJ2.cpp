@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
+#include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
 
 #define MIN 1
 #define MAX 99
@@ -24,11 +24,10 @@ int main(){
     int edad, mayor = 0;
 
     inicilizarContador(contador);
-
-    edad = pedirEntero("Ingrese la edad: ");
+    ingresarEntero(edad, "Ingrese la edad: ");
     while (edad != EXIT_ERROR) {
         if (not validarNumeroEnRangoExcluyente(edad, MIN, MAX)) {
-            mostrarMensaje("La edad ingresada es incorrecta\n");
+            cout << "La edad ingresada es incorrecta" << endl;
         } else {
             if (edad > mayor)
                 mayor = edad;
@@ -39,7 +38,7 @@ int main(){
                 contador.laborales++;
         }
 
-        edad = pedirEntero("Ingrese la edad: ");
+        ingresarEntero(edad, "Ingrese la edad: ");
     }
     
     mostrarResultados(mayor, contador);

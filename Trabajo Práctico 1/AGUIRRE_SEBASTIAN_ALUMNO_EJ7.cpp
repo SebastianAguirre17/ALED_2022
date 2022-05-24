@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
+#include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
 
 #define SEMANA 7
 #define MES 4
@@ -41,7 +41,7 @@ int main(){
 
         while (dia < SEMANA) {
             dia++;
-            milPorDia = pedirEntero("Ingrese la cantidad del dia (ml): ");
+            ingresarEntero(milPorDia, "Ingrese la cantidad del dia (ml): ");
 
             contSemanal.acumSemana += milPorDia;
             if (milPorDia == 0)

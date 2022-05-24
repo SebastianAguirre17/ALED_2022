@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
+#include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
 
 using namespace std;
 
@@ -43,13 +43,13 @@ int main() {
     
     inicializarContadores(contFiestas, contTipoMenu);
 
-    auxFecha = retornarString("Ingresar fecha de la fiesta (* para salir): ");
+    ingresarString(auxFecha, "Ingresar fecha de la fiesta (* para salir): ");
     while (auxFecha != "*") {
         ingresarFiesta(fiesta, auxFecha);
         incrementarContadorTipos(contFiestas, fiesta.tipo);
         verificarMaximosPorMenu(contTipoMenu, fiesta);
         contInvitados += fiesta.cantidad;
-        auxFecha = retornarString("\n\nIngresar fecha de la fiesta (* para salir): ");
+        ingresarString(auxFecha, "Ingresar fecha de la fiesta (* para salir): ");
     }
     
     realizarInforme(contFiestas, contTipoMenu, contInvitados);
@@ -84,9 +84,9 @@ void incrementarContadorTipos(tyContFiestas &contFiestas, char tipo){
 
 void ingresarFiesta(tyFiesta &fiesta, string fecha){
     fiesta.fecha = fecha;
-    fiesta.tipo = pedirCaracter("Ingrese el tipo de fiesta (C - S - O): ");
-    fiesta.cantidad = pedirEntero("Ingrese la cantidad de personas: ");
-    fiesta.menu = pedirEntero("Ingrese el menu (1 - 2): ");
+    ingresarCaracter(fiesta.tipo, "Ingrese el tipo de fiesta (C - S - O): ");
+    ingresarEntero(fiesta.cantidad, "Ingrese la cantidad de personas: ");
+    ingresarEntero(fiesta.menu, "Ingrese el menu (1 - 2): ");
 }
 
 void verificarMaximosPorMenu(tyContTipoMenu &contTipoMenu, tyFiesta &fiesta) {
@@ -123,7 +123,7 @@ void realizarInforme(tyContFiestas &contFiestas, tyContTipoMenu &contTipoMenu, i
         cout << "El promedio de personas de todas las fiestas es de " << promedio << endl;
 
     } else {
-        mostrarMensaje("\nGracias por usar este simple programa.\n\n");
+        cout << endl << "Gracias por usar este simple programa." << endl << endl;
     }
 }
 

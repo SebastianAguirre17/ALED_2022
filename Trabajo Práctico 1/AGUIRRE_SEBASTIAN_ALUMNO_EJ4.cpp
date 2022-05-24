@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
+#include "../Biblioteca/AGUIRRE_SEBASTIAN.h"  
 
 #define CORTE -1
 
@@ -14,8 +14,8 @@ void mostrarInterrumpciones(int cantidad);
 int main() {
     mostrarTitulo("Ejercicio 4");
 
-    int contDeGrupos = 0, acumPorGrupo, anterior;
-    int numeroIngresado = pedirEntero("Ingrese un numero: ");
+    int contDeGrupos = 0, acumPorGrupo, anterior, numeroIngresado;
+    ingresarEntero(numeroIngresado, "Ingrese un numero: ");
     
     while (numeroIngresado != CORTE) {
         acumPorGrupo = 0;
@@ -24,7 +24,7 @@ int main() {
         while (numeroIngresado != CORTE and numeroIngresado > anterior) {
             acumPorGrupo++;
             anterior = numeroIngresado;
-            numeroIngresado = pedirEntero("Ingrese un numero: ");
+            ingresarEntero(numeroIngresado, "Ingrese un numero: ");
         }
 
         contDeGrupos++;

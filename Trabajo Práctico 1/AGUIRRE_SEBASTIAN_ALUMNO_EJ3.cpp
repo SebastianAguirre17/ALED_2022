@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
+#include "../Biblioteca/AGUIRRE_SEBASTIAN.h"  
 
 using namespace std;
 
@@ -16,7 +16,7 @@ int main() {
     float promedio = 0;
 
     while (promedio < PROM_MAXIMO and cantLeidos < TOPE_LISTA) {
-        numeroIngresado = pedirEntero("Ingrese un numero: ");
+        ingresarEntero(numeroIngresado, "Ingrese un numero: ");
         acumNumeros += numeroIngresado;
         cantLeidos++;
         promedio = acumNumeros / cantLeidos;

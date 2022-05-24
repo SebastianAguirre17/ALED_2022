@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <cstring>
 
-#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h"
+#include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
 
 using namespace std;
 
@@ -20,7 +20,7 @@ int main() {
     copiarCadenaChar(cad1, cad2, TOPE);
     mostrarLongitudDeCadena(cad1, cad2);
 
-    pedirCadenaCharValida(cad2, TOPE);
+    ingresarCadenaCharValida(cad2, TOPE, "Ingrese texto: ");
     copiarCadenaChar(cad1, cad2, TOPE);
     mostrarLongitudDeCadena(cad1, cad2);
 	

@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <cstring>
 
-#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h"
+#include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
 
 using namespace std;
 
@@ -68,14 +68,14 @@ int main() {
     int cantDePalabras = 0;
     // char parrafo[TOPE] = "??Hola, como estan? Bravo!! Veamos: ej4: Si?"; // Parrafo de prueba
     char parrafo[TOPE];
-    pedirCadenaCharValida(parrafo, TOPE);
+    ingresarCadenaCharValida(parrafo, TOPE, "Ingrese cadena: ");
 
     if (strlen(parrafo) > 0) {
         procesarParrafo(parrafo, TOPE, cantDePalabras);
         mostrarCantidadDePalabras(cantDePalabras);
         mostrarLongitudDeParrafo(parrafo, TOPE);
     } else {
-        mostrarMensaje("\nNo ha ingresado una frase, asi que aqui nos despedimos.\nGracias por usar este programa.\n\n");
+        cout << endl << "No ha ingresado una frase, asi que aqui nos despedimos.\nGracias por usar este programa." << endl << endl;
     }
 
 

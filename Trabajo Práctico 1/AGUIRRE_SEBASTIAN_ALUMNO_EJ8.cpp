@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
+#include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
 
 using namespace std;
 
@@ -50,7 +50,7 @@ void cargarLlamadas(tyContador &cont, string &prod, int &masLarga) {
     tyLlamada llamada;
     string auxComercio;
 
-    pedirString("Ingrese el Comercio (* para salir): ", auxComercio);
+    ingresarString(auxComercio, "Ingrese el Comercio (* para salir): ");
     while (auxComercio != "*") {
         ingresarLlamada(llamada, auxComercio);
         incrementarContador(cont, llamada.tipo);
@@ -58,7 +58,7 @@ void cargarLlamadas(tyContador &cont, string &prod, int &masLarga) {
             masLarga = llamada.duracion;
             prod = llamada.codigo;
         }
-        auxComercio = retornarString("\nIngrese el Comercio (* para salir): ");
+        ingresarString(auxComercio, "Ingrese el Comercio (* para salir): ");
     }
 }
 
@@ -67,9 +67,9 @@ void ingresarLlamada(tyLlamada &llamada, string comercio) {
 
     inicializarLlamada(llamada);
     llamada.comercio = comercio;
-    llamada.codigo = retornarString("Ingrese el Codigo de Producto: ");
-    pedirCaracterValido(llamada.tipo, validos, TOPE_TIPO_LLAMADO, "Ingrese el Tipo de Llamada (C - R): ");
-    llamada.duracion = pedirEnteroPositivo("Ingrese la Duracion: ");
+    ingresarString(llamada.codigo, "Ingrese el Codigo de Producto: ");
+    ingresarCaracterValido(llamada.tipo, validos, TOPE_TIPO_LLAMADO, "Ingrese el Tipo de Llamada (C - R): ");
+    ingresarEnteroPositivo(llamada.duracion, "Ingrese la Duracion: ");
 }
 
 void inicializarLlamada(tyLlamada &llamada) {

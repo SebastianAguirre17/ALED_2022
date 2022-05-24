@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <cstring>
 
-#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h"
+#include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
 
 #define TOPE_CADENA 65
 #define TOPE_VOCALES 5

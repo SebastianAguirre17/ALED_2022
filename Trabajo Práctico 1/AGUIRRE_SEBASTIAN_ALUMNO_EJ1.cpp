@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 
-#include "../AGUIRRE_SEBASTIAN_BIBLIOTECA.h" 
+#include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
 
 #define DESDE 2
 #define HASTA 9
@@ -16,11 +16,11 @@ int main(){
     mostrarTitulo("Ejercicio 1");
 
 	int valor;
-	pedirEnteroEnRango(valor, 2, 9);
+	ingresarEnteroEnRango(valor, 2, 9, "Ingrese un numero entre 2 y 9: ");
 
-	mostrarMensaje("Orden Ascendente: \n");
+	cout << "Orden Ascendente" << endl;
 	mostrarMultiplos(valor, TOPE, 'A');
-	mostrarMensaje("\nOrden Descendente: \n");
+	cout << endl << "Orden Descendente" << endl;
 	mostrarMultiplos(valor, TOPE, 'D');
     
 	return EXIT_SUCCESS;
@@ -37,7 +37,7 @@ void mostrarMultiplos(int valor, int tope, char orden) {
 void mostarMultiplosAscendentes(int valor, int limite) {
     for (int i = valor; i <= limite ; i++) {
         if (i % valor == 0) {
-            mostrarNumeroEntero(i);
+            cout << i << endl;
         }
     }
 }
@@ -45,7 +45,7 @@ void mostarMultiplosAscendentes(int valor, int limite) {
 void mostrarMultiplosDescendentes(int valor, int limite) {
     for (int i = limite; i >=  valor; i--) {
         if (i % valor == 0) {
-            mostrarNumeroEntero(i);
+            cout << i << endl;
         }
     }
 }

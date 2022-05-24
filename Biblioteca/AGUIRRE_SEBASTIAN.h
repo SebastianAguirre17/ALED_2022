@@ -87,13 +87,20 @@ void ingresarEnteroEnRango(int &valor, int desde, int hasta, string mensaje) {
     cin.ignore(); // Limpiar buffer cin para usar getline
 }
 
+bool validarNumeroEnRango(int valor, int min, int max) {
+    return (valor >= min and valor <= max);
+}
+
+bool validarNumeroEnRangoExcluyente(int valor, int min, int max) {
+    return (valor > min and valor < max);
+}
+
 void swapEntero(int &a, int &b) {
     int aux = a;
     a = b;
     b = aux;
 }
 
-// FLOTANTES
 void ingresarFlotante(float &valor, string mensaje) {
     cout << mensaje;
     cin >> valor;
@@ -104,6 +111,10 @@ void ingresarFlotantePositivo(float &valor, string mensaje) {
         cout << mensaje;
         cin >> valor;
     } while (valor <= 0);
+}
+
+void mostrarCaracter(char c) {
+    cout << c;
 }
 
 void ingresarCaracter(char &dest, string msg) {
