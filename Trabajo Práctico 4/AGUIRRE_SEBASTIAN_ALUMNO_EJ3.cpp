@@ -12,7 +12,10 @@ int main(){
     char rutaPromotores[] = "promotores.dat";
 
     cargarTelefonos(telefonos, CANT_TEL, rutaTelefonos);
+    mostrarTelefonos(telefonos, CANT_TEL);
+
     cargarPromotores(promotores, CANT_PROM, rutaPromotores);
+    mostrarPromotores(promotores, CANT_PROM);
 
 
 	return EXIT_SUCCESS;

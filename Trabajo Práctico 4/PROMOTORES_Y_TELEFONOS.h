@@ -6,9 +6,9 @@
 #include <cstdio>
 #include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
 
-#define TOPE_PROM   30
+#define TOPE_PROM   31
 #define CANT_PROM   10
-#define TOPE_DESC   20
+#define TOPE_DESC   21
 #define CANT_TEL    10
 
 struct tyPromotor {
@@ -46,6 +46,14 @@ void cargarTelefonos(tyTelefono telefonos[], int tope, char nombreArchivo[]) {
     } 
 }
 
+void mostrarTelefonos(tyTelefono telefonos[], int tope) {
+    mostrarTitulo("Telefonos");
+    int i = 0;
+    for (i = 0; i < tope; i++) {
+        cout << "Telefono: " << telefonos[i].descripcion << "  \tPrecio: $ " << telefonos[i].precio << endl;
+    }
+}
+
 void cargarPromotores(tyPromotor promotores[], int tope, char nombreArchivo[]) {
     tyPromotor promotor;
     int i = 0, size = sizeof(promotor);
@@ -62,6 +70,14 @@ void cargarPromotores(tyPromotor promotores[], int tope, char nombreArchivo[]) {
         }
         cerrarArchivo(fichero, result);
     } 
+}
+
+void mostrarPromotores(tyPromotor promotores[], int tope) {
+    mostrarTitulo("Promotores");
+    int i = 0;
+    for (i = 0; i < tope; i++) {
+        cout << "Promotor: " << promotores[i].nombre << "   \tComision: " << promotores[i].comision << " %"<< endl;
+    }
 }
 
 int buscarPromotor(tyPromotor promotores[], int tope, string nombre) {

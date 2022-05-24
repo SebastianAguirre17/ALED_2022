@@ -3,7 +3,6 @@
 #include <cstdio>
 #include "PROMOTORES_Y_TELEFONOS.h"
 
-
 int main(){
     mostrarTitulo("Ejercicio 4 - Punto B");
 
@@ -12,7 +11,7 @@ int main(){
     tyVenta venta;
     int i = 0, size = sizeof(venta);
     FILE *fichero = NULL, *fVentasValidas = NULL, *fVentasErroneas = NULL;
-    bool result, finDeArchivo;
+    bool result, resultV, resultE, finDeArchivo;
     char op[] = "rb";
     char opE[] = "wb";
     char rutaVentas[] = "ventas.dat";
@@ -25,26 +24,22 @@ int main(){
     cargarPromotores(promotores, CANT_PROM, rutaPromotores);
 
     abrirArchivo(rutaVentas, op, fichero, result);
-    if (result) {
-        abrirArchivo(rutaVentasValidas, opE, fVentasValidas, result);
-        if (result) {
-            abrirArchivo(rutaVentasErroneas, opE, fVentasErroneas, result);
-            if (result) {
-                leerArchivo(fichero, &venta, size, finDeArchivo, result);
-                while (result and not finDeArchivo) {
-                    if (validarVenta(promotores, CANT_PROM, telefonos, CANT_TEL, venta)) {
-                        escribirArchivo(&venta, size, fVentasValidas, result);
-                    } else {
-                        escribirArchivo(&venta, size, fVentasErroneas, result);
-                    }
-                    leerArchivo(fichero, &venta, size, finDeArchivo, result);
-                }
-                cout << "Archivos generados." << endl;
-                cerrarArchivo(fVentasErroneas, result);
+    abrirArchivo(rutaVentasValidas, opE, fVentasValidas, resultV);
+    abrirArchivo(rutaVentasErroneas, opE, fVentasErroneas, resultE);
+    if (result and resultV and resultE) {
+        leerArchivo(fichero, &venta, size, finDeArchivo, result);
+        while (result and not finDeArchivo) {
+            if (validarVenta(promotores, CANT_PROM, telefonos, CANT_TEL, venta)) {
+                escribirArchivo(&venta, size, fVentasValidas, result);
+            } else {
+                escribirArchivo(&venta, size, fVentasErroneas, result);
             }
-            cerrarArchivo(fVentasValidas, result);
+            leerArchivo(fichero, &venta, size, finDeArchivo, result);
         }
+        cerrarArchivo(fVentasErroneas, result);
         cerrarArchivo(fichero, result);
+        cerrarArchivo(fVentasValidas, result);
+        cout << "Archivos generados." << endl;
     }
 
 	return EXIT_SUCCESS;
