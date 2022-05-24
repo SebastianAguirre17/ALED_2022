@@ -32,17 +32,16 @@ void listadoDeVehiculos(tyVehiculo vehiculos[], int topeCochera, int cantVehicul
 void mostrarVehiculos(tyVehiculo vehiculos[], int topeCochera);
 void mostrarVehiculo(tyVehiculo vehiculo);
 
-void finalizarPrograma(tyVehiculo vehiculos[], int topeCochera);
+void finalizarPrograma(tyVehiculo vehiculos[], int topeCochera, char nombreArchivo[]);
 void mostrarMensajeDeError();
 
 int main(){
     tyVehiculo cochera[TOPE_COCHERA];
     string menuDeOpciones = menu();
-    int cantVehiculosEstacionados, opcion;
-    char rutaCochera[] = "estacionamiento.dat";
+    int cantVehiculosEstacionados = 0, opcion;
+    char path[] = "estacionamiento.dat";
     
-    cantVehiculosEstacionados = 0;
-    inicializarEstacionamiento(cochera, TOPE_COCHERA, rutaCochera, cantVehiculosEstacionados);
+    inicializarEstacionamiento(cochera, TOPE_COCHERA, path, cantVehiculosEstacionados);
     
     do {
         system("CLS");
@@ -58,7 +57,7 @@ int main(){
                 listadoDeVehiculos(cochera, TOPE_COCHERA, cantVehiculosEstacionados);
                 break;
             case 4:
-                finalizarPrograma(cochera, TOPE_COCHERA);
+                finalizarPrograma(cochera, TOPE_COCHERA, path);
                 break;
             default:
                 mostrarMensajeDeError();
@@ -199,16 +198,15 @@ void mostrarVehiculo(tyVehiculo vehiculo) {
     }
 }
 
-void finalizarPrograma(tyVehiculo vehiculos[], int topeCochera) {
+void finalizarPrograma(tyVehiculo vehiculos[], int topeCochera, char nombreArchivo[]) {
     FILE *fichero = NULL;
-    char ruta[] = "cochera.dat"; 
     char op[] = "wb";
-    int size = sizeof(vehiculos[0]);
+    int i, size = sizeof(tyVehiculo);
     bool result;
 
-    abrirArchivo(ruta, op, fichero, result);
+    abrirArchivo(nombreArchivo, op, fichero, result);
     if (result) {
-        for (int i = 0; i < topeCochera; i++) {
+        for (i = 0; i < topeCochera; i++) {
             escribirArchivo(&vehiculos[i], size, fichero, result);
         }
         cerrarArchivo(fichero, result);

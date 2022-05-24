@@ -15,16 +15,16 @@ int main(){
 
     tyTelefono telefonos[CANT_TEL];
     tyPromotor promotores[CANT_PROM];
+    int contFactPorDia[CANT_DIAS];
     tyVenta venta;
     int i = 0, size = sizeof(venta);
-    int contFactPorDia[CANT_DIAS];
     float importeTotal, comision;
     FILE *fichero = NULL;
     bool result, finDeArchivo;
+    char op[] = "rb";
+    char rutaVentas[] = "ventasValidas.dat";
     char rutaTelefonos[] = "telefonos.dat";
     char rutaPromotores[] = "promotores.dat";
-    char rutaVentas[] = "ventasValidas.dat";
-    char op[] = "rb";
 
     inicializarArrayNumerico(contFactPorDia, CANT_DIAS);
     cargarTelefonos(telefonos, CANT_TEL, rutaTelefonos);
@@ -42,7 +42,6 @@ int main(){
         }
         cerrarArchivo(fichero, result);
     } 
-
     mostrarCantFacturasPorDia(contFactPorDia, CANT_DIAS);
 
 	return EXIT_SUCCESS;

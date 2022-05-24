@@ -7,16 +7,16 @@ int main(){
     mostrarTitulo("Ejercicio 2 - Generar archivo de telefonos");
 
     tyTelefono telefonos[] = {
-        "Nokia1", 15000.00, 
-        "Moto1", 20000.00, 
-        "Alcatel1", 18000.00, 
-        "Uauei1", 19000.00, 
-        "Nokia2", 14000.00, 
-        "Nokia3", 17500.00, 
-        "Samsung7", 25000.00, 
-        "Moto2", 14000.00, 
-        "Moto3", 13500.00, 
-        "Alcatel2", 20000.00
+        "Nokia1", 15999.99, 
+        "Moto1", 20499.99, 
+        "Alcatel1", 18499.99, 
+        "Uauei1", 19899.99, 
+        "Nokia2", 14499.99, 
+        "Nokia3", 17599.99, 
+        "Samsung7", 25299.99, 
+        "Moto2", 14399.99, 
+        "Moto3", 13599.99, 
+        "Alcatel2", 20299.99
     };
     FILE *fichero = NULL;
     char ruta[] = "telefonos.dat"; 

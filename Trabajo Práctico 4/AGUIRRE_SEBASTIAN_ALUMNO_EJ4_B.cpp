@@ -5,7 +5,7 @@
 
 
 int main(){
-    mostrarTitulo("Ejercicio 4 - B");
+    mostrarTitulo("Ejercicio 4 - Punto B");
 
     tyTelefono telefonos[CANT_TEL];
     tyPromotor promotores[CANT_PROM];

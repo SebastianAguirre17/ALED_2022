@@ -6,7 +6,7 @@
 #define CANT_FACTURAS 20
 
 int main(){
-    mostrarTitulo("Ejercicio 4 A - Generar el archivo ingresoVentas.dat");
+    mostrarTitulo("Ejercicio 4 - Punto A");
 
     tyVenta ventas[] = {
         "Juan", "Alcatel1", 2, 25, 
