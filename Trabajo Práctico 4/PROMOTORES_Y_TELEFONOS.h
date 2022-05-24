@@ -10,6 +10,8 @@
 #define CANT_PROM   10
 #define TOPE_DESC   21
 #define CANT_TEL    10
+#define CANT_DIAS   31
+
 
 struct tyPromotor {
     char nombre[TOPE_PROM];
@@ -106,6 +108,32 @@ bool validarVenta(tyPromotor promotores[], int topeProm, tyTelefono telefonos[],
         buscarTelefono(telefonos, topeTel, venta.descripcion) != EXIT_ERROR and
         venta.cantidad > 0 and venta.dia > 0 and venta.dia < 32
     ); 
+}
+
+void mostrarVenta(tyVenta venta) {
+    cout << "Nombre del promotor     : " << venta.promotor << endl;
+    cout << "Descripcion del telefono: " << venta.descripcion << endl;
+    cout << "Cantidad Vendida        : " << venta.cantidad << endl;
+    cout << "Dia del mes             : " << venta.dia << endl << endl;
+    cout << endl;
+}
+
+void mostrarVentas(char nombreArchivo[]) {
+    tyVenta venta;
+    int i = 0, size = sizeof(venta);
+    FILE *fichero = NULL;
+    bool result, finDeArchivo;
+    char op[] = "rb";
+
+    abrirArchivo(nombreArchivo, op, fichero, result);
+    if (result) {
+        leerArchivo(fichero, &venta, size, finDeArchivo, result);
+        while (result and not finDeArchivo) {
+            mostrarVenta(venta);
+            leerArchivo(fichero, &venta, size, finDeArchivo, result);
+        }
+        cerrarArchivo(fichero, result);
+    } 
 }
 
 

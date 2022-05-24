@@ -10,12 +10,12 @@ int main(){
 
     tyVenta ventas[] = {
         "Juan", "Alcatel1", 2, 25, 
-        "Heriberto", "Falso", 3, 8, // Erroneo
+        "Heriberto", "Nokia1100", 3, 8, // Erroneo
         "Carlos", "Moto3", 0, 14, // Erroneo
         "Maria", "Uauei1", 2, 32, // Erroneo
         "Juana", "Moto1", 4, 16, 
         "Diana", "Alcatel1", 5, 12, 
-        "Falso", "Samsung7", 1, 20, // Erroneo
+        "Alfonso", "Samsung7", 1, 20, // Erroneo
         "Marcos", "Nokia2", 3, 22, 
         "Marcos", "Uauei1", 3, 21, 
         "Natalia", "Nokia3", 4, 14, 
@@ -23,7 +23,7 @@ int main(){
         "Heriberto", "Samsung7", 1, 14,
         "Nicolas", "Moto2", 2, 6,
         "Juan", "Alcatel1", 2, 25, 
-        "Falso", "Falso", 3, 8, // Erroneo
+        "Pepito", "Ladrillo", 3, 8, // Erroneo
         "Carlos", "Moto3", 6, 16,
         "Maria", "Uauei1", 2, 30,
         "Juana", "Moto1", 4, 2, 

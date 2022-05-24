@@ -3,8 +3,6 @@
 #include <cstdio>
 #include "PROMOTORES_Y_TELEFONOS.h"
 
-#define CANT_DIAS       31
-
 void calcularImporteYComision(tyPromotor promotores[], int topeProm, tyTelefono telefonos[], int topeTel, tyVenta venta, float &importeTotal, float &comision);
 void incrementarAcumuladorFacturasPorDia(int contFactPorDia[], int dia);
 void mostrarFacturaYComision(tyVenta venta, float importeTotal, float comision);
@@ -22,15 +20,22 @@ int main(){
     FILE *fichero = NULL;
     bool result, finDeArchivo;
     char op[] = "rb";
-    char rutaVentas[] = "ventasValidas.dat";
+
+    // char rutaVentas[] = "ventas.dat";
     char rutaTelefonos[] = "telefonos.dat";
     char rutaPromotores[] = "promotores.dat";
+    char rutaVentasValidas[] = "ventasValidas.dat";
+    // char rutaVentasErroneas[] = "ventasErroneas.dat";
 
     inicializarArrayNumerico(contFactPorDia, CANT_DIAS);
     cargarTelefonos(telefonos, CANT_TEL, rutaTelefonos);
     cargarPromotores(promotores, CANT_PROM, rutaPromotores);
 
-    abrirArchivo(rutaVentas, op, fichero, result);
+    // mostrarVentas(rutaVentas); // DEBUG - Mostrar ventas
+    // mostrarVentas(rutaVentasValidas); // DEBUG - Mostrar ventas validas
+    // mostrarVentas(rutaVentasErroneas); // DEBUG - Mostrar ventas erroneas
+ 
+    abrirArchivo(rutaVentasValidas, op, fichero, result);
     if (result) {
         leerArchivo(fichero, &venta, size, finDeArchivo, result);
         while (result and not finDeArchivo) {
@@ -43,6 +48,7 @@ int main(){
         cerrarArchivo(fichero, result);
     } 
     mostrarCantFacturasPorDia(contFactPorDia, CANT_DIAS);
+
 
 	return EXIT_SUCCESS;
 }
