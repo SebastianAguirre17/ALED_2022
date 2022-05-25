@@ -21,20 +21,20 @@ int main(){
     bool result, finDeArchivo;
     char op[] = "rb";
 
-    // char rutaVentas[] = "ventas.dat"; -- DEBUG -- 
     char rutaTelefonos[] = "telefonos.dat";
     char rutaPromotores[] = "promotores.dat";
     char rutaVentasValidas[] = "ventasValidas.dat";
+
+    // char rutaVentas[] = "ventas.dat"; -- DEBUG -- 
     // char rutaVentasErroneas[] = "ventasErroneas.dat"; -- DEBUG -- 
-
-    inicializarArrayNumerico(contFactPorDia, CANT_DIAS);
-    cargarTelefonos(telefonos, CANT_TEL, rutaTelefonos);
-    cargarPromotores(promotores, CANT_PROM, rutaPromotores);
-
     // mostrarVentas(rutaVentas); // -- DEBUG -- 
     // mostrarVentas(rutaVentasValidas); // -- DEBUG -- 
     // mostrarVentas(rutaVentasErroneas); // -- DEBUG -- 
 
+    inicializarArrayNumerico(contFactPorDia, CANT_DIAS);
+    cargarTelefonos(telefonos, CANT_TEL, rutaTelefonos);
+    cargarPromotores(promotores, CANT_PROM, rutaPromotores);
+    
     abrirArchivo(rutaVentasValidas, op, fichero, result);
     if (result) {
         leerArchivo(fichero, &venta, size, finDeArchivo, result);
