@@ -21,20 +21,20 @@ int main(){
     bool result, finDeArchivo;
     char op[] = "rb";
 
-    // char rutaVentas[] = "ventas.dat";
+    // char rutaVentas[] = "ventas.dat"; -- DEBUG -- 
     char rutaTelefonos[] = "telefonos.dat";
     char rutaPromotores[] = "promotores.dat";
     char rutaVentasValidas[] = "ventasValidas.dat";
-    // char rutaVentasErroneas[] = "ventasErroneas.dat";
+    // char rutaVentasErroneas[] = "ventasErroneas.dat"; -- DEBUG -- 
 
     inicializarArrayNumerico(contFactPorDia, CANT_DIAS);
     cargarTelefonos(telefonos, CANT_TEL, rutaTelefonos);
     cargarPromotores(promotores, CANT_PROM, rutaPromotores);
 
-    // mostrarVentas(rutaVentas); // DEBUG - Mostrar ventas
-    // mostrarVentas(rutaVentasValidas); // DEBUG - Mostrar ventas validas
-    // mostrarVentas(rutaVentasErroneas); // DEBUG - Mostrar ventas erroneas
- 
+    // mostrarVentas(rutaVentas); // -- DEBUG -- 
+    // mostrarVentas(rutaVentasValidas); // -- DEBUG -- 
+    // mostrarVentas(rutaVentasErroneas); // -- DEBUG -- 
+
     abrirArchivo(rutaVentasValidas, op, fichero, result);
     if (result) {
         leerArchivo(fichero, &venta, size, finDeArchivo, result);
@@ -48,7 +48,6 @@ int main(){
         cerrarArchivo(fichero, result);
     } 
     mostrarCantFacturasPorDia(contFactPorDia, CANT_DIAS);
-
 
 	return EXIT_SUCCESS;
 }
@@ -65,8 +64,9 @@ void incrementarAcumuladorFacturasPorDia(int contFactPorDia[], int dia) {
 }
 
 void mostrarFacturaYComision(tyVenta venta, float importeTotal, float comision) {
-    mostrarTitulo("Factura");
-
+    cout << "------------------------" << endl;
+    cout << "   Importe y comision   " << endl;
+    cout << "------------------------" << endl;
     cout << "Nombre del promotor     : " << venta.promotor << endl;
     cout << "Descripcion del telefono: " << venta.descripcion << endl;
     cout << "Cantidad Vendida        : " << venta.cantidad << endl;
@@ -80,7 +80,11 @@ void mostrarCantFacturasPorDia(int contFactPorDia[], int topeDias) {
     int i;
     for (i = 0; i < topeDias; i++) {
         if (contFactPorDia[i] > 0) {
-            cout << "El dia " << i + 1 << " se realizaron " << contFactPorDia[i] << " facturas." << endl;
+            if (contFactPorDia[i] > 1) {
+                cout << "El dia " << i + 1 << " se realizaron\t" << contFactPorDia[i] << " facturas." << endl;
+            } else {
+                cout << "El dia " << i + 1 << " se realizo \t" << contFactPorDia[i] << " factura." << endl;
+            }
             hayResultados = true;
         }
     }

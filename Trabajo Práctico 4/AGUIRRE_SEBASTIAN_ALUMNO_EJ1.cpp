@@ -7,16 +7,16 @@ int main(){
     mostrarTitulo("Ejercicio 1 - Generar archivo de promotores");
 
     tyPromotor promotores[] = {
-        "Juan", 2.2, 
-        "Heriberto", 3.3, 
-        "Carlos", 2.4, 
-        "Maria", 2.8, 
-        "Juana", 2.7, 
-        "Diana", 2.6, 
-        "Leonor", 3.1, 
-        "Marcos", 3.2, 
-        "Natalia", 2.1, 
-        "Nicolas", 2.5
+        "Juan",     2.2, 
+        "Carlos",   2.4, 
+        "Maria",    2.8, 
+        "Juana",    2.7, 
+        "Diana",    2.6, 
+        "Leonor",   3.1, 
+        "Marcos",   3.2, 
+        "Natalia",  2.1, 
+        "Nicolas",  2.5,
+        "Heriberto",3.3
     };
     FILE *fichero = NULL;
     char ruta[] = "promotores.dat"; 

@@ -7,15 +7,15 @@ int main(){
     mostrarTitulo("Ejercicio 2 - Generar archivo de telefonos");
 
     tyTelefono telefonos[] = {
-        "Nokia1", 15999.99, 
-        "Moto1", 20499.99, 
+        "Nokia1",   15999.99, 
+        "Moto1",    20499.99, 
         "Alcatel1", 18499.99, 
-        "Uauei1", 19899.99, 
-        "Nokia2", 14499.99, 
-        "Nokia3", 17599.99, 
+        "Uauei1",   19899.99, 
+        "Nokia2",   14499.99, 
+        "Nokia3",   17599.99, 
         "Samsung7", 25299.99, 
-        "Moto2", 14399.99, 
-        "Moto3", 13599.99, 
+        "Moto2",    14399.99, 
+        "Moto3",    13599.99, 
         "Alcatel2", 20299.99
     };
     FILE *fichero = NULL;

@@ -14,14 +14,16 @@ int main(){
     bool result, resultV, resultE, finDeArchivo;
     char op[] = "rb";
     char opE[] = "wb";
-    char rutaVentas[] = "ventas.dat";
+    char rutaVentas[] = "ingresoVentas.dat";
     char rutaTelefonos[] = "telefonos.dat";
     char rutaPromotores[] = "promotores.dat";
     char rutaVentasValidas[] = "ventasValidas.dat";
     char rutaVentasErroneas[] = "ventasErroneas.dat";
 
     cargarTelefonos(telefonos, CANT_TEL, rutaTelefonos);
+    // mostrarTelefonos(telefonos, CANT_TEL); // -- DEBUG -- 
     cargarPromotores(promotores, CANT_PROM, rutaPromotores);
+    // mostrarPromotores(promotores, CANT_PROM); // -- DEBUG -- 
 
     abrirArchivo(rutaVentas, op, fichero, result);
     abrirArchivo(rutaVentasValidas, opE, fVentasValidas, resultV);
@@ -36,10 +38,10 @@ int main(){
             }
             leerArchivo(fichero, &venta, size, finDeArchivo, result);
         }
-        cerrarArchivo(fVentasErroneas, result);
         cerrarArchivo(fichero, result);
-        cerrarArchivo(fVentasValidas, result);
-        cout << "Archivos generados." << endl;
+        cerrarArchivo(fVentasValidas, resultV);
+        cerrarArchivo(fVentasErroneas, resultE);
+        cout << "Archivos '" << rutaVentasValidas << "' y '" << rutaVentasErroneas << "' generados." <<  endl;
     }
 
 	return EXIT_SUCCESS;
