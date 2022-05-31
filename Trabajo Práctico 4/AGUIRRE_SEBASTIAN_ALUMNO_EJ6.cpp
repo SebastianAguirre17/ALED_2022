@@ -5,9 +5,6 @@
 
 #define SALIDA          4
 #define TOPE_COCHERA    10
-#define MIN_LEN_PATENTE 6
-#define MAX_LEN_PATENTE 10
-#define MAX_LEN_HORA    6
 #define TOPE_PATENTE    10
 #define TOPE_HORA       6
 #define LIBRE           "LIBRE"
@@ -22,7 +19,7 @@ string menu();
 void inicializarEstacionamiento(tyVehiculo vehiculos[], int topeCochera, char nombreArchivo[], int &cantVehiculosEstacionados); 
 
 void ingresoDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &cantVehiculosEstacionados);
-int buscarCochera(tyVehiculo vehiculos[], int topeCochera, string patente);
+int buscarCochera(tyVehiculo vehiculos[], int topeCochera, char patente[]);
 void agregarVehiculo(tyVehiculo vehiculos[], int topeCochera, int &cantVehiculosEstacionados, int pos);
 
 void salidaDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &cantVehiculosEstacionados);
@@ -71,7 +68,7 @@ int main(){
 string menu() {
     string menu = "";
     menu += "---------------------------------------\n";
-    menu += "     Ejercicio 7 - Estacionamiento\n";
+    menu += "     Ejercicio 6 - Estacionamiento\n";
     menu += "---------------------------------------\n\n";
     menu += "1) Ingreso de Vehiculo\n";
     menu += "2) Salida de Vehiculo\n";
@@ -120,9 +117,9 @@ void ingresoDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &cantVehicul
     system("PAUSE");
 }
 
-int buscarCochera(tyVehiculo vehiculos[], int topeCochera, string patente) {
+int buscarCochera(tyVehiculo vehiculos[], int topeCochera, char patente[]) {
     int i = 0;
-    while (i < topeCochera and vehiculos[i].patente != patente) {
+    while (i < topeCochera and strcmp(vehiculos[i].patente, patente) != 0) {
         i++;
     }
     if (i == topeCochera)
@@ -133,9 +130,9 @@ int buscarCochera(tyVehiculo vehiculos[], int topeCochera, string patente) {
 void agregarVehiculo(tyVehiculo vehiculos[], int topeCochera, int &cantVehiculosEstacionados, int pos) {
     tyVehiculo auxVehiculo;
 
-    ingresarCadenaCharValida(auxVehiculo.patente, MAX_LEN_PATENTE, "Ingrese la patente: ");
+    ingresarCadenaCharValida(auxVehiculo.patente, TOPE_PATENTE, "Ingrese la patente: ");
     if (buscarCochera(vehiculos, topeCochera, auxVehiculo.patente) == EXIT_ERROR) {
-        ingresarCadenaCharValida(auxVehiculo.hora, MAX_LEN_HORA, "Ingrese hora (HH:MM): ");
+        ingresarCadenaCharValida(auxVehiculo.hora, TOPE_HORA, "Ingrese hora (HH:MM): ");
         vehiculos[pos] = auxVehiculo;
         cantVehiculosEstacionados++;
         mostrarString("\nVehiculo guardado.\n\n");
@@ -148,9 +145,8 @@ void salidaDeVehiculo(tyVehiculo vehiculos[], int topeCochera, int &cantVehiculo
     mostrarTitulo("Salida de Vehiculo");
     
     if (cantVehiculosEstacionados > 0) {
-        string patente;
-
-        ingresarStringValido(patente, MIN_LEN_PATENTE, MAX_LEN_PATENTE, "Ingrese la patente: ");
+        char patente[TOPE_PATENTE];
+        ingresarCadenaCharValida(patente, TOPE_PATENTE, "Ingrese la patente: ");
         int pos = buscarCochera(vehiculos, topeCochera, patente);
         if (pos != EXIT_ERROR) {
             cout << "\nEl vehiculo entro a las " << vehiculos[pos].hora << " Hs." << endl << endl;

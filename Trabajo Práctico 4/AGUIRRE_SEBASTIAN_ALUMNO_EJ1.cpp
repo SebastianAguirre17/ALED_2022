@@ -21,7 +21,7 @@ int main(){
     FILE *fichero = NULL;
     char ruta[] = "promotores.dat"; 
     char op[] = "wb";
-    int size = sizeof(promotores[0]);
+    int i, size = sizeof(promotores[0]);
     bool result;
 
     abrirArchivo(ruta, op, fichero, result);

@@ -35,11 +35,11 @@ int main(){
     char op[] = "wb";
     char path[] = "ingresoVentas.dat"; 
     FILE *fichero = NULL;
-    int size = sizeof(tyVenta);
+    int i, size = sizeof(tyVenta);
 
     abrirArchivo(path, op, fichero, result);
     if (result) {
-        for (int i = 0; i < CANT_FACTURAS; i++) {
+        for (i = 0; i < CANT_FACTURAS; i++) {
             escribirArchivo(&ventas[i], size, fichero, result);
         }  
         cerrarArchivo(fichero, result);

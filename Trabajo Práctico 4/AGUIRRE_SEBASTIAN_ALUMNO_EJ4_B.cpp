@@ -9,7 +9,7 @@ int main(){
     tyTelefono telefonos[CANT_TEL];
     tyPromotor promotores[CANT_PROM];
     tyVenta venta;
-    int i = 0, size = sizeof(venta);
+    int size = sizeof(venta);
     FILE *fichero = NULL, *fVentasValidas = NULL, *fVentasErroneas = NULL;
     bool result, resultV, resultE, finDeArchivo;
     char op[] = "rb";
