@@ -88,7 +88,7 @@ bool validarArticulo(tyArticulo articulo) {
 void inicializarMatrizDeStock(int matriz[][CANT_SUCURSALES], int filas, int columnas) {
     for (int i = 0; i < filas; i++) {
         for (int j = 0; j < columnas; j++) {
-            matriz[i][j] = 20;
+            matriz[i][j] = rand() % 5;
         }
     }
 }
