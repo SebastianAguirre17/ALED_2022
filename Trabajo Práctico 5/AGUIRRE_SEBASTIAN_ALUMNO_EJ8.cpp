@@ -46,10 +46,10 @@ void mostrarTipos(TipoProd tipos[], int tope);
 
 void cargarVentas(char archivo[], char errores[], Producto productos[], int topeProd, Grupo grupos[], int topeGrupo, 
     TipoProd tipos[], int topeTipos, float tablaTiposGrupos[][TOPE_GRUPOS]);
-void acumularRecaudacionPorTipoYGrupo(Producto productos[], int posProd, int posGrupo, float tablaTiposGrupos[][TOPE_GRUPOS]);
 
+void acumularRecaudacionPorTipoYGrupo(Producto productos[], TipoProd tipos[], int posProd, int posGrupo, char descuento, float tablaTiposGrupos[][TOPE_GRUPOS]);
 void inicializarTablaTiposGrupos(float tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas);
-void mostrarAcumuladoPorTipoYGrupo(float tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas);
+void mostrarAcumuladoPorTipoYGrupo(TipoProd tipos[], Grupo grupos[], float tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas);
 
 int main(){
     mostrarTitulo("Ejercicio 8");
@@ -75,10 +75,11 @@ int main(){
     // mostrarProductos(productos, cantProd);
     // mostrarTipos(tipos, TOPE_TIPOS);
     // mostrarGrupos(grupos, TOPE_GRUPOS);
+    // mostrarAcumuladoPorTipoYGrupo(tipos, grupos, tablaTiposGrupos, TOPE_TIPOS, TOPE_GRUPOS);
 
-    //cargarVentas(pathMovimientos, pathErrores, productos, cantProd, grupos, TOPE_GRUPOS, tipos, TOPE_TIPOS, tablaTiposGrupos);
+    cargarVentas(pathMovimientos, pathErrores, productos, cantProd, grupos, TOPE_GRUPOS, tipos, TOPE_TIPOS, tablaTiposGrupos);
 
-    mostrarAcumuladoPorTipoYGrupo(tablaTiposGrupos, TOPE_TIPOS, TOPE_GRUPOS);
+    mostrarAcumuladoPorTipoYGrupo(tipos, grupos, tablaTiposGrupos, TOPE_TIPOS, TOPE_GRUPOS);
 
 
 	return EXIT_SUCCESS;
@@ -200,8 +201,8 @@ void cargarVentas(char archivo[], char errores[], Producto productos[], int tope
             posProd = buscarProducto(productos, topeProd, venta.codigo);
             if (posProd != EXIT_ERROR) {
                 posGrupo = buscarGrupo(grupos, topeGrupo, venta.edad);
-                acumularRecaudacionPorTipoYGrupo(productos, posProd, posGrupo, tablaTiposGrupos);
-                cout << posGrupo << " ";
+                acumularRecaudacionPorTipoYGrupo(productos, tipos, posProd, posGrupo, venta.descuento, tablaTiposGrupos);
+
             } else {
                 escribirArchivo(&venta, size, ficheroE, resultE);
             }
@@ -212,27 +213,28 @@ void cargarVentas(char archivo[], char errores[], Producto productos[], int tope
     } 
 }
 
-void acumularRecaudacionPorTipoYGrupo(Producto productos[], int posProd, int posGrupo, float tablaTiposGrupos[][TOPE_GRUPOS]) {
-   
-
-
+void acumularRecaudacionPorTipoYGrupo(Producto productos[], TipoProd tipos[], int posProd, int posGrupo, char descuento, float tablaTiposGrupos[][TOPE_GRUPOS]) {
+    int posTipo = productos[posProd].tipo;
+    if (descuento == 'S') {
+        tablaTiposGrupos[posTipo][posGrupo] += (productos[posProd].precio - (productos[posProd].precio * tipos[posTipo].descuento)); 
+    } else {
+        tablaTiposGrupos[posTipo][posGrupo] += productos[posProd].precio; 
+    }  
+        
 }
 
-void mostrarAcumuladoPorTipoYGrupo(float tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas) {
-    int i, j;
-    cout << "-----------------------------------------------------------------------------------------" << endl;
-    cout << "| Tipo\t| 6-10\t| 11-15\t| 16-21\t| 22-30\t| 31-35\t| 36-45\t| 46-55\t| 56-60\t| 61-70\t| 11-100|" << endl;
-    cout << "-----------------------------------------------------------------------------------------" << endl;
-
-    for (i = 0; i < filas; i++) {
-        cout << "| " << i << "\t|";
-        for (j = 0; j < columnas; j++) {
-            cout << " " << tablaTiposGrupos[i][j] << "\t|";
+void mostrarAcumuladoPorTipoYGrupo(TipoProd tipos[], Grupo grupos[], float tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas) {
+    mostrarTitulo("Nombre del Tipo de Producto y Recaudacion por cada Grupo de Edad");
+    int i = 0, j = 0;
+    while (i < filas) {
+        mostrarTitulo(tipos[i].nombre);
+        while (j < columnas) {
+            cout << "Grupo [" << grupos[j].edadDesde << "-" << grupos[j].edadHasta << "]:\t$ " << tablaTiposGrupos[i][j] << endl;
+            j++;
         }
-        cout << endl;
+        j = 0;
+        i++;
     }
-    cout << "-----------------------------------------------------------------------------------------" << endl;
-
 }
 
 void inicializarTablaTiposGrupos(float tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas) {
