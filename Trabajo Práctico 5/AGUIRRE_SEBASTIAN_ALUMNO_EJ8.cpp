@@ -83,10 +83,10 @@ int main(){
     cargarVentas(pathMovimientos, pathErrores, productos, MAX_PRODUCTOS, grupos, TOPE_GRUPOS, tipos, TOPE_TIPOS, 
         tablaTiposGrupos, acumGrupoConDescuento, acumVentasPorTipo, cantidadDeVentas);
 
-    mostrarRecaudacionPorTipoYGrupo(tipos, grupos, tablaTiposGrupos, TOPE_TIPOS, TOPE_GRUPOS);
+    // mostrarRecaudacionPorTipoYGrupo(tipos, grupos, tablaTiposGrupos, TOPE_TIPOS, TOPE_GRUPOS);
     // mostrarComprasPorGrupo();
-    mostrarGrupoDeMayorVentaConDescuento(grupos, acumGrupoConDescuento, TOPE_GRUPOS);
-    mostrarPorcentajesDeVentasPorTipo(tipos, acumVentasPorTipo, TOPE_TIPOS, cantidadDeVentas);
+    // mostrarGrupoDeMayorVentaConDescuento(grupos, acumGrupoConDescuento, TOPE_GRUPOS);
+    // mostrarPorcentajesDeVentasPorTipo(tipos, acumVentasPorTipo, TOPE_TIPOS, cantidadDeVentas);
 
 	return EXIT_SUCCESS;
 }
@@ -105,6 +105,8 @@ void cargarVentas(char archivo[], char errores[], Producto productos[], int tope
     if (result and resultE) {
         leerArchivo(fichero, &venta, size, finDeArchivo, result);
         while (result and not finDeArchivo) {
+            //cout << venta.codigo << " " << venta.descuento << " " << venta.edad << endl;
+            
             posProd = buscarProducto(productos, topeProd, venta.codigo);
             if (posProd != EXIT_ERROR) {
                 totalVentas++;
@@ -139,6 +141,7 @@ void cargarProductos(char archivo[], Producto productos[], int topeProd, int &to
         leerArchivo(fichero, &producto, size, finDeArchivo, result);
         while (result and not finDeArchivo and topeReal < topeProd) {
             productos[topeReal++] = producto;
+            // cout << producto.codigo << " " << producto.tipo << " " << producto.precio << " " << producto.descripcion << endl;
             leerArchivo(fichero, &producto, size, finDeArchivo, result);
         }
         cerrarArchivo(fichero, result);
@@ -157,6 +160,7 @@ void cargarGrupos(char archivo[], Grupo grupos[], int tope) {
         leerArchivo(fichero, &grupo, size, finDeArchivo, result);
         while (result and not finDeArchivo and i < tope) {
             grupos[i++] = grupo;
+            // cout << grupo.edadDesde << " " << grupo.edadHasta << endl;
             leerArchivo(fichero, &grupo, size, finDeArchivo, result);
         }
         cerrarArchivo(fichero, result);
@@ -175,7 +179,7 @@ void cargarTipos(char archivo[], TipoProd tipos[], int tope) {
         leerArchivo(fichero, &tipo, size, finDeArchivo, result);
         while (result and not finDeArchivo and i < tope) {
             tipos[i++] = tipo;
-            //  << tipo.nombre << " " << tipo.descuento << endl;
+            // cout << tipo.nombre << " " << tipo.descuento << endl;
             leerArchivo(fichero, &tipo, size, finDeArchivo, result);
         }
         cerrarArchivo(fichero, result);
