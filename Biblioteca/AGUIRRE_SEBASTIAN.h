@@ -55,6 +55,7 @@ int busquedaSecuencial(int numeros[], int tope, int buscado);
 void buscarPosMaxEnArrayNumerico(int vec[], int tope, int &maxPos);
 void buscarPosMinYMaxEnArrayNumerico(int vec[], int desde, int hasta, int &minPos, int &maxPos);
 void mostrarArrayNumerico(int numeros[], int tope);
+void mostrarArrayFlotante(float numeros[], int tope);
 void mostrarArrayNumericoConIndice(int numeros[], int tope);
 void cargarVecRandom(int vec[], int tope, int mod);
 int contarRepeticionesEnVecNumerico(int vec[], int tope, int buscado);
@@ -352,6 +353,12 @@ void mostrarArrayNumerico(int numeros[], int tope) {
 void mostrarArrayNumericoConIndice(int numeros[], int tope) {
     for (int i = 0; i < tope; i++) {
         cout << "Indice: " << i << " - Valor: " << numeros[i] << endl;
+    }
+}
+
+void mostrarArrayFlotante(float numeros[], int tope) {
+    for (int i = 0; i < tope; i++) {
+        cout << numeros[i] << endl;
     }
 }
 
