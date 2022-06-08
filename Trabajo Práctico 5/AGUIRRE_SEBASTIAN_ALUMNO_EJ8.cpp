@@ -11,48 +11,54 @@
 #define TOPE_TIPOS      12
 #define TOPE_GRUPOS     10
 
-struct Venta {
+struct tyVenta {
     char codigo[TOPE_COD_PROD];
     char descuento;
     int edad;
 };
 
-struct Producto {
+struct tyProducto {
     char codigo[TOPE_COD_PROD];
     char descripcion[TOPE_COD_DESC];
     float precio;
     int tipo;
 };
 
-struct TipoProd {
+struct tyTipoProd {
     char nombre[TOPE_TIPO_PROD];
     float descuento;
 };
 
-struct Grupo {
+struct tyGrupo {
     int edadDesde;
     int edadHasta;
 };
 
-void cargarVentas(char archivo[], char errores[], Producto productos[], int topeProd, Grupo grupos[], int topeGrupo, TipoProd tipos[], int topeTipos, 
-    float tablaTiposGrupos[][TOPE_GRUPOS], int acumGrupoConDescuento[], int acumVentasPorTipo[], int &totalVentas);
+struct tyAcumulador {
+    int cantidad;
+    float importe;
+};
 
-void cargarProductos(char archivo[], Producto productos[], int topeProd, int &topeReal);
-void cargarTipos(char archivo[], TipoProd tipos[], int tope);
-void cargarGrupos(char archivo[], Grupo grupos[], int tope);
+void procesarVentas(char archivo[], char errores[], tyProducto productos[], int topeProd, tyGrupo grupos[], int topeGrupo, tyTipoProd tipos[], 
+    tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int acumGrupoConDescuento[], int acumVentasPorTipo[], int &totalVentas);
 
-int buscarProducto(Producto productos[], int tope, char codigo[]);
-int buscarGrupo(Grupo grupo[], int tope, int buscado);
+void cargarProductos(char archivo[], tyProducto productos[], int topeProd, int &topeReal);
+void cargarTipos(char archivo[], tyTipoProd tipos[], int tope);
+void cargarGrupos(char archivo[], tyGrupo grupos[], int tope);
 
-void inicializarTablaTiposGrupos(float tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas);
+int buscarProducto(tyProducto productos[], int tope, char codigo[]);
+int buscarGrupo(tyGrupo grupo[], int tope, int buscado);
 
-void acumularRecaudacionPorTipoYGrupo(float tablaTiposGrupos[][TOPE_GRUPOS], int posGrupo, int posTipo, char descontar, float precio, float porcentaje);
+void inicializarTablaTiposGrupos(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas);
+
+void acumularRecaudacionPorTipoYGrupo(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int posGrupo, int posTipo, float precio);
 void acumularVentasConDescuento(int acumulador[], int posGrupo);
 void acumularVentasPorTipo(int acumVentasPorTipo[], int posTipo);
 
-void mostrarRecaudacionPorTipoYGrupo(TipoProd tipos[], Grupo grupos[], float tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas);
-void mostrarGrupoDeMayorVentaConDescuento(Grupo grupos[], int acumulador[], int tope);
-void mostrarPorcentajesDeVentasPorTipo(TipoProd tipos[], int acumVentasPorTipo[], int tope, int totalVentas);
+void mostrarRecaudacionPorTipoYGrupo(tyTipoProd tipos[], tyGrupo grupos[], tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas);
+void mostrarGrupoDeMayorVentaConDescuento(tyGrupo grupos[], int acumulador[], int tope);
+void mostrarPorcentajesDeVentasPorTipo(tyTipoProd tipos[], int acumVentasPorTipo[], int tope, int totalVentas);
+void mostrarComprasPorGrupo(tyTipoProd tipos[], tyGrupo grupos[], tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas);
 
 int main(){
     char pathMovimientos[] = "movimientosEJ8.dat";
@@ -64,13 +70,13 @@ int main(){
     int cantidadDeProductos = 0;
     int cantidadDeVentas = 0;
 
-    float tablaTiposGrupos[TOPE_TIPOS][TOPE_GRUPOS];
+    tyAcumulador tablaTiposGrupos[TOPE_TIPOS][TOPE_GRUPOS];
     int acumGrupoConDescuento[TOPE_GRUPOS];
     int acumVentasPorTipo[TOPE_TIPOS];
 
-    Producto productos[MAX_PRODUCTOS];
-    TipoProd tipos[TOPE_TIPOS];
-    Grupo grupos[TOPE_GRUPOS];
+    tyProducto productos[MAX_PRODUCTOS];
+    tyTipoProd tipos[TOPE_TIPOS];
+    tyGrupo grupos[TOPE_GRUPOS];
 
     inicializarTablaTiposGrupos(tablaTiposGrupos, TOPE_TIPOS, TOPE_GRUPOS);
     inicializarArrayNumerico(acumGrupoConDescuento, TOPE_GRUPOS);
@@ -80,23 +86,24 @@ int main(){
     cargarGrupos(pathGrupos, grupos, TOPE_GRUPOS);
     cargarTipos(pathTipos, tipos, TOPE_TIPOS);
 
-    cargarVentas(pathMovimientos, pathErrores, productos, MAX_PRODUCTOS, grupos, TOPE_GRUPOS, tipos, TOPE_TIPOS, 
+    procesarVentas(pathMovimientos, pathErrores, productos, MAX_PRODUCTOS, grupos, TOPE_GRUPOS, tipos, 
         tablaTiposGrupos, acumGrupoConDescuento, acumVentasPorTipo, cantidadDeVentas);
 
-    // mostrarRecaudacionPorTipoYGrupo(tipos, grupos, tablaTiposGrupos, TOPE_TIPOS, TOPE_GRUPOS);
-    // mostrarComprasPorGrupo();
-    // mostrarGrupoDeMayorVentaConDescuento(grupos, acumGrupoConDescuento, TOPE_GRUPOS);
-    // mostrarPorcentajesDeVentasPorTipo(tipos, acumVentasPorTipo, TOPE_TIPOS, cantidadDeVentas);
+    mostrarRecaudacionPorTipoYGrupo(tipos, grupos, tablaTiposGrupos, TOPE_TIPOS, TOPE_GRUPOS);
+    mostrarComprasPorGrupo(tipos, grupos, tablaTiposGrupos, TOPE_TIPOS, TOPE_GRUPOS);
+    mostrarGrupoDeMayorVentaConDescuento(grupos, acumGrupoConDescuento, TOPE_GRUPOS);
+    mostrarPorcentajesDeVentasPorTipo(tipos, acumVentasPorTipo, TOPE_TIPOS, cantidadDeVentas);
 
 	return EXIT_SUCCESS;
 }
 
-void cargarVentas(char archivo[], char errores[], Producto productos[], int topeProd, Grupo grupos[], int topeGrupo, TipoProd tipos[], int topeTipos, 
-    float tablaTiposGrupos[][TOPE_GRUPOS], int acumGrupoConDescuento[], int acumVentasPorTipo[], int &totalVentas) {
+void procesarVentas(char archivo[], char errores[], tyProducto productos[], int topeProd, tyGrupo grupos[], int topeGrupo, tyTipoProd tipos[], 
+    tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int acumGrupoConDescuento[], int acumVentasPorTipo[], int &totalVentas) {
 
-    Venta venta;
+    tyVenta venta;
     FILE *fichero = NULL, *ficheroE = NULL;
     int posProd, posGrupo, posTipo, size = sizeof(venta);
+    float precio;
     bool result, resultE, finDeArchivo;
     char op[] = "rb", opE[] = "wb";
 
@@ -105,19 +112,21 @@ void cargarVentas(char archivo[], char errores[], Producto productos[], int tope
     if (result and resultE) {
         leerArchivo(fichero, &venta, size, finDeArchivo, result);
         while (result and not finDeArchivo) {
-            //cout << venta.codigo << " " << venta.descuento << " " << venta.edad << endl;
-            
             posProd = buscarProducto(productos, topeProd, venta.codigo);
             if (posProd != EXIT_ERROR) {
                 totalVentas++;
                 posGrupo = buscarGrupo(grupos, topeGrupo, venta.edad);
                 posTipo = productos[posProd].tipo - 1; // Para coincidir con posicion en vector
-                
-                acumularRecaudacionPorTipoYGrupo(tablaTiposGrupos, posGrupo, posTipo, venta.descuento, productos[posProd].precio, tipos[posTipo].descuento);
-                acumularVentasPorTipo(acumVentasPorTipo, posTipo);
+
                 if (venta.descuento == 'S') {
+                    precio = productos[posProd].precio - (productos[posProd].precio * tipos[posTipo].descuento);
                     acumularVentasConDescuento(acumGrupoConDescuento, posGrupo);
+                } else {
+                    precio = productos[posProd].precio;
                 }
+                acumularVentasPorTipo(acumVentasPorTipo, posTipo);
+                acumularRecaudacionPorTipoYGrupo(tablaTiposGrupos, posGrupo, posTipo, precio);
+
             } else {
                 escribirArchivo(&venta, size, ficheroE, resultE);
             }
@@ -128,8 +137,8 @@ void cargarVentas(char archivo[], char errores[], Producto productos[], int tope
     } 
 }
 
-void cargarProductos(char archivo[], Producto productos[], int topeProd, int &topeReal) {
-    Producto producto;
+void cargarProductos(char archivo[], tyProducto productos[], int topeProd, int &topeReal) {
+    tyProducto producto;
     int size = sizeof(producto);
     FILE *fichero = NULL;
     bool result, finDeArchivo;
@@ -141,15 +150,14 @@ void cargarProductos(char archivo[], Producto productos[], int topeProd, int &to
         leerArchivo(fichero, &producto, size, finDeArchivo, result);
         while (result and not finDeArchivo and topeReal < topeProd) {
             productos[topeReal++] = producto;
-            // cout << producto.codigo << " " << producto.tipo << " " << producto.precio << " " << producto.descripcion << endl;
             leerArchivo(fichero, &producto, size, finDeArchivo, result);
         }
         cerrarArchivo(fichero, result);
     } 
 }
 
-void cargarGrupos(char archivo[], Grupo grupos[], int tope) {
-    Grupo grupo;
+void cargarGrupos(char archivo[], tyGrupo grupos[], int tope) {
+    tyGrupo grupo;
     int i = 0, size = sizeof(grupo);
     FILE *fichero = NULL;
     bool result, finDeArchivo;
@@ -160,15 +168,14 @@ void cargarGrupos(char archivo[], Grupo grupos[], int tope) {
         leerArchivo(fichero, &grupo, size, finDeArchivo, result);
         while (result and not finDeArchivo and i < tope) {
             grupos[i++] = grupo;
-            // cout << grupo.edadDesde << " " << grupo.edadHasta << endl;
             leerArchivo(fichero, &grupo, size, finDeArchivo, result);
         }
         cerrarArchivo(fichero, result);
     } 
 }
 
-void cargarTipos(char archivo[], TipoProd tipos[], int tope) {
-    TipoProd tipo;
+void cargarTipos(char archivo[], tyTipoProd tipos[], int tope) {
+    tyTipoProd tipo;
     int i = 0, size = sizeof(tipo);
     FILE *fichero = NULL;
     bool result, finDeArchivo;
@@ -179,14 +186,13 @@ void cargarTipos(char archivo[], TipoProd tipos[], int tope) {
         leerArchivo(fichero, &tipo, size, finDeArchivo, result);
         while (result and not finDeArchivo and i < tope) {
             tipos[i++] = tipo;
-            // cout << tipo.nombre << " " << tipo.descuento << endl;
             leerArchivo(fichero, &tipo, size, finDeArchivo, result);
         }
         cerrarArchivo(fichero, result);
     } 
 }
 
-int buscarProducto(Producto productos[], int tope, char codigo[]) {
+int buscarProducto(tyProducto productos[], int tope, char codigo[]) {
     int i = 0;
     while (i < tope and strcmp(productos[i].codigo, codigo) != 0) {
         i++;
@@ -196,7 +202,7 @@ int buscarProducto(Producto productos[], int tope, char codigo[]) {
     return i;
 }
 
-int buscarGrupo(Grupo grupo[], int tope, int buscado) {
+int buscarGrupo(tyGrupo grupo[], int tope, int buscado) {
     int i = 0;
     while (i < tope and buscado < grupo[i].edadDesde or buscado > grupo[i].edadHasta) {
         i++;
@@ -206,20 +212,18 @@ int buscarGrupo(Grupo grupo[], int tope, int buscado) {
     return i;
 }
 
-void inicializarTablaTiposGrupos(float tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas) {
+void inicializarTablaTiposGrupos(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas) {
     for (int i = 0; i < filas; i++) {
         for (int j = 0; j < columnas; j++) {
-            tablaTiposGrupos[i][j] = 0;
+            tablaTiposGrupos[i][j].cantidad = 0;
+            tablaTiposGrupos[i][j].importe = 0;
         }
     }
 }
 
-void acumularRecaudacionPorTipoYGrupo(float tablaTiposGrupos[][TOPE_GRUPOS], int posGrupo, int posTipo, char descontar, float precio, float porcentaje) {
-    if (descontar == 'S') {
-        tablaTiposGrupos[posTipo][posGrupo] += (precio - (precio * porcentaje)); 
-    } else {
-        tablaTiposGrupos[posTipo][posGrupo] += precio; 
-    }  
+void acumularRecaudacionPorTipoYGrupo(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int posGrupo, int posTipo, float precio) {
+    tablaTiposGrupos[posTipo][posGrupo].cantidad++;
+    tablaTiposGrupos[posTipo][posGrupo].importe += precio;
 }
 
 void acumularVentasConDescuento(int acumulador[], int posGrupo) {
@@ -230,30 +234,39 @@ void acumularVentasPorTipo(int acumVentasPorTipo[], int posTipo) {
     acumVentasPorTipo[posTipo]++;
 }
 
-void mostrarRecaudacionPorTipoYGrupo(TipoProd tipos[], Grupo grupos[], float tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas) {
-    mostrarTitulo("Punto A - Tipo de Producto y Recaudacion por Grupo de Edad");
-    int i = 0, j = 0;
-    while (i < filas) {
-        mostrarTitulo(tipos[i].nombre);
-        while (j < columnas) {
-            cout << "Grupo [" << grupos[j].edadDesde << "-" << grupos[j].edadHasta << "]:\t$ " << tablaTiposGrupos[i][j] << endl;
-            j++;
+void mostrarRecaudacionPorTipoYGrupo(tyTipoProd tipos[], tyGrupo grupos[], tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas) {
+    mostrarTitulo("Por cada Tipo de Producto: Nombre del Tipo de Producto y Recaudacion por cada Grupo de Edad.");
+
+    for (int i = 0; i < filas; i++) {
+        cout << tipos[i].nombre << endl << endl;
+        for (int j = 0; j < columnas; j++) {
+            cout << "Grupo [" << grupos[j].edadDesde << "-" << grupos[j].edadHasta << "]\tRecaudacion: $ " << tablaTiposGrupos[i][j].importe << endl;
         }
-        j = 0;
-        i++;
+        cout << endl;
     }
 }
 
-void mostrarGrupoDeMayorVentaConDescuento(Grupo grupos[], int acumulador[], int tope) {
-    mostrarTitulo("Punto C - Grupo de mayor cantidad de productos con descuento");
+void mostrarComprasPorGrupo(tyTipoProd tipos[], tyGrupo grupos[], tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas) {
+    mostrarTitulo("Por cada Grupo de Edad: Nombre del Tipo de Producto y Cantidad de Compras.");
+    for (int i = 0; i < columnas; i++) {
+        cout << "Grupo [" << grupos[i].edadDesde << "-" << grupos[i].edadHasta << "]"<< endl << endl;
+        for (int j = 0; j < filas; j++) {
+            cout << "Tipo de producto '" << tipos[j].nombre << "'\tCantidad de compras: " << tablaTiposGrupos[i][j].cantidad << endl;
+        }
+        cout << endl;
+    }
+}
+
+void mostrarGrupoDeMayorVentaConDescuento(tyGrupo grupos[], int acumulador[], int tope) {
+    mostrarTitulo("Grupo de Edad en que se vendio mayor cantidad de productos con descuento.");
 
     int posMax;
     buscarPosMaxEnArrayNumerico(acumulador, tope, posMax);
     cout << "El grupo " << posMax << " [" << grupos[posMax].edadDesde << "-" << grupos[posMax].edadHasta << "] vendio " << acumulador[posMax] << " productos con descuento" << endl;
 }
 
-void mostrarPorcentajesDeVentasPorTipo(TipoProd tipos[], int acumVentasPorTipo[], int tope, int totalVentas) {
-    mostrarTitulo("Punto D - Porcentaje de vendidos por Tipo");
+void mostrarPorcentajesDeVentasPorTipo(tyTipoProd tipos[], int acumVentasPorTipo[], int tope, int totalVentas) {
+    mostrarTitulo("Por cada Tipo de Producto: Nombre del Tipo y Porcentaje de productos vendidos.");
     double porcentaje;
     for (int i = 0; i < tope; i++) {
         porcentaje = acumVentasPorTipo[i] * 100 / (float)totalVentas;
