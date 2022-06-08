@@ -41,20 +41,17 @@ struct tyAcumulador {
 
 void procesarVentas(char archivo[], char errores[], tyProducto productos[], int topeProd, tyGrupo grupos[], int topeGrupo, tyTipoProd tipos[], 
     tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int acumGrupoConDescuento[], int acumVentasPorTipo[], int &totalVentas);
-
 void cargarProductos(char archivo[], tyProducto productos[], int topeProd, int &topeReal);
 void cargarTipos(char archivo[], tyTipoProd tipos[], int tope);
 void cargarGrupos(char archivo[], tyGrupo grupos[], int tope);
-
 int buscarProducto(tyProducto productos[], int tope, char codigo[]);
 int buscarGrupo(tyGrupo grupo[], int tope, int buscado);
-
 void inicializarTablaTiposGrupos(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas);
-
 void acumularRecYCantPorTipoYGrupo(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int posGrupo, int posTipo, float precio);
 void acumularVentasConDescuento(int acumulador[], int posGrupo);
 void acumularVentasPorTipo(int acumVentasPorTipo[], int posTipo);
-
+void contarVentas(int &totalVentas);
+float calcularPrecio(char descontar, tyProducto productos[], tyTipoProd tipos[], int posProd, int posTipo);
 void mostrarRecaudacionPorTipoYGrupo(tyTipoProd tipos[], tyGrupo grupos[], tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas);
 void mostrarGrupoDeMayorVentaConDescuento(tyGrupo grupos[], int acumulador[], int tope);
 void mostrarPorcentajesDeVentasPorTipo(tyTipoProd tipos[], int acumVentasPorTipo[], int tope, int totalVentas);
@@ -114,18 +111,15 @@ void procesarVentas(char archivo[], char errores[], tyProducto productos[], int 
         while (result and not finDeArchivo) {
             posProd = buscarProducto(productos, topeProd, venta.codigo);
             if (posProd != EXIT_ERROR) {
-                totalVentas++;
                 posGrupo = buscarGrupo(grupos, topeGrupo, venta.edad);
                 posTipo = productos[posProd].tipo - 1; // Para coincidir con posicion en vector
-
-                if (venta.descuento == 'S') {
-                    precio = productos[posProd].precio - (productos[posProd].precio * tipos[posTipo].descuento);
-                    acumularVentasConDescuento(acumGrupoConDescuento, posGrupo);
-                } else {
-                    precio = productos[posProd].precio;
-                }
-                acumularVentasPorTipo(acumVentasPorTipo, posTipo);
+                precio = calcularPrecio(venta.descuento, productos, tipos, posProd, posTipo);
+                contarVentas(totalVentas);
                 acumularRecYCantPorTipoYGrupo(tablaTiposGrupos, posGrupo, posTipo, precio);
+                acumularVentasPorTipo(acumVentasPorTipo, posTipo);
+                if (venta.descuento == 'S') {
+                    acumularVentasConDescuento(acumGrupoConDescuento, posGrupo);
+                }
             } else {
                 escribirArchivo(&venta, size, ficheroE, resultE);
             }
@@ -217,6 +211,20 @@ void inicializarTablaTiposGrupos(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], i
             tablaTiposGrupos[i][j].importe = 0;
         }
     }
+}
+
+void contarVentas(int &totalVentas) {
+    totalVentas++;
+}
+
+float calcularPrecio(char descontar, tyProducto productos[], tyTipoProd tipos[], int posProd, int posTipo) {
+    float precio;
+    if (descontar == 'S') {
+        precio = productos[posProd].precio - (productos[posProd].precio * tipos[posTipo].descuento);
+    } else {
+        precio = productos[posProd].precio;
+    }
+    return precio;
 }
 
 void acumularRecYCantPorTipoYGrupo(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int posGrupo, int posTipo, float precio) {
