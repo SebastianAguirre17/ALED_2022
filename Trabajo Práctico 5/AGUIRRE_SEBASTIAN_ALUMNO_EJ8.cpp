@@ -51,7 +51,7 @@ int buscarGrupo(tyGrupo grupo[], int tope, int buscado);
 
 void inicializarTablaTiposGrupos(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int filas, int columnas);
 
-void acumularRecaudacionPorTipoYGrupo(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int posGrupo, int posTipo, float precio);
+void acumularRecYCantPorTipoYGrupo(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int posGrupo, int posTipo, float precio);
 void acumularVentasConDescuento(int acumulador[], int posGrupo);
 void acumularVentasPorTipo(int acumVentasPorTipo[], int posTipo);
 
@@ -125,8 +125,7 @@ void procesarVentas(char archivo[], char errores[], tyProducto productos[], int 
                     precio = productos[posProd].precio;
                 }
                 acumularVentasPorTipo(acumVentasPorTipo, posTipo);
-                acumularRecaudacionPorTipoYGrupo(tablaTiposGrupos, posGrupo, posTipo, precio);
-
+                acumularRecYCantPorTipoYGrupo(tablaTiposGrupos, posGrupo, posTipo, precio);
             } else {
                 escribirArchivo(&venta, size, ficheroE, resultE);
             }
@@ -143,7 +142,6 @@ void cargarProductos(char archivo[], tyProducto productos[], int topeProd, int &
     FILE *fichero = NULL;
     bool result, finDeArchivo;
     char op[] = "rb";
-    topeReal = 0;
 
     abrirArchivo(archivo, op, fichero, result);
     if (result) {
@@ -221,7 +219,7 @@ void inicializarTablaTiposGrupos(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], i
     }
 }
 
-void acumularRecaudacionPorTipoYGrupo(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int posGrupo, int posTipo, float precio) {
+void acumularRecYCantPorTipoYGrupo(tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int posGrupo, int posTipo, float precio) {
     tablaTiposGrupos[posTipo][posGrupo].cantidad++;
     tablaTiposGrupos[posTipo][posGrupo].importe += precio;
 }
