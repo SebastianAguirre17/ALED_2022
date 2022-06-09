@@ -290,7 +290,7 @@ void mostrarGrupoDeMayorVentaConDescuento(tyGrupo grupos[], int acumulador[], in
 
 void mostrarPorcentajesDeVentasPorTipo(tyTipoProd tipos[], int acumVentasPorTipo[], int tope, int totalVentas) {
     mostrarTitulo("Por cada Tipo de Producto: Nombre del Tipo y Porcentaje de productos vendidos.");
-    double porcentaje;
+    float porcentaje;
     for (int i = 0; i < tope; i++) {
         porcentaje = acumVentasPorTipo[i] * 100 / (float)totalVentas; // Hago casteo para mostrar decimales
         cout << "El tipo '" << tipos[i].nombre << "' represento el " << std::fixed << std::setprecision(2) << porcentaje << " % de las ventas" <<endl;
