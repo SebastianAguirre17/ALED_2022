@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <iomanip>
-#include "../Biblioteca/AGUIRRE_SEBASTIAN.h" 
+#include "AGUIRRE_SEBASTIAN.h" 
 
 #define TOPE_COD_PROD   6
 #define TOPE_COD_DESC   31
@@ -10,6 +10,8 @@
 #define MAX_PRODUCTOS   50
 #define TOPE_TIPOS      12
 #define TOPE_GRUPOS     10
+#define EDAD_MINIMA     6
+#define EDAD_MAXIMA     100
 
 struct tyVenta {
     char codigo[TOPE_COD_PROD];
@@ -41,6 +43,9 @@ struct tyAcumulador {
 
 void procesarVentas(char archivo[], char errores[], tyProducto productos[], int topeProd, tyGrupo grupos[], int topeGrupo, tyTipoProd tipos[], 
     tyAcumulador tablaTiposGrupos[][TOPE_GRUPOS], int acumGrupoConDescuento[], int acumVentasPorTipo[], int &totalVentas);
+bool validarVenta(tyProducto productos[], int topeProd, tyVenta venta, int &posProd);
+bool validarEdad(int edad);
+bool validarOpcionDescuento(char d);
 void cargarProductos(char archivo[], tyProducto productos[], int topeProd, int &topeReal);
 void cargarTipos(char archivo[], tyTipoProd tipos[], int tope);
 void cargarGrupos(char archivo[], tyGrupo grupos[], int tope);
@@ -109,8 +114,7 @@ void procesarVentas(char archivo[], char errores[], tyProducto productos[], int 
     if (result and resultE) {
         leerArchivo(fichero, &venta, size, finDeArchivo, result);
         while (result and not finDeArchivo) {
-            posProd = buscarProducto(productos, topeProd, venta.codigo);
-            if (posProd != EXIT_ERROR) {
+            if (validarVenta(productos, topeProd, venta, posProd)) {
                 posGrupo = buscarGrupo(grupos, topeGrupo, venta.edad);
                 posTipo = productos[posProd].tipo - 1; // Para coincidir con posicion en vector
                 precio = calcularPrecio(venta.descuento, productos, tipos, posProd, posTipo);
@@ -128,6 +132,19 @@ void procesarVentas(char archivo[], char errores[], tyProducto productos[], int 
         cerrarArchivo(fichero, result);
         cerrarArchivo(ficheroE, resultE);
     } 
+}
+
+bool validarVenta(tyProducto productos[], int topeProd, tyVenta venta, int &posProd) {
+    posProd = buscarProducto(productos, topeProd, venta.codigo);
+    return (posProd != EXIT_ERROR and validarEdad(venta.edad) and validarOpcionDescuento(venta.descuento));
+}
+
+bool validarEdad(int edad) {
+    return (edad >= EDAD_MINIMA and edad <= EDAD_MAXIMA);
+}
+
+bool validarOpcionDescuento(char d) {
+    return (d == 'S' or d == 'N');
 }
 
 void cargarProductos(char archivo[], tyProducto productos[], int topeProd, int &topeReal) {
@@ -275,7 +292,7 @@ void mostrarPorcentajesDeVentasPorTipo(tyTipoProd tipos[], int acumVentasPorTipo
     mostrarTitulo("Por cada Tipo de Producto: Nombre del Tipo y Porcentaje de productos vendidos.");
     double porcentaje;
     for (int i = 0; i < tope; i++) {
-        porcentaje = acumVentasPorTipo[i] * 100 / (float)totalVentas;
+        porcentaje = acumVentasPorTipo[i] * 100 / (float)totalVentas; // Hago casteo para mostrar decimales
         cout << "El tipo '" << tipos[i].nombre << "' represento el " << std::fixed << std::setprecision(2) << porcentaje << " % de las ventas" <<endl;
     }
 }
