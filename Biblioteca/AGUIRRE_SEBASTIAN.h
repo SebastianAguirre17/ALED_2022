@@ -65,6 +65,11 @@ int calcularNumeroInverso(int num);
 bool esNumeroCapicua(int num);
 bool sonNumerosAmigos(int num1, int num2);
 
+void abrirArchivo(char ruta[], char op[], FILE *&fichero, bool &result);
+void cerrarArchivo(FILE *fichero, bool &result);
+void escribirArchivo(void *reg, int size, FILE *fichero, bool &result);
+void leerArchivo(FILE *fichero, void *reg, int size, bool &fin, bool &pude);
+
 // DESARROLLO DE FUNCIONES
 void ingresarEntero(int &valor, string mensaje) {
     cout << mensaje;
