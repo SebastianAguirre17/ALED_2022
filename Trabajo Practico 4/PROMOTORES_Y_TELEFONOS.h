@@ -82,9 +82,9 @@ void mostrarPromotores(tyPromotor promotores[], int tope) {
     }
 }
 
-int buscarPromotor(tyPromotor promotores[], int tope, string nombre) {
+int buscarPromotor(tyPromotor promotores[], int tope, char nombre[TOPE_PROM]) {
     int i = 0;
-    while (i < tope and promotores[i].nombre != nombre) {
+    while (i < tope and strcmp(promotores[i].nombre, nombre) != 0) {
         i++;
     }
     if (i == tope)
@@ -92,9 +92,9 @@ int buscarPromotor(tyPromotor promotores[], int tope, string nombre) {
     return i;
 }
 
-int buscarTelefono(tyTelefono telefonos[], int tope, string descripcion) {
+int buscarTelefono(tyTelefono telefonos[], int tope, char descripcion[TOPE_DESC]) {
     int i = 0;
-    while (i < tope and telefonos[i].descripcion != descripcion) {
+    while (i < tope and strcmp(telefonos[i].descripcion, descripcion) != 0) {
         i++;
     }
     if (i == tope)

@@ -34,11 +34,14 @@ struct tyPais{
 };
 
 void escribirArchivoIngresos();
-void procesarInformeDeBarcos(tyBarco barcos[], int topeBarcos, int acumBarcosPorPais[]);
+void procesarInformeDeBarcos(tyBarco barcos[], int topeBarcos, tyCat categorias[], int topeCat, int acumBarcosPorPais[][TOPE_CAT]);
+
 int buscarBarco(tyBarco barcos[], int tope, char buscado[]);
 int buscarCategoria(tyCat categorias[], int tope, int tonelaje); 
-void acumularBarcosPorPais(int acumBarcosPorPais[], int posPais);
-void mostrarCantidadDeBarcosPorPais (tyPais paises[], int tope, int acumBarcosPorPais[]);
+
+void inicializarMatrizDeBarcosPorPais(int matriz[][TOPE_CAT], int filas, int columnas);
+void acumularBarcosPorPais(int acumBarcosPorPais[][TOPE_CAT], int posPais, int posCat);
+void mostrarTipoYCantDeBarcosPorPais(tyPais paises[], int tope, tyCat categorias[], int topeCat, int acumBarcosPorPais[][TOPE_CAT]);
 
 int main(){
 	tyBarco barcos[TOPE_BARCOS] = {
@@ -62,23 +65,23 @@ int main(){
 		"FRANCIA", 120,
 		"BRASIL", 110
     };
-	int precios[TOPE_PRECIOS] = {
-        1000, 1250, 1500, 2000
-    };
+	// int precios[TOPE_PRECIOS] = {
+    //     1000, 1250, 1500, 2000
+    // };
 
-	int acumBarcosPorPais[TOPE_PAISES];
-    inicializarArrayNumerico(acumBarcosPorPais, TOPE_PAISES);
+	int acumBarcosPorPais[TOPE_PAISES][TOPE_CAT];
+    inicializarMatrizDeBarcosPorPais(acumBarcosPorPais, TOPE_PAISES, TOPE_CAT);
 
-	escribirArchivoIngresos();
-	procesarInformeDeBarcos(barcos, TOPE_BARCOS, acumBarcosPorPais);
+	// escribirArchivoIngresos();
+	procesarInformeDeBarcos(barcos, TOPE_BARCOS, categorias, TOPE_CAT, acumBarcosPorPais);
 
-    mostrarCantidadDeBarcosPorPais(paises, TOPE_PAISES, acumBarcosPorPais);
+    mostrarTipoYCantDeBarcosPorPais(paises, TOPE_PAISES, categorias, TOPE_CAT, acumBarcosPorPais);
 }
 
-void procesarInformeDeBarcos(tyBarco barcos[], int topeBarcos, int acumBarcosPorPais[]) {
+void procesarInformeDeBarcos(tyBarco barcos[], int topeBarcos, tyCat categorias[], int topeCat, int acumBarcosPorPais[][TOPE_CAT]) {
 	tyIngreso ingreso;
     FILE *fichero = NULL;
-    int size = sizeof(ingreso), posBarco;
+    int size = sizeof(ingreso), posBarco, posCat;
     bool result, finDeArchivo;
     char op[] = "rb";
 	char archivo[] = "barcos_ingresados.dat"; 
@@ -89,7 +92,9 @@ void procesarInformeDeBarcos(tyBarco barcos[], int topeBarcos, int acumBarcosPor
         while (result and not finDeArchivo) {
 			posBarco = buscarBarco(barcos, topeBarcos, ingreso.nombre);
 			if (posBarco != EXIT_ERROR) { //and and ingreso.permanencia > 0
-                acumularBarcosPorPais(acumBarcosPorPais, barcos[posBarco].pais);
+                posCat = buscarCategoria(categorias, topeCat, barcos[posBarco].tonelaje);
+                acumularBarcosPorPais(acumBarcosPorPais, barcos[posBarco].pais, posCat);
+
                 if (ingreso.permanencia > 0) {
 
                 }
@@ -138,7 +143,7 @@ int buscarBarco(tyBarco barcos[], int tope, char buscado[]) {
 
 int buscarCategoria(tyCat categorias[], int tope, int tonelaje) {
 	int i = 0;
-    while (i < tope and tonelaje < categorias[i].tonMin or tonelaje > categorias[i].tonMax) {
+    while (i < tope and (tonelaje < categorias[i].tonMin or tonelaje > categorias[i].tonMax)) {
         i++;
     }
     if (i == tope)
@@ -146,13 +151,30 @@ int buscarCategoria(tyCat categorias[], int tope, int tonelaje) {
     return i;
 }
 
-void acumularBarcosPorPais(int acumBarcosPorPais[], int posPais) {
-    acumBarcosPorPais[posPais]++;
+void inicializarMatrizDeBarcosPorPais(int matriz[][TOPE_CAT], int filas, int columnas) {
+    for (int i = 0; i < filas; i++) {
+        for (int j = 0; j < columnas; j++) {
+            matriz[i][j] = 0;
+        }
+    }
 }
 
-void mostrarCantidadDeBarcosPorPais (tyPais paises[], int tope, int acumBarcosPorPais[]) {
-    mostrarTitulo("Cantidad de Barcos por pais");
+void acumularBarcosPorPais(int acumBarcosPorPais[][TOPE_CAT], int posPais, int posCat) {
+    acumBarcosPorPais[posPais][posCat]++;
+}
+
+void mostrarTipoYCantDeBarcosPorPais(tyPais paises[], int tope, tyCat categorias[], int topeCat, int acumBarcosPorPais[][TOPE_CAT]) {
+    mostrarTitulo("Por cada pais: Nombre de cada tipo de barco (categoria) y cantidad de barcos.");
+    int cant = 0;
     for (int i = 0; i < tope; i++) {
-        cout << paises[i].nombre << "   \t" << acumBarcosPorPais[i] << " barcos." << endl;
+        mostrarTitulo(paises[i].nombre);
+        for (int j = 0; j < topeCat; j++) {
+            if ( acumBarcosPorPais[i][j] > 0) {
+                cout << categorias[j].tipoBarco << endl;
+                cant += acumBarcosPorPais[i][j];
+            }
+        }
+        cout << "Cantidad de Barcos: " << cant << endl;
+        cant = 0;
     }
 }
